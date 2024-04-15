@@ -10,14 +10,11 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 @Data
-@Builder
 @TypeAlias("Booking")
 @Document
 public abstract class Booking implements Serializable {
     @Id
     private String id;
 
-    @DBRef
-    private Category category;
 
 }

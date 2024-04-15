@@ -1,6 +1,7 @@
 package com.bexos.bookingservice.models.booking_categories;
 
 import com.bexos.bookingservice.models.Booking;
+import com.bexos.bookingservice.models.CategoryCode;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

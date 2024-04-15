@@ -13,7 +13,7 @@ import java.util.List;
 @Data
 @Builder
 @TypeAlias("Category")
-@Document
+@Document(value = "category")
 public class Category {
     @Id
     private String id;
@@ -22,6 +22,4 @@ public class Category {
     private CategoryCode code;
     private String icon;
 
-    @DBRef
-    private List<Booking> bookings;
 }

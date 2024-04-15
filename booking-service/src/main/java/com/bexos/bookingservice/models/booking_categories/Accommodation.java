@@ -1,6 +1,7 @@
 package com.bexos.bookingservice.models.booking_categories;
 
 import com.bexos.bookingservice.models.Booking;
+import com.bexos.bookingservice.models.CategoryCode;
 import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;

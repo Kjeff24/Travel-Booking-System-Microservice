@@ -2,6 +2,7 @@ package com.bexos.bookingservice.services;
 
 import com.bexos.bookingservice.dto.CategoryRequest;
 import com.bexos.bookingservice.models.Category;
+import com.bexos.bookingservice.models.CategoryCode;
 import com.bexos.bookingservice.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -28,7 +29,7 @@ public class CategoryServiceImpl implements CategoryService{
                 .icon(categoryRequest.icon())
                 .build();
 
-        return new ResponseEntity<>(category, HttpStatus.CREATED);
+        return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
     }
 
     public ResponseEntity<Category> findCategoryById(ObjectId id) {
@@ -37,10 +38,9 @@ public class CategoryServiceImpl implements CategoryService{
                 .orElseGet(() -> ResponseEntity.notFound().build());
     }
 
-    public ResponseEntity<Category> findCategoryByCode(Category code) {
+    public ResponseEntity<List<Category>> findCategoryByCode(CategoryCode code) {
+        List<Category> categories = categoryRepository.findAllByCode(code);
 
-        return categoryRepository.findByCode(code)
-                .map(ResponseEntity::ok)
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        return new ResponseEntity<>(categories, HttpStatus.OK);
     }
 }

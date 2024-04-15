@@ -2,6 +2,7 @@ package com.bexos.bookingservice.services;
 
 import com.bexos.bookingservice.dto.CategoryRequest;
 import com.bexos.bookingservice.models.Category;
+import com.bexos.bookingservice.models.CategoryCode;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 
@@ -14,5 +15,5 @@ public interface CategoryService {
 
     ResponseEntity<Category> findCategoryById(ObjectId id);
 
-    ResponseEntity<Category> findCategoryByCode(Category code);
+    ResponseEntity<List<Category>> findCategoryByCode(CategoryCode code);
 }
