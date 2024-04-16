@@ -4,7 +4,6 @@ import com.bexos.bookingservice.dto.AccommodationRequest;
 import com.bexos.bookingservice.dto.CarRentalRequest;
 import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.dto.HotelRequest;
-import com.bexos.bookingservice.models.Booking;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
@@ -20,6 +19,7 @@ public class BookingMapper {
                 .type(accommodationRequest.type())
                 .capacity(accommodationRequest.capacity())
                 .price(accommodationRequest.price())
+                .categoryId(accommodationRequest.categoryId())
                 .build();
     }
 
@@ -29,6 +29,7 @@ public class BookingMapper {
                 .location(hotelRequest.location())
                 .roomType(hotelRequest.roomType())
                 .price(hotelRequest.price())
+                .categoryId(hotelRequest.categoryId())
                 .build();
     }
 
@@ -36,8 +37,8 @@ public class BookingMapper {
         return Flight.builder()
                 .departureCity(flightRequest.departureCity())
                 .destinationCity(flightRequest.destinationCity())
-                .date(flightRequest.date())
                 .price(flightRequest.price())
+                .categoryId(flightRequest.categoryId())
                 .build();
     }
 
@@ -46,6 +47,7 @@ public class BookingMapper {
                 .carType(carRentalRequest.carType())
                 .carImage(carRentalRequest.carImage())
                 .pricePerDay(carRentalRequest.pricePerDay())
+                .categoryId(carRentalRequest.categoryId())
                 .build();
     }
 }

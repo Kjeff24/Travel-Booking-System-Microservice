@@ -17,4 +17,5 @@ public class Accommodation extends Booking {
     private String type;
     private String capacity;
     private double price;
+    private String categoryId;
 }

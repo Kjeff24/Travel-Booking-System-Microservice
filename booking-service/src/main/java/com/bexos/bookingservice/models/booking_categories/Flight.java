@@ -1,15 +1,11 @@
 package com.bexos.bookingservice.models.booking_categories;
 
 import com.bexos.bookingservice.models.Booking;
-import com.bexos.bookingservice.models.CategoryCode;
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 
 @EqualsAndHashCode(callSuper = true)
@@ -20,6 +16,8 @@ import java.util.Date;
 public class Flight extends Booking {
     private String departureCity;
     private String destinationCity;
-    private LocalDateTime date;
+    @Builder.Default
+    private LocalDateTime date = LocalDateTime.now();
     private double price;
+    private String categoryId;
 }

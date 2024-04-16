@@ -16,5 +16,4 @@ public abstract class Booking implements Serializable {
     @Id
     private String id;
 
-
 }

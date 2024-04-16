@@ -1,6 +1,7 @@
 package com.bexos.bookingservice.services;
 
 import com.bexos.bookingservice.models.Booking;
+import com.bexos.bookingservice.models.Category;
 import com.bexos.bookingservice.repositories.BookingRepository;
 import com.bexos.bookingservice.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;

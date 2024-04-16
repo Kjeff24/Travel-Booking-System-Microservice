@@ -17,4 +17,6 @@ public class CarRental extends Booking {
     private String carType;
     private double pricePerDay;
     private String carImage;
+    private String categoryId;
+
 }

@@ -14,7 +14,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class CategoryServiceImpl implements CategoryService{
+public class CategoryServiceImpl implements CategoryService {
     private final CategoryRepository categoryRepository;
 
     public ResponseEntity<List<Category>> findAllCategories() {
@@ -22,17 +22,19 @@ public class CategoryServiceImpl implements CategoryService{
     }
 
     public ResponseEntity<Category> createCategory(CategoryRequest categoryRequest) {
+
         Category category = Category.builder()
                 .name(categoryRequest.name())
                 .description(categoryRequest.description())
-                .code(categoryRequest.code())
+                .code(CategoryCode.valueOf(categoryRequest.code()))
                 .icon(categoryRequest.icon())
                 .build();
 
-        return new ResponseEntity<>(categoryRepository.save(category), HttpStatus.CREATED);
+        return ResponseEntity.status(HttpStatus.CREATED).body(categoryRepository.save(category));
     }
 
     public ResponseEntity<Category> findCategoryById(ObjectId id) {
+
         return categoryRepository.findById(String.valueOf(id))
                 .map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.notFound().build());
@@ -41,6 +43,6 @@ public class CategoryServiceImpl implements CategoryService{
     public ResponseEntity<List<Category>> findCategoryByCode(CategoryCode code) {
         List<Category> categories = categoryRepository.findAllByCode(code);
 
-        return new ResponseEntity<>(categories, HttpStatus.OK);
+        return ResponseEntity.ok(categories);
     }
 }
