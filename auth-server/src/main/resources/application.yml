@@ -1,0 +1,39 @@
+spring:
+  application.name: auth-server
+
+  data.mongodb:
+    authentication-database: admin
+    username: root
+    password: password
+    database: user-service
+    port: 27017
+    host: localhost
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${email-username}
+    password: ${email-app-password}
+    properties.mail.smtp:
+      auth: truef
+      starttls.enable: true
+
+
+  security.oauth2.client.registration:
+    github:
+      clientId: ${client-id}
+      clientSecret: ${client-secret}
+    google:
+      client-id: ${google-id}
+      client-secret: ${google-secret}
+    facebook:
+      client-id: ${facebook-id}
+      client-secret: ${facebook-secret}
+
+
+jwt:
+  secret: ${jwt-secret}
+
+
+
+logging.level.org.springframework.security.oauth2: debug
