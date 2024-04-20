@@ -1,0 +1,7 @@
+
+spring:
+  application:
+    name: gateway
+  # Below property is equivalent to @EnableEurekaClient. It helps API Gateway to register itself to eureka server
+  config:
+    import: optional:configserver:http://localhost:8888

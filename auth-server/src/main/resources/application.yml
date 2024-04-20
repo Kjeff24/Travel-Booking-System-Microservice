@@ -1,6 +1,5 @@
 spring:
   application.name: auth-server
-
   data.mongodb:
     authentication-database: admin
     username: root
@@ -9,31 +8,21 @@ spring:
     port: 27017
     host: localhost
 
-  mail:
-    host: smtp.gmail.com
-    port: 587
-    username: ${email-username}
-    password: ${email-app-password}
-    properties.mail.smtp:
-      auth: truef
-      starttls.enable: true
+  output.ansi.enabled: always
 
+  security:
+    oauth2:
+      authorizationserver:
+        client:
+          demo-client:
+            #            require-authorization-consent: true
+            registration:
+              client-id: travel-booking-client
+              client-secret: "{noop}secret"
+              authorization-grant-types: client_credentials, authorization_code, refresh_token
+              redirect-uris: http://127.0.0.1:8765/login/oauth2/code/travel-booking-client
+              scopes: user.read, user.write, openid
+              client-authentication-methods: client_secret_basic
 
-  security.oauth2.client.registration:
-    github:
-      clientId: ${client-id}
-      clientSecret: ${client-secret}
-    google:
-      client-id: ${google-id}
-      client-secret: ${google-secret}
-    facebook:
-      client-id: ${facebook-id}
-      client-secret: ${facebook-secret}
-
-
-jwt:
-  secret: ${jwt-secret}
-
-
-
-logging.level.org.springframework.security.oauth2: debug
+server:
+  port: 8080

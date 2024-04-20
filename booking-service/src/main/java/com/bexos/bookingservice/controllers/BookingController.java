@@ -27,6 +27,11 @@ public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;
 
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello from booker service";
+    }
+
     @GetMapping
     public ResponseEntity<List<Booking>> findAllBookings(){
         return bookingServiceImpl.findAllBookings();

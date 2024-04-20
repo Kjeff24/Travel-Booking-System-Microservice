@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: gateway
+# Below property is equivalent to @EnableEurekaClient. It helps API Gateway to register itself to eureka server
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+        lower-case-service-id: true
+      routes[0]:
+        id: booking-service
+        uri: lb://booking-service
+        predicates[0]: Path=/api/bookings/**
+# Enable token relay - Pass the successful authenticated token from keycloak server to downstream APIs
+      default-filters: TokenRelay
+# Below property tells API Gateway to work in a load balanced mode
+    loadbalancer:
+      ribbon:
+        enabled: true
+# Configuration for connecting to spring server
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/oauth2/jwks
+      client:
+        provider:
+          spring:
+            issuer-uri: http://localhost:8080
+        registration:
+          travel-booking-client:
+            provider: spring
+            client-id: travel-booking-client
+            client-secret: "secret"
+            authorization-grant-type: authorization_code
+            scope: openid
+server:
+  port: 8765
+# Generate a unique name for the instance
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${random.uuid}
