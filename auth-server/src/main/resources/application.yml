@@ -12,6 +12,13 @@ spring:
 
   security:
     oauth2:
+      client.registration:
+        google:
+          client-id: ${google-id}
+          client-secret: ${google-secret}
+        github:
+          clientId: ${github-id}
+          clientSecret: ${github-secret}
       authorizationserver:
         client:
           demo-client:
