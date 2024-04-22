@@ -1,6 +1,6 @@
 package com.bexos.authserver.services;
 
-import com.bexos.authserver.dto.RegisterRequest;
+import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.mappers.UserMapper;
 import com.bexos.authserver.models.ConfirmationToken;
 import com.bexos.authserver.models.User;
@@ -12,8 +12,6 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -27,7 +25,7 @@ public class UserServiceImpl implements UserService{
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailService emailService;
 
-    public ResponseEntity<?> register(RegisterRequest request) {
+    public ResponseEntity<?> register(RegisterRequestDto request) {
         if (userRepository.existsByEmail(request.email())) {
             return ResponseEntity.badRequest().body("Error: Email is already in use!");
         }

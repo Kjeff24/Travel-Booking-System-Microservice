@@ -1,6 +1,6 @@
 package com.bexos.authserver.mappers;
 
-import com.bexos.authserver.dto.RegisterRequest;
+import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.models.Role;
 import com.bexos.authserver.models.User;
 import lombok.RequiredArgsConstructor;
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Service;
 public class UserMapper {
     private final PasswordEncoder passwordEncoder;
 
-    public User toUser(RegisterRequest request){
+    public User toUser(RegisterRequestDto request){
 
         return User.builder()
-                .firstName(request.firstName())
-                .lastName(request.lastName())
+                .fullName(request.fullName())
+                .username(request.username())
                 .email(request.email())
                 .password(passwordEncoder.encode(request.password()))
                 .role(Role.USER)

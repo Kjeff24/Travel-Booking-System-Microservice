@@ -21,6 +21,7 @@ spring:
           jwk-set-uri: http://localhost:8080/oauth2/jwks
 eureka:
   instance:
+    hostname: localhost
     instance-id: ${spring.application.name}:${random.uuid}
 
 server.port: 0

@@ -7,10 +7,10 @@ spring:
       discovery:
         locator:
           enabled: true
-        lower-case-service-id: true
+#        lower-case-service-id: true
       routes[0]:
         id: booking-service
-        uri: lb://booking-service
+        uri: lb://BOOKING-SERVICE
         predicates[0]: Path=/api/bookings/**
 # Enable token relay - Pass the successful authenticated token from keycloak server to downstream APIs
       default-filters: TokenRelay
@@ -40,4 +40,5 @@ server:
 # Generate a unique name for the instance
 eureka:
   instance:
+    hostname: localhost
     instance-id: ${spring.application.name}:${random.uuid}

@@ -1,6 +1,6 @@
 package com.bexos.authserver.controllers;
 
-import com.bexos.authserver.dto.RegisterRequest;
+import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +20,7 @@ public class UserController {
 
     @PostMapping("/register")
     public ResponseEntity<?> register(
-            @RequestBody RegisterRequest request
+            @RequestBody RegisterRequestDto request
     ){
         return ResponseEntity.ok(userService.register(request));
     }

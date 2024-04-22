@@ -27,7 +27,8 @@ spring:
               client-id: travel-booking-client
               client-secret: "$2a$10$jJtp6plZ0VEDPyE3NkQYJekDRJozhzcllkrQA1g43H2MRiU89xHzm"
               authorization-grant-types: client_credentials, authorization_code, refresh_token
-              redirect-uris: http://127.0.0.1:8765/login/oauth2/code/travel-booking-client
+#              redirect-uris: http://127.0.0.1:8765/login/oauth2/code/travel-booking-client
+              redirect-uris: https://oauthdebugger.com/debug
               scopes: user.read, user.write, openid
               client-authentication-methods: client_secret_basic
   mail:
@@ -39,7 +40,7 @@ spring:
       auth: true
       starttls.enable: true
 
-jwtsecret: ${jwt-secret}
+jwt-secret: ${jwt-secret}
 
 server:
   port: 8080
