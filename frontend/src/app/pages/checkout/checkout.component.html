@@ -1,0 +1,189 @@
+<div>
+    <app-header></app-header>
+    <!-- Mini-nav-starts  -->
+    <div class="bg-light py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-0">
+              <a [routerLink]="['']" class="fw-bold text-decoration-none">Home</a>
+              <span class="mx-2 mb-0">/ Checkout</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mini-nav-ends  -->
+
+      <!-- checkout-starts  -->
+      <div class="site-section">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-6 mb-5 mb-md-0">
+              <h2 class="h3 mb-3 text-black">Delivery Details</h2>
+              <form method="POST">
+                <div class="p-3 p-lg-5 border" id="delivery-details">
+                  <div class="form-group delivery-info pb-3">
+                    <label for="c_country" class="text-black"
+                      >Region <span class="text-danger">*</span></label
+                    >
+                    <select
+                      id="c_country"
+                      class="form-control"
+                      name="region"
+                      required
+                    >
+                      <option value="">Select Region</option>
+                      <option value="Greater Accra">Greater Accra</option>
+                      <option value="Ashanti">Ashanti</option>
+                      <option value="Central">Central</option>
+                      <option value="Eastern">Eastern</option>
+                      <option value="Northern">Northern</option>
+                      <option value="Volta">Volta</option>
+                      <option value="Western">Western</option>
+                      <option value="Bono">Bono</option>
+                      <option value="Bono East">Bono East</option>
+                      <option value="Ahafo">Ahafo</option>
+                      <option value="Savannah">Savannah</option>
+                      <option value="North East">North East</option>
+                      <option value="Oti">Oti</option>
+                      <option value="Western North">Western North</option>
+                    </select>
+                  </div>
+
+                  <div class="form-group row delivery-info pb-3">
+                    <div class="col-md-12">
+                      <label for="c_address" class="text-black"
+                        >Address <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="c_address"
+                        name="address"
+                        placeholder="Street address"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="form-group row delivery-info pb-3">
+                    <div class="col-md-6">
+                      <label for="c_postal_zip" class="text-black"
+                        >Ghana Post GPS
+                        <span class="text-danger">*</span></label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="c_gps"
+                        name="gps"
+                        required
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group delivery-info pb-3">
+                    <label for="c_order_notes" class="text-black"
+                      >Order Notes</label
+                    >
+                    <textarea
+                      name="order_notes"
+                      id="c_order_notes"
+                      cols="30"
+                      rows="5"
+                      class="form-control"
+                      placeholder="Write your notes here..."
+                    ></textarea>
+                  </div>
+                  <div class="form-group text-center p-2">
+                    <a [routerLink]="['/thankyou']"
+                      class="btn btn-secondary btn-lg btn-block">Checkout</a>
+                  </div>
+                </div>
+              </form>
+            </div>
+            <div class="col-md-6">
+              <div class="row mb-5">
+                <div class="col-md-12">
+                  <h2 class="h3 mb-3 text-black">Your Order</h2>
+                  <div class="p-3 p-lg-5 border">
+                    <table class="table site-block-order-table mb-5">
+                      <thead>
+                        <th class="product-thumbnail">Image</th>
+                        <th class="product-name">Product</th>
+                        <th class="product-total">Total</th>
+                      </thead>
+                      <tbody>
+                        <tr>
+                          <td class="product-thumbnail">
+                            <img
+                              src="../assets/products/bagpack.jpg"
+                              alt="Image"
+                              class="col-sm-4"
+                            />
+                          </td>
+                          <td>
+                            Back pack<strong class="mx-2">
+                              x </strong
+                            >3
+                          </td>
+                          <td>GHS 150.00</td>
+                        </tr>
+                        <tr>
+                          <td class="product-thumbnail">
+                            <img
+                              src="../assets/products/hp_deskjet.jpg"
+                              alt="Image"
+                              class="col-sm-4"
+                            />
+                          </td>
+                          <td>
+                            Back pack<strong class="mx-2">
+                              x </strong
+                            >2
+                          </td>
+                          <td>GHS 300.00</td>
+                        </tr>
+                        <tr>
+                          <td class="product-thumbnail">
+                            <img
+                              src="../assets/products/led_mouse.jpg"
+                              alt="Image"
+                              class="col-sm-4"
+                            />
+                          </td>
+                          <td>
+                            Back pack<strong class="mx-2">
+                              x </strong
+                            >1
+                          </td>
+                          <td>GHS 25.00</td>
+                        </tr>
+                        <tr>
+                          <td class="text-black font-weight-bold">
+                            <strong>Cart Items</strong>
+                          </td>
+                          <td class="text-black">6</td>
+                        </tr>
+                        <tr>
+                          <td class="text-black font-weight-bold">
+                            <strong>Order Cart Total</strong>
+                          </td>
+                          <td class="text-black font-weight-bold">
+                            <strong
+                              >GHS
+                              375.00</strong
+                            >
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- </form> -->
+          </div>
+        </div>
+      </div>
+      <!-- checkout-ends  -->
+    <app-footer></app-footer>
+</div>

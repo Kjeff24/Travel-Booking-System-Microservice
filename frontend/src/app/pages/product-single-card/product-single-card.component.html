@@ -1,0 +1,60 @@
+<!-- Product Section - Start -->
+<div class="product-single-card">
+  <div class="product-top-area">
+    <div class="product-discount">GHS {{ productItem.discount }}</div>
+
+    <div class="product-img">
+      <div class="first-view">
+        <img
+          [src]="productItem.images.firstView"
+          alt="logo"
+          class="img-fluid m-auto"
+        />
+      </div>
+      <div class="hover-view">
+        <img
+          [src]="productItem.images.hoverView"
+          alt="logo"
+          class="img-fluid m-auto"
+        />
+      </div>
+    </div>
+    <div class="sideicons">
+      <button class="sideicons-btn">
+        <img src="../assets/svg/add_cart.svg" alt="add to cart" />
+      </button>
+      <button class="sideicons-btn">
+        <img src="../assets/svg/eye.svg" alt="heart" />
+      </button>
+      <button class="sideicons-btn">
+        <img src="../assets/svg/heart.svg" alt="heart" />
+      </button>
+      <button class="sideicons-btn">
+        <img src="../assets/svg/shuffle.svg" alt="heart" />
+      </button>
+    </div>
+  </div>
+  <div class="product-info">
+    <h6 class="product-category">
+      <a href="product_detail.html">{{ productItem.title }}</a>
+    </h6>
+    <h6 class="product-title text-truncate">
+      <a href="product_detail.html">{{ productItem.category }}</a>
+    </h6>
+    <div class="d-flex align-items-center">
+      <div class="review-star me-1">
+        <img src="../assets/svg/star.svg" alt="heart" />
+        <img src="../assets/svg/star.svg" alt="heart" />
+        <img src="../assets/svg/star.svg" alt="heart" />
+        <img src="../assets/svg/star_half.svg" alt="heart" />
+      </div>
+
+      <span class="review-count">({{ productItem.reviewCount }})</span>
+    </div>
+    <div class="d-flex flex-wrap align-items-center py-2">
+      <div class="old-price">GHS {{ productItem.oldPrice }}</div>
+      <div class="new-price">GHS {{ productItem.newPrice }}</div>
+    </div>
+  </div>
+</div>
+<!-- Product Section - End -->

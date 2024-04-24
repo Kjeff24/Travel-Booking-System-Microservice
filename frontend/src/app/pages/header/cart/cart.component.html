@@ -1,0 +1,270 @@
+<div>
+    <app-header></app-header>
+    <!-- Mini-nav-starts  -->
+    <div class="bg-light py-3">
+        <div class="container">
+          <div class="row">
+            <div class="col-md-12 mb-0">
+              <a [routerLink]="['']" class="fw-bold text-decoration-none mini-nav-link">Home</a>
+              <span class="mx-2 mb-0">/ Cart</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Mini-nav-ends  -->
+
+      <!-- Cart-item-start  -->
+      <div class="site-section">
+        <div class="container">
+          <div class="row mb-5">
+            <form class="col-md-12" method="post">
+              <div class="site-blocks-table">
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th class="product-thumbnail">Image</th>
+                      <th class="product-name">Product</th>
+                      <th class="product-price">Price</th>
+                      <th class="product-quantity">Quantity</th>
+                      <th class="product-total">Total</th>
+                      <th class="product-remove">Remove</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td class="product-thumbnail ">
+                        <img
+                          src="../assets/products/bagpack.jpg"
+                          alt="Image"
+                          class="img-fluid col-md-6"
+                        />
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">Backpack</h2>
+                      </td>
+                      <td>GHS 50.00</td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px">
+                          <div class="input-group-prepend">
+                            <button
+                              data-action="remove"
+                              class="btn btn-outline-dark js-btn-minus update-cart"
+                              type="button"
+                            >
+                              &minus;
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            value="3"
+                            placeholder=""
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            readonly
+                          />
+                          <div class="input-group-append">
+                            <button
+                              data-action="add"
+                              class="btn btn-outline-dark js-btn-plus update-cart"
+                              type="button"
+                            >
+                              &plus;
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td>GHS 150.00</td>
+                      <td>
+                        <a
+                          data-action="delete"
+                          class="btn btn-dark height-auto btn-sm update-cart"
+                          >X</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img
+                          src="../assets/products/hp_deskjet.jpg"
+                          alt="Image"
+                          class="img-fluid col-md-6"
+                        />
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">HP deskjet</h2>
+                      </td>
+                      <td>GHS 150.00</td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px">
+                          <div class="input-group-prepend">
+                            <button
+                              data-action="remove"
+                              class="btn btn-outline-dark js-btn-minus update-cart"
+                              type="button"
+                            >
+                              &minus;
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            value="2"
+                            placeholder=""
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            readonly
+                          />
+                          <div class="input-group-append">
+                            <button
+                              data-action="add"
+                              class="btn btn-outline-dark js-btn-plus update-cart"
+                              type="button"
+                            >
+                              &plus;
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td>GHS 300.00</td>
+                      <td>
+                        <a
+                          data-action="delete"
+                          class="btn btn-dark height-auto btn-sm update-cart"
+                          >X</a
+                        >
+                      </td>
+                    </tr>
+                    <tr>
+                      <td class="product-thumbnail">
+                        <img
+                          src="../assets/products/led_mouse.jpg"
+                          alt="Image"
+                          class="img- col-md-6"
+                        />
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">LED mouse</h2>
+                      </td>
+                      <td>GHS 25.00</td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px">
+                          <div class="input-group-prepend">
+                            <button
+                              data-action="remove"
+                              class="btn btn-outline-dark js-btn-minus update-cart"
+                              type="button"
+                            >
+                              &minus;
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            value="1"
+                            placeholder=""
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            readonly
+                          />
+                          <div class="input-group-append">
+                            <button
+                              data-action="add"
+                              class="btn btn-outline-dark js-btn-plus update-cart"
+                              type="button"
+                            >
+                              &plus;
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td>GHS 25.00</td>
+                      <td>
+                        <a
+                          data-action="delete"
+                          class="btn btn-dark height-auto btn-sm update-cart"
+                          >X</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </form>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="row mb-5">
+                <div class="col-md-6">
+                    <a [routerLink]="['/store']" class="btn btn-outline-dark btn-md btn-block js-logo-clone"
+                      >Continue Shopping</a
+                    >
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-md-12">
+                  <label class="text-black h4" for="coupon">Coupon</label>
+                  <p>Enter your coupon code if you have one.</p>
+                </div>
+                <div class="col-md-8 mb-3 mb-md-0">
+                  <input
+                    type="text"
+                    class="form-control py-3"
+                    id="coupon"
+                    placeholder="Coupon Code"
+                  />
+                </div>
+                <div class="col-md-4">
+                  <button class="btn btn-dark btn-md px-4">
+                    Apply Coupon
+                  </button>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6 pl-5">
+              <div class="row justify-content-end">
+                <div class="col-md-7">
+                  <div class="row">
+                    <div class="col-md-12 text-center border-bottom mb-5">
+                      <h3 class="text-black h4 text-uppercase">Cart Info.</h3>
+                    </div>
+                  </div>
+                  <div class="row mb-3">
+                    <div class="col-md-6">
+                      <span class="text-black">Cart Items: </span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <strong class="text-black"
+                        >6</strong
+                      >
+                    </div>
+                  </div>
+                  <div class="row mb-5">
+                    <div class="col-md-6">
+                      <span class="text-black">Cart Total</span>
+                    </div>
+                    <div class="col-md-6 text-right">
+                      <strong class="text-black"
+                        >GHS 375.00</strong
+                      >
+                    </div>
+                  </div>
+                  <div class="row">
+                    <div class="col-md-12">
+                      <a
+                        [routerLink]="['/checkout']"
+                        class="btn btn-dark btn-lg btn-block"
+                        >Proceed To Checkout</a
+                      >
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Cart-item-ends  -->
+    <app-footer></app-footer>
+</div>

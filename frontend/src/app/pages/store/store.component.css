@@ -1,0 +1,14 @@
+.store-mini-nav-link {
+    background-color: rgb(151, 149, 149);
+    color: rgb(255, 255, 255);
+    width: 150px;
+    text-align: center;
+    border-radius: 5px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  
+  .store-mini-nav-link:hover {
+    color: rgb(31, 31, 31);
+  }
+  

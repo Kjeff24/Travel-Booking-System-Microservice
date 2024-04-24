@@ -1,0 +1,24 @@
+.navbar-brand {
+  letter-spacing: 3px;
+}
+
+.banner-wrap a h5 {
+  font-style: italic;
+}
+
+
+.nav-link.active {
+  border-bottom: 1px solid black;
+}
+
+.nav-item:hover{
+  border-bottom: 1px solid rgba(0, 0, 0, 0.322);
+  transition: all 0.3s ease;
+}
+
+.navbar-light .navbar-nav .nav-link.active,
+.navbar-light .navbar-nav .show > .nav-link {
+  color: rgba(0, 0, 0, 0.9);
+  border-bottom: 1px solid black;
+}
+

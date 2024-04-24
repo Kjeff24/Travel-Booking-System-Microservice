@@ -1,0 +1,14 @@
+<!-- Product-starts  -->
+<section>
+    <div class="container">
+      <div class="row g-4 py-2">
+        <app-product-single-card
+          *ngFor="let productItem of filteredProductItemList"
+          [productItem]="productItem"
+          class="col-md-4 col-lg-3 col-sm-12"
+        >
+        </app-product-single-card>
+      </div>
+    </div>
+  </section>
+  <!-- Product-ends  -->

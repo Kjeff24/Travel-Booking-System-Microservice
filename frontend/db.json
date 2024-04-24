@@ -1,0 +1,66 @@
+{
+  "products": [
+    {
+      "discount": 50,
+      "images": {
+        "firstView": "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71QkH2OISVL._AC_UF894,1000_QL80_.jpg",
+        "hoverView": "https://img.ltwebstatic.com/images3_spmp/2023/09/22/fa/1695361985b625347bb7815014f3b07c5ab2e86db4_thumbnail_720x.webp"
+      },
+      "category": "Backpack",
+      "title": "Solar Powered Backpack",
+      "stars": 4,
+      "reviewCount": 25,
+      "oldPrice": 50,
+      "newPrice": 45
+    },
+    {
+      "discount": 150,
+      "images": {
+        "firstView": "https://ssl-product-images.www8-hp.com/digmedialib/prodimg/lowres/c07019469.png",
+        "hoverView": "https://images-na.ssl-images-amazon.com/images/I/71XDjBboFYL._AC_SL1500_.jpg"
+      },
+      "category": "Printer",
+      "title": "HP Deskjet",
+      "stars": 4,
+      "reviewCount": 25,
+      "oldPrice": 250,
+      "newPrice": 145
+    },
+    {
+      "discount": 50,
+      "images": {
+        "firstView": "https://m.media-amazon.com/images/I/719EcL1vmRL._AC_UF1000,1000_QL80_.jpg",
+        "hoverView": "https://rukminim2.flixcart.com/image/850/1000/xif0q/laptop-stand/g/d/1/750-adjustable-laptop-stand-for-desk-seven-height-compatible-for-original-imagjuhvjfchvbwy.jpeg?q=90"
+      },
+      "category": "Laptop Accessories",
+      "title": "Laptop Stand",
+      "stars": 4,
+      "reviewCount": 25,
+      "oldPrice": 78,
+      "newPrice": 50
+    },
+    {
+      "discount": 40,
+      "images": {
+        "firstView": "https://i0.wp.com/www.nexotin.com/wp-content/uploads/2022/07/SANDISK-128GB-PENDRIVE-CRUZER-BLADE-120.jpg?fit=500%2C500&ssl=1",
+        "hoverView": "https://computervillage.ng/media/catalog/product/3/2/32696691467_3.jpg?auto=webp&format=pjpg&width=700"
+      },
+      "category": "Storage Device",
+      "title": "SanDisk Pendrive",
+      "stars": 4,
+      "reviewCount": 25,
+      "oldPrice": 98,
+      "newPrice": 40
+    }
+    
+  ],
+  "carts": [
+    {
+      "image": "https://m.media-amazon.com/images/W/MEDIAX_792452-T2/images/I/71QkH2OISVL._AC_UF894,1000_QL80_.jpg",
+      "title": "Solar Powered Backpack",
+      "oldPrice": 50,
+      "newPrice": 45
+    }
+    
+  ]
+}
