@@ -29,9 +29,9 @@ spring:
           spring:
             issuer-uri: http://localhost:8080
         registration:
-          travel-booking-client:
+          client2:
             provider: spring
-            client-id: travel-booking-client
+            client-id: client2
             client-secret: secret
             authorization-grant-type: authorization_code
             scope: openid

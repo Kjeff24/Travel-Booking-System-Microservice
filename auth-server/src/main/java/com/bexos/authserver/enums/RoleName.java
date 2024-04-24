@@ -1,6 +1,7 @@
-package com.bexos.authserver.models;
+package com.bexos.authserver.enums;
 
-public enum Role {
-    USER,
+public enum RoleName {
+    BUSINESS,
+    CUSTOMER,
     ADMIN
 }

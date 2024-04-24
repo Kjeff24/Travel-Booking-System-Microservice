@@ -1,5 +1,6 @@
 package com.bexos.authserver.models;
 
+import com.bexos.authserver.enums.RoleName;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -12,6 +13,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -27,13 +29,13 @@ public class User implements UserDetails {
     @Indexed(unique = true)
     private String email;
     private String password;
-    private Role role;
+    private Set<Role> roles;
 
     private boolean enabled=false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return roles;
     }
 
     @Override

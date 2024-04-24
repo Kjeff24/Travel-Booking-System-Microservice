@@ -34,7 +34,7 @@ public class ClientService implements RegisteredClientRepository {
     @Override
     public RegisteredClient findByClientId(String clientId) {
         Client client = clientRepository.findByClientId(clientId)
-                .orElseThrow(() -> new RuntimeException("client not found"));
+                .orElseThrow(() -> new RuntimeException("client not found" + clientId));
         return Client.toRegisteredClient(client);
     }
 

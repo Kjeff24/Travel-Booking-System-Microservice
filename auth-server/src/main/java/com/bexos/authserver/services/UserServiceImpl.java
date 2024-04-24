@@ -5,11 +5,11 @@ import com.bexos.authserver.mappers.UserMapper;
 import com.bexos.authserver.models.ConfirmationToken;
 import com.bexos.authserver.models.User;
 import com.bexos.authserver.repositories.ConfirmationTokenRepository;
+import com.bexos.authserver.repositories.RoleRepository;
 import com.bexos.authserver.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -17,10 +17,9 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
-public class UserServiceImpl implements UserService{
+public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final UserMapper userMapper;
     private final ConfirmationTokenRepository confirmationTokenRepository;
     private final EmailService emailService;
