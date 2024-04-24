@@ -18,9 +18,9 @@ cd my_app
 ```
 npm install
 ```
-- Run server
+- Run server. Make port open 
 ```
-ng serve
+ng serve --host 0.0.0.0
 ```
 - Since product items is in `db.json`, install `json-server`
 ```

@@ -12,12 +12,18 @@ import { AccommodationComponent } from './pages/categories/accommodation/accommo
 import { HotelComponent } from './pages/categories/hotel/hotel.component';
 import { CarRentalComponent } from './pages/categories/car-rental/car-rental.component';
 import { FlightComponent } from './pages/categories/flight/flight.component';
+import { AuthorizedComponent } from './pages/authentication/authorized/authorized.component';
 
 export const routes: Routes = [
   {
     path: '',
     component: HomeComponent,
     title: 'ExcursionEase | Home',
+  },
+  {
+    path: 'login/oauth2/code/angular-client',
+    component: AuthorizedComponent,
+    title: 'ExcursionEase | Authorized',
   },
   {
     path: 'store',
@@ -78,5 +84,5 @@ export const routes: Routes = [
     path: 'store/category/flight',
     component: FlightComponent,
     title: 'ExcursionEase | Flight',
-  },
+  }
 ];

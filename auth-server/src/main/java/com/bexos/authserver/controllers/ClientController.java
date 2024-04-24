@@ -12,6 +12,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.server.authorization.client.RegisteredClient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/client")
 @RequiredArgsConstructor
@@ -31,5 +33,10 @@ public class ClientController {
         Client client = clientRepository.findByClientId(id)
                 .orElseThrow(() -> new RuntimeException("client not found (findById)"));
         return ResponseEntity.ok(client);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Client>> findAll() {
+        return ResponseEntity.ok(clientRepository.findAll());
     }
 }
