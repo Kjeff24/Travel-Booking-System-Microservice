@@ -40,16 +40,17 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/login']">Login</a>
+            <a class="nav-link btn" (click)="onLogin()">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" [routerLink]="['/signup']">Signup</a>
+            <a class="nav-link btn" [routerLink]="['/signup']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+              true}">Signup</a>
           </li>
         </ul>
         <a class="m-lg-3 text-decoration-none" [routerLink]="['/cart']" routerLinkActive="active">
           <img src="../assets/svg/cart.svg" alt="cart" />
           <span
-            class="text-dark position-relative top-0 start-0 translate-middle badge rounded-pill bg-light"
+            class="text-dark position-relative top-0 start-0 translate-middle badge rounded-pill bg-transparent border border-secondary"
             >6</span
           >
         </a>

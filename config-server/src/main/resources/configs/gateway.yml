@@ -28,13 +28,13 @@ spring:
         provider:
           spring:
             issuer-uri: http://localhost:8080
-        registration:
-          client2:
-            provider: spring
-            client-id: client2
-            client-secret: secret
-            authorization-grant-type: authorization_code
-            scope: openid
+#        registration:
+#          client2:
+#            provider: spring
+#            client-id: client2
+#            client-secret: secret
+#            authorization-grant-type: authorization_code
+#            scope: openid
 server:
   port: 8765
 # Generate a unique name for the instance

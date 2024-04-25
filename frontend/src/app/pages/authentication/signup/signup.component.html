@@ -1,7 +1,7 @@
 <section class="vh-100">
   <div class="container-fluid h-custom">
     <div class="row d-flex justify-content-center align-items-center h-100">
-      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+      <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 order-lg-1 order-md-2">
         <form>
           <div
             class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mt-3"
@@ -99,7 +99,7 @@
                 Remember me
               </label>
             </div>
-            <a href="#!" class="text-body">Forgot password?</a>
+            <a href="#!" class="text-body btn">Forgot password?</a>
           </div>
 
           <div class="text-center text-lg-start mt-4 pt-2">
@@ -115,12 +115,12 @@
             </button>
             <p class="small fw-bold mt-2 pt-1 mb-5">
               Already have an account?
-              <a [routerLink]="['/login']" class="link-danger">Login</a>
+              <a (click)="onLogin()" class="link-danger btn">Login</a>
             </p>
           </div>
         </form>
       </div>
-      <div class="col-md-9 col-lg-6 col-xl-5">
+      <div class="col-md-9 col-lg-6 col-xl-5 order-lg-2 order-md-1">
         <img
           src="../../assets/svg/travel_flip.svg"
           class="img-fluid"

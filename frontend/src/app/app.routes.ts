@@ -2,7 +2,6 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { LoginComponent } from './pages/authentication/login/login.component';
 import { CartComponent } from './pages/header/cart/cart.component';
 import { StoreComponent } from './pages/store/store.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
@@ -39,11 +38,6 @@ export const routes: Routes = [
     path: 'contact',
     component: ContactComponent,
     title: 'ExcursionEase | Contact',
-  },
-  {
-    path: 'login',
-    component: LoginComponent,
-    title: 'ExcursionEase | Login',
   },
   {
     path: 'signup',

@@ -27,7 +27,13 @@ import org.springframework.security.oauth2.server.authorization.token.OAuth2Toke
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.security.web.authentication.LoginUrlAuthenticationEntryPoint;
+import org.springframework.security.web.server.authentication.logout.DelegatingServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.SecurityContextServerLogoutHandler;
+import org.springframework.security.web.server.authentication.logout.WebSessionServerLogoutHandler;
 import org.springframework.security.web.util.matcher.MediaTypeRequestMatcher;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.security.KeyPair;
 import java.security.KeyPairGenerator;
@@ -49,12 +55,11 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
             throws Exception {
+        http.cors(Customizer.withDefaults());
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
         http
-                // Redirect to the OAuth 2.0 Login endpoint when not authenticated
-                // from the authorization endpoint
                 .exceptionHandling((exceptions) -> exceptions
                         .defaultAuthenticationEntryPointFor(
                                 new LoginUrlAuthenticationEntryPoint("/login"),
@@ -72,14 +77,24 @@ public class SecurityConfig {
     @Order(2)
     public SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
         http
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/api/v1/**").permitAll()
+                        .requestMatchers("/","/images/**", "/styles/**", "/confirm-account", "/login", "/register", "/logout", "/client").permitAll()
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 ->
-                        oauth2.successHandler(authenticationSuccessHandler()))
-                .formLogin(Customizer.withDefaults());
-        http.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers("/api/v1/**"));
+                        oauth2.successHandler(authenticationSuccessHandler())
+                                .loginPage("/login")
+                )
+                .formLogin(formLogin -> formLogin.loginPage("/login"));
+        http.logout((logout) -> logout
+                .logoutUrl("/logout")
+                .invalidateHttpSession(true)
+                .deleteCookies("JSESSIONID")
+                .clearAuthentication(true)
+                .logoutSuccessUrl("/login"));
+
+        http.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/client"));
         return http.build();
 
     }
@@ -106,7 +121,18 @@ public class SecurityConfig {
         return successHandler;
     }
 
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource(){
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        CorsConfiguration cors = new CorsConfiguration();
+        cors.addAllowedHeader("*");
+        cors.addAllowedMethod("*");
+        cors.setAllowCredentials(true);
+        cors.addAllowedOrigin("http://127.0.0.1:4200");
+        source.registerCorsConfiguration("/**", cors);
 
+        return source;
+    }
 
     @Bean
     public AuthorizationServerSettings authorizationServerSettings(){

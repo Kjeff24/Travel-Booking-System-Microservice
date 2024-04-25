@@ -17,7 +17,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 @Document(value = "Google Users")
 public class GoogleUser {
     @Id
-    private int id;
+    private String id;
     private String email;
     private String fullName;
     private String givenName;
@@ -37,7 +37,6 @@ public class GoogleUser {
     @Override
     public String toString() {
         return "GoogleUser{" +
-                "id=" + id +
                 ", email='" + email + '\'' +
                 ", name='" + fullName + '\'' +
                 ", givenName='" + givenName + '\'' +

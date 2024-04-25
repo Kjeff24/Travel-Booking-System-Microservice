@@ -12,5 +12,8 @@ import { RouterLink } from '@angular/router';
 })
 export class HomeComponent {
 
+  ngOnInit(): void{
+    console.log(btoa('angular-client:secret'))
+  }
 
 }
