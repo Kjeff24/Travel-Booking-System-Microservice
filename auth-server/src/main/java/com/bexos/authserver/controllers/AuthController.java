@@ -25,8 +25,8 @@ public class AuthController {
     }
 
     @GetMapping("/signup")
-    public ModelAndView signup() {
-        return new ModelAndView("signup");
+    public String signup() {
+        return "signup";
     }
 
 }
