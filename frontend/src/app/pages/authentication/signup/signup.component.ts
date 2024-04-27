@@ -2,10 +2,10 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
-import { Signup } from '../../models/signup';
+import { Signup } from '../../../models/signup';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from '../../../../environments/environment';
-import { Login } from '../../models/login';
+import { Login } from '../../../models/login';
 
 @Component({
   selector: 'app-signup',

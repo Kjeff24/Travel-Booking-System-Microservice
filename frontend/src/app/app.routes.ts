@@ -2,16 +2,17 @@ import { Routes } from '@angular/router';
 import { HomeComponent } from './pages/home/home.component';
 import { AboutComponent } from './pages/about/about.component';
 import { ContactComponent } from './pages/contact/contact.component';
-import { CartComponent } from './pages/header/cart/cart.component';
+import { CartComponent } from './pages/cart/cart.component';
 import { StoreComponent } from './pages/store/store.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
 import { SignupComponent } from './pages/authentication/signup/signup.component';
-import { AccommodationComponent } from './pages/categories/accommodation/accommodation.component';
-import { HotelComponent } from './pages/categories/hotel/hotel.component';
-import { CarRentalComponent } from './pages/categories/car-rental/car-rental.component';
-import { FlightComponent } from './pages/categories/flight/flight.component';
-import { AuthorizedComponent } from './pages/authentication/authorized/authorized.component';
+import { AccommodationComponent } from './components/accommodation/accommodation.component';
+import { HotelComponent } from './components/hotel/hotel.component';
+import { CarRentalComponent } from './components/car-rental/car-rental.component';
+import { FlightComponent } from './components/flight/flight.component';
+import { AuthorizedComponent } from './components/authorized/authorized.component';
+import { LogoutComponent } from './components/logout/logout.component';
 
 export const routes: Routes = [
   {
@@ -23,6 +24,12 @@ export const routes: Routes = [
     path: 'login/oauth2/code/angular-client',
     component: AuthorizedComponent,
     title: 'ExcursionEase | Authorized',
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent,
+    title: 'ExcursionEase | Logout'
+
   },
   {
     path: 'store',
