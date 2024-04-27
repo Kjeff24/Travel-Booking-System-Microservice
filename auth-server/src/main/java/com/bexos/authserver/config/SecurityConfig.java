@@ -4,6 +4,7 @@ import com.bexos.authserver.federated.FederatedIdentityAuthenticationSuccessHand
 import com.bexos.authserver.federated.GithubGoogleUserHandler;
 import com.bexos.authserver.repositories.GitHubUserRepository;
 import com.bexos.authserver.repositories.GoogleUserRepository;
+import com.bexos.authserver.repositories.UserRepository;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
 import com.nimbusds.jose.jwk.source.JWKSource;
@@ -40,6 +41,9 @@ import java.security.KeyPairGenerator;
 import java.security.NoSuchAlgorithmException;
 import java.security.interfaces.RSAPrivateKey;
 import java.security.interfaces.RSAPublicKey;
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+import java.util.Date;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -48,8 +52,7 @@ import java.util.stream.Collectors;
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig {
-    private final GitHubUserRepository gitHubUserRepository;
-    private final GoogleUserRepository googleUserRepository;
+    private final UserRepository userRepository;
 
     @Bean
     @Order(1)
@@ -76,10 +79,10 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
+        http.cors(Customizer.withDefaults());
         http
-                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/","/images/**", "/styles/**", "/confirm-account", "/login", "/register", "/logout", "/client").permitAll()
+                        .requestMatchers("/","/images/**", "/styles/**", "/confirm-account", "/login", "/register", "/signup","/logout", "/client/**").permitAll()
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 ->
@@ -92,11 +95,10 @@ public class SecurityConfig {
                 .invalidateHttpSession(true)
                 .deleteCookies("JSESSIONID")
                 .clearAuthentication(true)
-                .logoutSuccessUrl("/login"));
+                .logoutSuccessUrl("http://127.0.0.1:4200/logout"));
 
-        http.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/client"));
+        http.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
         return http.build();
-
     }
 
 
@@ -111,13 +113,15 @@ public class SecurityConfig {
                 context.getClaims().claim("token_type", "access token");
                 Set<String> roles = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
                 context.getClaims().claim("roles", roles).claim("username", principal.getName());
+                Instant expirationTime = Instant.now().plus(6, ChronoUnit.HOURS);
+                context.getClaims().expiresAt(Date.from(expirationTime).toInstant());
             }
         };
     }
 
     private AuthenticationSuccessHandler authenticationSuccessHandler() {
         FederatedIdentityAuthenticationSuccessHandler successHandler = new FederatedIdentityAuthenticationSuccessHandler();
-        successHandler.setOAuth2UserHandler(new GithubGoogleUserHandler(gitHubUserRepository, googleUserRepository ));
+        successHandler.setOAuth2UserHandler(new GithubGoogleUserHandler(userRepository));
         return successHandler;
     }
 

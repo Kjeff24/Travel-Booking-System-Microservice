@@ -16,12 +16,17 @@ public class AuthController {
 
     @GetMapping("/")
     public ModelAndView getUsers() {
-        return new ModelAndView("login.html");
+        return new ModelAndView("login");
     }
 
     @GetMapping("/logout")
-    public String logoutOK() {
-        return "logout";
+    public ModelAndView logoutOK() {
+        return new ModelAndView("logout");
+    }
+
+    @GetMapping("/signup")
+    public ModelAndView signup() {
+        return new ModelAndView("signup");
     }
 
 }

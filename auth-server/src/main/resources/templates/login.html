@@ -29,6 +29,12 @@
                      class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
+                <div th:if="${param.error}" class="alert alert-danger" role="alert">
+                    Bad Credentials
+                </div>
+                <div th:if="${param.logout}" class="alert alert-success" role="alert">
+                    You have logged out.
+                </div>
                 <form method="post" th:action="@{/login}">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mt-3">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>

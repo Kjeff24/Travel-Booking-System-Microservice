@@ -21,20 +21,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/bookings")
+@RequestMapping("/api/booking-service/bookings")
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:4200")
 public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;
 
+    @GetMapping("/all")
+    public ResponseEntity<List<Booking>> findAllBookings(){
+        return bookingServiceImpl.findAllBookings();
+    }
+
     @GetMapping("/hello")
     public String hello(){
         return "Hello from booker service";
-    }
-
-    @GetMapping
-    public ResponseEntity<List<Booking>> findAllBookings(){
-        return bookingServiceImpl.findAllBookings();
     }
 
     @GetMapping("/{id}")

@@ -10,6 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
 import java.util.List;
@@ -19,7 +20,7 @@ import java.util.Set;
 @Data
 @Builder
 @TypeAlias("User")
-@Document(value = "_user")
+@Document(value = "USERS")
 public class User implements UserDetails {
     @Id
     private String id;
@@ -30,6 +31,7 @@ public class User implements UserDetails {
     private String email;
     private String password;
     private Set<Role> roles;
+    private String pictureUrl;
 
     private boolean enabled=false;
 
@@ -61,5 +63,25 @@ public class User implements UserDetails {
     @Override
     public boolean isEnabled() {
         return enabled;
+    }
+
+    public static User fromOAuth2GithubUser(OAuth2User user){
+        return User.builder()
+                .email(user.getAttribute("email"))
+                .fullName(user.getAttribute("name"))
+                .username(user.getAttribute("login"))
+                .pictureUrl(user.getAttribute("avatar_url"))
+                .enabled(true)
+                .build();
+    }
+
+    public static User fromOauth2GoogleUser(OAuth2User user){
+        return User.builder()
+                .email(user.getAttributes().get("email").toString())
+                .fullName(user.getAttributes().get("name").toString())
+                .username(user.getAttributes().get("given_name").toString())
+                .pictureUrl(user.getAttributes().get("picture").toString())
+                .enabled(true)
+                .build();
     }
 }

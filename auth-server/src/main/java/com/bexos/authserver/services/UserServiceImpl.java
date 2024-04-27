@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
         ConfirmationToken emailConfirmationToken = confirmationTokenRepository.save(confirmationToken);
         emailService.sendEmail(createEmail(user, emailConfirmationToken));
 
-        return ResponseEntity.ok("Verify email by the link sent on your email address");
+        return ResponseEntity.ok("Verify email by the link sent to your email address");
     }
 
     public SimpleMailMessage createEmail(User user, ConfirmationToken confirmationToken) {
