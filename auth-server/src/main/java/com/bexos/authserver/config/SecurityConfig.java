@@ -53,7 +53,9 @@ public class SecurityConfig {
     @Order(1)
     public SecurityFilterChain authorizationServerSecurityFilterChain(HttpSecurity http)
             throws Exception {
-        http.cors(Customizer.withDefaults());
+        http
+                .cors(Customizer.withDefaults())
+                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
@@ -74,7 +76,9 @@ public class SecurityConfig {
     @Bean
     @Order(2)
     public SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults());
+        http
+                .cors(Customizer.withDefaults())
+                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
         http
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/","/images/**", "/styles/**", "/confirm-account", "/login", "/register", "/signup","/logout", "/client/**").permitAll()
@@ -92,7 +96,7 @@ public class SecurityConfig {
                 .clearAuthentication(true)
                 .logoutSuccessUrl("http://127.0.0.1:4200/logout"));
 
-        http.csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
+
         return http.build();
     }
 

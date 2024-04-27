@@ -20,10 +20,9 @@ spring:
       routes[0]:
         id: booking-service
         uri: lb://booking-service
-        predicates[0]: Path=/api/bookings/**
-        predicates[1]: Path=/api/categories/**
+        predicates[0]: Path=/api/booking-service/**
       # Enable token relay - Pass the successful authenticated token from keycloak server to downstream APIs
-#      default-filters: TokenRelay
+      default-filters: TokenRelay
     # Below property tells API Gateway to work in a load balanced mode
     loadbalancer:
       enabled: true
@@ -34,19 +33,19 @@ spring:
       resourceserver:
         jwt:
           jwk-set-uri: http://localhost:8080/oauth2/jwks
-#      client:
-#        provider:
-#          spring:
-#            issuer-uri: http://localhost:8080
-#        registration:
-#          client2:
-#            provider: spring
-#            client-id: client2
-#            client-secret: secret
-#            authorization-grant-type: authorization_code
+      client:
+        provider:
+          spring:
+            issuer-uri: http://localhost:8080
+        registration:
+          gateway-client:
+            provider: spring
+            client-id: gateway-client
+            client-secret: secret
+            authorization-grant-type: authorization_code
 #            client-authentication-method: client_secret_basic
-#            scope: openid
-#            redirect-uri: "{baseUrl}/login/oauth2/code/{registrationId}"
+            scope: openid, profile
+            redirect-uri: http://127.0.0.1:8765/login/oauth2/code/gateway-client
 server:
   port: 8765
 # Generate a unique name for the instance
