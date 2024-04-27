@@ -6,7 +6,6 @@ import { CartComponent } from './pages/cart/cart.component';
 import { StoreComponent } from './pages/store/store.component';
 import { ThankyouComponent } from './pages/thankyou/thankyou.component';
 import { CheckoutComponent } from './pages/checkout/checkout.component';
-import { SignupComponent } from './pages/authentication/signup/signup.component';
 import { AccommodationComponent } from './components/accommodation/accommodation.component';
 import { HotelComponent } from './components/hotel/hotel.component';
 import { CarRentalComponent } from './components/car-rental/car-rental.component';
@@ -45,11 +44,6 @@ export const routes: Routes = [
     path: 'contact',
     component: ContactComponent,
     title: 'ExcursionEase | Contact',
-  },
-  {
-    path: 'signup',
-    component: SignupComponent,
-    title: 'ExcursionEase | Register',
   },
   {
     path: 'cart',

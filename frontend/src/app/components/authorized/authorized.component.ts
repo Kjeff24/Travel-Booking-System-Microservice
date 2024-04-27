@@ -22,12 +22,14 @@ export class AuthorizedComponent implements OnInit {
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe((data) => {
       this.code = data['code'];
-      this.getToken();
+      const code_verifier = this.tokenService.getCodeVerifier();
+      this.tokenService.deleteVerifier();
+      this.getToken(this.code, code_verifier);
     });
   }
 
-  getToken(): void {
-    this.authService.getToken(this.code).subscribe({
+  getToken(code: string, code_verifier: string): void {
+    this.authService.getToken(code, code_verifier).subscribe({
       next: (data) => {
         this.tokenService.setTokens(
           data['access_token'],
@@ -40,14 +42,6 @@ export class AuthorizedComponent implements OnInit {
       },
     });
   }
-  // async getToken(): Promise<void> {
-  //   try {
-  //     const data = await this.authService.getToken(this.code).toPromise();
-  //     this.tokenService.setTokens(data['access_token'], data['refresh_token']);
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
   
 
 

@@ -40,14 +40,14 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link login-pointer" *ngIf="!isLoggedIn"  (click)="onLogin()">Login</a>
+            <a class="nav-link click-pointer" *ngIf="!isLoggedIn"  (click)="onLogin()">Login</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" *ngIf="!isLoggedIn"  [routerLink]="['/signup']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            <a class="nav-link click-pointer" *ngIf="!isLoggedIn"  (click)="onSignUp()" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
               true}">Signup</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link login-pointer" *ngIf="isLoggedIn" (click)="onLogout()">Log out</a>
+            <a class="nav-link click-pointer" *ngIf="isLoggedIn" (click)="onLogout()">Log out</a>
           </li>
         </ul>
         <a class="m-lg-3 text-decoration-none" [routerLink]="['/cart']" routerLinkActive="active">
