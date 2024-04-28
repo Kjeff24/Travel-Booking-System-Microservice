@@ -1,4 +1,4 @@
-package com.bexos.bookingservice.models;
+package com.bexos.categoryservice.models;
 
 public enum CategoryCode {
     ACC,

@@ -23,7 +23,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/booking-service/bookings")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;

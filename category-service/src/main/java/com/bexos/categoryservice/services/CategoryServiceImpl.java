@@ -1,9 +1,9 @@
-package com.bexos.bookingservice.services;
+package com.bexos.categoryservice.services;
 
-import com.bexos.bookingservice.dto.CategoryRequest;
-import com.bexos.bookingservice.models.Category;
-import com.bexos.bookingservice.models.CategoryCode;
-import com.bexos.bookingservice.repositories.CategoryRepository;
+import com.bexos.categoryservice.dto.CategoryRequest;
+import com.bexos.categoryservice.models.Category;
+import com.bexos.categoryservice.models.CategoryCode;
+import com.bexos.categoryservice.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.http.HttpStatus;

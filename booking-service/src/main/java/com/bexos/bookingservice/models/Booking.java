@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 @Data
-@TypeAlias("Booking")
+@TypeAlias("BOOKING")
 @Document
 public abstract class Booking implements Serializable {
     @Id

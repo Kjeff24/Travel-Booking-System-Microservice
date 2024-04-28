@@ -1,9 +1,9 @@
-package com.bexos.bookingservice.controllers;
+package com.bexos.categoryservice.controllers;
 
-import com.bexos.bookingservice.dto.CategoryRequest;
-import com.bexos.bookingservice.models.Category;
-import com.bexos.bookingservice.models.CategoryCode;
-import com.bexos.bookingservice.services.CategoryServiceImpl;
+import com.bexos.categoryservice.dto.CategoryRequest;
+import com.bexos.categoryservice.models.Category;
+import com.bexos.categoryservice.models.CategoryCode;
+import com.bexos.categoryservice.services.CategoryServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
@@ -14,12 +14,17 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/booking-service/categories")
+@RequestMapping("/api/category-service/categories")
 @RequiredArgsConstructor
-@CrossOrigin(origins = "http://localhost:4200")
+//@CrossOrigin(origins = "http://localhost:4200")
 public class CategoryController {
 
     private final CategoryServiceImpl categoryServiceImpl;
+
+    @GetMapping("/hello")
+    public String hello(){
+        return "Hello fron category controller";
+    }
 
     @GetMapping("/all")
     public ResponseEntity<List<Category>> findAllCategories() {

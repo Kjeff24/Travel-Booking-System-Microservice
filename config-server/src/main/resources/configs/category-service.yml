@@ -1,13 +1,13 @@
 spring:
-  application.name: booking-service
+  application.name: category-service
   data.mongodb:
     authentication-database: admin
     username: root
     password: password
-    database: booking-service
+    database: category-service
     port: 27017
     host: localhost
-# RabbitMQ config
+  # RabbitMQ config
   rabbitmq:
     host: localhost
     port: 5672

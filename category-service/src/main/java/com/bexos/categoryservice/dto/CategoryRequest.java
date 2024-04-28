@@ -1,6 +1,5 @@
-package com.bexos.bookingservice.dto;
+package com.bexos.categoryservice.dto;
 
-import com.bexos.bookingservice.models.CategoryCode;
 import jakarta.validation.constraints.NotEmpty;
 
 public record CategoryRequest(

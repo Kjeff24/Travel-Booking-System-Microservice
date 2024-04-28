@@ -1,8 +1,8 @@
-package com.bexos.bookingservice.services;
+package com.bexos.categoryservice.services;
 
-import com.bexos.bookingservice.dto.CategoryRequest;
-import com.bexos.bookingservice.models.Category;
-import com.bexos.bookingservice.models.CategoryCode;
+import com.bexos.categoryservice.dto.CategoryRequest;
+import com.bexos.categoryservice.models.Category;
+import com.bexos.categoryservice.models.CategoryCode;
 import org.bson.types.ObjectId;
 import org.springframework.http.ResponseEntity;
 

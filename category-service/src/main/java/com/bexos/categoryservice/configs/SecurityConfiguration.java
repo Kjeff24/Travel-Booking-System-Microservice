@@ -1,4 +1,4 @@
-package com.bexos.bookingservice.configs;
+package com.bexos.categoryservice.configs;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -18,7 +18,7 @@ public class SecurityConfiguration {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/booking-service/bookings/all").permitAll()
+                        .requestMatchers("/api/category-service/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
