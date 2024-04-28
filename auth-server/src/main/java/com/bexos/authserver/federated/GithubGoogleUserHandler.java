@@ -15,13 +15,13 @@ public final class GithubGoogleUserHandler implements Consumer<OAuth2User> {
     public void accept(OAuth2User user) {
         // Capture user in a database on first authentication
         if (user.getAttributes().containsKey("login")) {
-            if(userRepository.findByUsername(user.getAttribute("login")).isEmpty()){
+            if(userRepository.findByEmailIgnoreCase(user.getAttribute("login")).isEmpty() && !userRepository.existsByEmailIgnoreCase(user.getAttribute("email"))){
                 User gitHubUser = User.fromOAuth2GithubUser(user);
                 System.out.println(gitHubUser.toString());
                 this.userRepository.save(gitHubUser);
             }
         }
-        else if (userRepository.findByEmail(user.getAttribute("email")).isEmpty()) {
+        else if (userRepository.findByEmailIgnoreCase(user.getAttribute("email")).isEmpty() && !userRepository.existsByUsernameIgnoreCase(user.getAttribute("email"))) {
             User googleUser = User.fromOauth2GoogleUser(user);
             System.out.println(googleUser.toString());
             this.userRepository.save(googleUser);

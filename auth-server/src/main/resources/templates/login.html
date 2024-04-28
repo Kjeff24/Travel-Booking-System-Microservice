@@ -30,7 +30,7 @@
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
                 <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                    Bad Credentials
+                    <p class="text-center">Bad Credentials</p>
                 </div>
                 <div th:if="${param.logout}" class="alert alert-success" role="alert">
                     You have logged out.
@@ -38,15 +38,15 @@
                 <form method="post" th:action="@{/login}">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mt-3">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                class="btn btn-outline-dark btn-floating mx-1">
+                        <a href="/oauth2/authorization/google" type="button" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-outline-secondary btn-floating mx-1">
                             <img src="/images/google.svg" alt="google">
-                        </button>
+                        </a>
 
-                        <button type="button" data-mdb-button-init data-mdb-ripple-init
-                                class="btn btn-outline-dark btn-floating mx-1">
+                        <a href="/oauth2/authorization/github" type="button" data-mdb-button-init data-mdb-ripple-init
+                                class="btn btn-outline-secondary btn-floating mx-1">
                             <img src="/images/github.svg" alt="github">
-                        </button>
+                        </a>
                     </div>
 
                     <div class="divider d-flex align-items-center my-4">
@@ -75,20 +75,7 @@
                         <button data-mdb-button-init data-mdb-ripple-init class="btn btn-dark btn-lg "
                                 style="padding-left: 2.5rem; padding-right: 2.5rem;" type="submit">Login
                         </button>
-                        <br>
-                        <a class="btn btn-light btn-block bg-white" href="/oauth2/authorization/google" role="link"
-                           style="text-transform: none;">
-                            <img width="20" style="margin-right: 5px;" alt="Sign in with Google"
-                                 src="/images/google.svg"/>
-                            Sign in with Google
-                        </a>
-                        <a> </a>
-                        <a class="btn btn-light btn-block bg-white" href="/oauth2/authorization/github" role="link"
-                           style="text-transform: none;">
-                            <img width="20" style="margin-right: 5px;" alt="Sign in with Github"
-                                 src="/images/github.svg"/>
-                            Sign in with GitHub
-                        </a>
+
                         <p class="small fw-bold mt-2 pt-1 mb-5">Don't have an account?
                             <a  class="link-danger text-decoration-none" th:href="@{/signup}">Register</a>
                         </p>

@@ -1,8 +1,10 @@
 package com.bexos.authserver.models;
 
 import com.bexos.authserver.enums.RoleName;
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.mongodb.core.index.Indexed;
@@ -33,7 +35,7 @@ public class User implements UserDetails {
     private Set<Role> roles;
     private String pictureUrl;
 
-    private boolean enabled=false;
+    private boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

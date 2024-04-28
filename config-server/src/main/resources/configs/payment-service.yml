@@ -1,0 +1,29 @@
+spring:
+  application.name: payment-service
+  data.mongodb:
+    authentication-database: admin
+    username: root
+    password: password
+    database: payment-service
+    port: 27017
+    host: localhost
+  # RabbitMQ config
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: guest
+    password: guest
+
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: http://localhost:8080/oauth2/jwks
+eureka:
+  instance:
+    hostname: localhost
+    instance-id: ${spring.application.name}:${random.uuid}
+
+server.port: 0
+# Below property will enable us to access the /actuator/refresh endpoint
+management.endpoints.web.exposure.include: "*"

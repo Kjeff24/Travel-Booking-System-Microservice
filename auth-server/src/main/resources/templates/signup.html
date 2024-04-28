@@ -25,31 +25,21 @@
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 order-lg-1 order-md-2">
-                <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                    ${param.error}
+                <div th:if="${registration_error}" class="alert alert-danger" role="alert">
+                    <p class="text-center" th:text="${registration_error}"></p>
                 </div>
-                <form method="post" th:action="@{/signup}">
-                    <div
-                            class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mt-3"
-                    >
+                <form method="POST" th:action="@{/signup}" th:object="${user}">
+                    <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">
                         <p class="lead fw-normal mb-0 me-3">Sign up with</p>
-                        <button
-                                type="button"
-                                data-mdb-button-init
-                                data-mdb-ripple-init
-                                class="btn btn-outline-dark btn-floating mx-1"
-                        >
+                        <a href="/oauth2/authorization/google" type="button" data-mdb-button-init data-mdb-ripple-init
+                           class="btn btn-outline-secondary btn-floating mx-1">
                             <img src="/images/google.svg" alt="google">
-                        </button>
+                        </a>
 
-                        <button
-                                type="button"
-                                data-mdb-button-init
-                                data-mdb-ripple-init
-                                class="btn btn-outline-dark btn-floating mx-1"
-                        >
-                            <img src="/images/github.svg" alt="google">
-                        </button>
+                        <a href="/oauth2/authorization/github" type="button" data-mdb-button-init data-mdb-ripple-init
+                           class="btn btn-outline-secondary btn-floating mx-1">
+                            <img src="/images/github.svg" alt="github">
+                        </a>
                     </div>
 
                     <div class="divider d-flex align-items-center my-4">
@@ -60,13 +50,13 @@
                     <div data-mdb-input-init class="form-outline mb-4">
                         <input
                                 type="text"
-                                id="fullname"
+                                id="fullName"
                                 class="form-control form-control-lg"
                                 placeholder="Enter full name"
-                                name="fullname"
+                                th:field="*{fullName}"
                                 required
                         />
-                        <label class="form-label" for="fullname">Full name</label>
+                        <label class="form-label" for="fullName">Full name</label>
                     </div>
 
                     <!-- Email input -->
@@ -76,7 +66,7 @@
                                 id="username"
                                 class="form-control form-control-lg"
                                 placeholder="Enter username"
-                                name="username"
+                                th:field="*{username}"
                                 required
                         />
                         <label class="form-label" for="username">Username</label>
@@ -89,7 +79,7 @@
                                 id="email"
                                 class="form-control form-control-lg"
                                 placeholder="Enter a valid email address"
-                                name="email"
+                                th:field="*{email}"
                                 required
                         />
                         <label class="form-label" for="email">Email address</label>
@@ -102,13 +92,12 @@
                                 id="password"
                                 class="form-control form-control-lg"
                                 placeholder="Enter password"
-                                name="password"
-                                required
+                                th:field="*{password}" required
                         />
                         <label class="form-label" for="password">Password</label>
                     </div>
 
-                    <div class="text-center text-lg-start mt-4 pt-2">
+                    <div class="text-center text-lg-start mt-4 pt-2 ">
                         <button
                                 type="submit"
                                 data-mdb-button-init

@@ -1,0 +1,30 @@
+Bootstrap in spring boot
+After changes are made in config files
+send post to /actuator/refresh from you specific service(server) to refresh you server with the latest update
+All services have been configured with RabbitMQ:
+    Send post to actuator/busrefresh from any service(server) to refresh your server with the latest update
+
+Set vault address in environment variable:
+    variable name: VAULT_ADDR
+    variable path: http://127.0.0.1:8200
+
+Command to start vault server in dev mode:
+    vault server --dev --dev-root-token-id="00000000-0000-0000-0000-000000000000"
+
+Command to wrtie to vault:
+    vault kv put secret/<directory-name> @<file-name-with-path>
+    Example: vault kv put secret/booking-service @booking-service.json
+
+Command to read from vault:
+    vault kv get secret/<directory-name>
+    Example: vault kv get secret/booking-service
+
+Command to setup vault in docker:
+    docker pull vault:1.13.3
+    docker run --name vault --cap-add=IPC_LOCK -e 'VAULT_DEV_ROOT_TOKEN_ID=<your_token>' -p 8200:8200 vault:1.13.3
+
+Command to start RabbitMQ in docker:
+    docker run --name rabbitmq -p 5672:5672 -p 15672:15672 rabbitmq:3.13-management
+
+Command to start keycloak in docker:
+    docker run --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=<admin> -e KEYCLOAK_ADMIN_PASSWORD=<admin_password> quay.io/keycloak/keycloak:24.0.2 start-dev

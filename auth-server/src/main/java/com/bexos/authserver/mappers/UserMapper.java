@@ -1,5 +1,6 @@
 package com.bexos.authserver.mappers;
 
+import com.bexos.authserver.dto.FormRegisterDto;
 import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.enums.RoleName;
 import com.bexos.authserver.models.Role;
@@ -32,6 +33,20 @@ public class UserMapper {
                 .email(request.email())
                 .roles(roles)
                 .password(passwordEncoder.encode(request.password()))
+                .build();
+    }
+
+    public User registerUser(FormRegisterDto user){
+        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(customerRole);
+        return User.builder()
+                .fullName(user.getFullName())
+                .username(user.getUsername())
+                .email(user.getEmail())
+                .roles(roles)
+                .password(passwordEncoder.encode(user.getPassword()))
+//                .enabled(false)
                 .build();
     }
 

@@ -1,5 +1,6 @@
 package com.bexos.authserver.controllers;
 
+import com.bexos.authserver.dto.ChangePasswordRequest;
 import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
@@ -23,5 +24,11 @@ public class UserController {
     ){
         return ResponseEntity.ok(userService.register(request));
     }
+
+    @PostMapping("/change-password")
+    public ResponseEntity<?> changePassword(ChangePasswordRequest request){
+        return userService.changePassword(request);
+    }
+
 
 }
