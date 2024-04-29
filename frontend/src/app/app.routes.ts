@@ -34,6 +34,28 @@ export const routes: Routes = [
     path: 'store',
     component: StoreComponent,
     title: 'ExcursionEase | Store',
+    children: [
+      {
+        path: 'category/accommodation/:id',
+        component: AccommodationComponent,
+        title: 'ExcursionEase | Accommodation',
+      },
+      {
+        path: 'category/hotel/:id',
+        component: HotelComponent,
+        title: 'ExcursionEase | Hotel',
+      },
+      {
+        path: 'category/car-rental/:id',
+        component: CarRentalComponent,
+        title: 'ExcursionEase | Car Rental',
+      },
+      {
+        path: 'category/flight/:id',
+        component: FlightComponent,
+        title: 'ExcursionEase | Flight',
+      }
+    ]
   },
   {
     path: 'about',
@@ -60,24 +82,24 @@ export const routes: Routes = [
     component: CheckoutComponent,
     title: 'ExcursionEase | Checkout',
   },
-  {
-    path: 'store/category/accommodation',
-    component: AccommodationComponent,
-    title: 'ExcursionEase | Accommodation',
-  },
-  {
-    path: 'store/category/hotel',
-    component: HotelComponent,
-    title: 'ExcursionEase | Hotel',
-  },
-  {
-    path: 'store/category/car-rental',
-    component: CarRentalComponent,
-    title: 'ExcursionEase | Car Rental',
-  },
-  {
-    path: 'store/category/flight',
-    component: FlightComponent,
-    title: 'ExcursionEase | Flight',
-  }
+  // {
+  //   path: 'store/category/accommodation/:id',
+  //   component: AccommodationComponent,
+  //   title: 'ExcursionEase | Accommodation',
+  // },
+  // {
+  //   path: 'store/category/hotel/:id',
+  //   component: HotelComponent,
+  //   title: 'ExcursionEase | Hotel',
+  // },
+  // {
+  //   path: 'store/category/car-rental/:id',
+  //   component: CarRentalComponent,
+  //   title: 'ExcursionEase | Car Rental',
+  // },
+  // {
+  //   path: 'store/category/flight/:id',
+  //   component: FlightComponent,
+  //   title: 'ExcursionEase | Flight',
+  // }
 ];

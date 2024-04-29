@@ -28,42 +28,21 @@
   object-fit: cover;
 }
 
-/* Hover effects */
-.card {
-  transition: -webkit-transform 0.3s ease;
-}
-.card:hover {
-  transform: scale(1.01, 1.01);
-}
-
-/* Responsive design for image heights */
 @media (min-width: 576px) {
-  .card-img-top {
-    height: 50vw;
-  }
   .site-block-cover {
     height: 250px;
   }
 }
 
 @media (min-width: 768px) {
-  .card-img-top {
-    height: 30vw;
-  }
   .site-block-cover {
     height: 400px;
   }
 }
 
 @media (min-width: 992px) {
-  .card-img-top {
-    height: 20vw;
-  }
 }
 
 @media (min-width: 1200px) {
-  .card-img-top {
-    height: 20vw;
-  }
 }
 

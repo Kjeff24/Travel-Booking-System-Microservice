@@ -1,4 +1,4 @@
-export interface BookingItem{
+export interface AccommodationItem{
     id: string,
     location: string,
     type: string,

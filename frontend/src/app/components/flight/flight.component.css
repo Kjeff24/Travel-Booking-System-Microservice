@@ -1,0 +1,44 @@
+.booking-category-container {
+    margin: 5px;
+  }
+  
+  
+  .booking-title {
+    margin-top: 10px;
+  }
+  
+  .item {
+    background-color: #fff;
+  }
+  
+  .item .booking-title {
+    font-size: 14px;
+    padding: 8px 0;
+  }
+  
+  .item .booking-title span {
+    float: right;
+    font-weight: bold;
+  }
+  
+  .item .description {
+    font-size: 12px;
+  }
+  
+  .booking-category-card {
+    transition: -webkit-transform 0.3s ease;
+    background-color: rgba(185, 185, 185, 0.068);
+    height: 150px;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 7px -8px 11px -8px rgba(97,97,97,0.75);
+    -webkit-box-shadow: 7px -8px 11px -8px rgba(97,97,97,0.75);
+    -moz-box-shadow: 7px -8px 11px -8px rgba(97,97,97,0.75);
+  }
+  
+  .booking-category-card:hover{
+      
+    transform: scale(1.01, 1.01);
+  }
+  

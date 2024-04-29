@@ -9,7 +9,7 @@ import { environment } from '../../../environments/environment';
 export class ResourceService {
 
   
-  bookingServiceUrl = environment.booking_service_url
+  bookingServiceUrl = environment.gateway_url
 
   constructor(private httpClient: HttpClient) { }
 

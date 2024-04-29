@@ -1,1 +1,35 @@
-<p>flight works!</p>
+<div class="d-flex  justify-content-between align-items-center">
+    <h6 class="ms-2">Flight</h6>
+    <form class="d-flex" action="" method="GET">
+        <input
+          class="form-control"
+          type="text"
+          placeholder="Search for items..."
+          name="q"
+          aria-label="Search"
+        />
+        <button class="btn btn-outline-dark" type="submit" >Search</button>
+      </form>
+    </div>
+<div class="row booking-category-container ">
+  <div
+    class="col-sm-3 item"
+    data-price="1"
+    *ngFor="let flightItem of flightItemList"
+  >
+    <div class="booking-category-card d-flex flex-column">
+      <div>
+        <div class="booking-title">
+          {{ flightItem.date }}
+          <span>$ {{ flightItem.price }}</span>
+        </div>
+        <div class="description">
+          {{ flightItem.departureCity }} | {{ flightItem.destinationCity }}
+        </div>
+      </div>
+      <button class="btn btn-outline-dark mt-auto text-nowrap">
+        <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
+      </button>
+    </div>
+  </div>
+</div>

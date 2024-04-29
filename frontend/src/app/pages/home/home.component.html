@@ -12,7 +12,7 @@
         </h2>
         <h1 class="text-light">Welcome To ExcursionEase</h1>
         <p>
-          <a [routerLink]="['/store']" class="btn btn-dark px-3 py-2"
+          <a [routerLink]="['/store/category/accommodation', accomodationId]" class="btn btn-dark px-3 py-2"
             >Book Now</a
           >
         </p>
@@ -22,13 +22,16 @@
   <!-- Site-block-ends -->
   <!-- Business categories  -->
 
-  <h1 class="text-center pt-2">Booking Categories</h1>
+  <h3 class="text-center pt-2">Booking Categories</h3>
   <!-- Categories card  -->
   <!-- <h1>{{categoryItemList}}</h1> -->
-  <app-category-card
-  *ngFor="let categoryItem of categoryItemList"
-          [categoryItem]="categoryItem"
-  ></app-category-card>
-  
+  <div class="row p-2">
+    <app-category-card
+      *ngFor="let categoryItem of categoryItemList"
+      [categoryItem]="categoryItem"
+      class="col-md-4 col-lg-3 col-sm-12"
+    ></app-category-card>
+  </div>
+
   <app-footer></app-footer>
 </div>

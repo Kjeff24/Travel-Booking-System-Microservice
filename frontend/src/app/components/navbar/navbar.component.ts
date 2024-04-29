@@ -6,6 +6,8 @@ import { HttpParams } from '@angular/common/http';
 import { TokenService } from '../../services/token/token.service';
 import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
+import { CategoryService } from '../../services/category/category.service';
+import { CategoryItem } from '../../models/category-item';
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -22,6 +24,8 @@ export class NavbarComponent implements OnInit {
   logout_uri = environment.logout_url;
   isLoggedIn: boolean;
   isAdmin: boolean;
+  categoryItemList!: CategoryItem[];
+  accomodationId!: string;
 
   params: any = {
     client_id: environment.client_id,
@@ -35,11 +39,19 @@ export class NavbarComponent implements OnInit {
   loginObj: Login;
 
   constructor(
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private categoryService: CategoryService
   ){}
 
   ngOnInit(): void {
     this.getLogged();
+    this.categoryService.getAllCategory().subscribe({
+      next: (data: CategoryItem[]) => {
+        console.log('Data received');
+        this.categoryItemList = data;
+        this.accomodationId = this.categoryItemList[0].id;
+      },
+    })
   }
 
   onSignUp(): void{
@@ -84,6 +96,5 @@ export class NavbarComponent implements OnInit {
     .replace(/\//g, '_');
     return code_challenge;
   }
-
 
 }
