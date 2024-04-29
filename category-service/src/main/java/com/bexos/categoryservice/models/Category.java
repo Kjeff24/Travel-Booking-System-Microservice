@@ -9,7 +9,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Data
 @Builder
 @TypeAlias("Category")
-@Document(value = "CATEGORY")
+@Document(value = "Category")
 public class Category {
     @Id
     private String id;

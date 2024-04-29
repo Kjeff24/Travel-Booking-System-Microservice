@@ -16,7 +16,9 @@ public class SecurityConfiguration {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors(Customizer.withDefaults());
+        http
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/payment-service/**").permitAll()
                         .anyRequest().authenticated())

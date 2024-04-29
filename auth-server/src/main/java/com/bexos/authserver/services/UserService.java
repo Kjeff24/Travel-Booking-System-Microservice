@@ -7,5 +7,5 @@ import org.springframework.http.ResponseEntity;
 public interface UserService {
     ResponseEntity<?> register(RegisterRequestDto request);
 
-    ResponseEntity<String> changePassword(ChangePasswordRequest request);
+    ResponseEntity<?> changePassword(ChangePasswordRequest request);
 }

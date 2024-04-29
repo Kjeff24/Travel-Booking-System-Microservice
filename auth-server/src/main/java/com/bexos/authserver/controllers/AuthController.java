@@ -48,7 +48,7 @@ public class AuthController {
         } else if (userRepository.existsByUsernameIgnoreCase(user.getUsername())) {
             model.addAttribute("registration_error", "User with this username already exists.");
 
-        } else if (!userServiceImpl.isValidPassword(user.getPassword())) {
+        } else if (!userServiceImpl.isStrongPassword(user.getPassword())) {
             model.addAttribute(
                     "registration_error",
                     "Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");

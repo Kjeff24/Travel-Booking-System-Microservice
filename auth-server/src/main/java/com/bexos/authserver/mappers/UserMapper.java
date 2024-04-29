@@ -46,7 +46,6 @@ public class UserMapper {
                 .email(user.getEmail())
                 .roles(roles)
                 .password(passwordEncoder.encode(user.getPassword()))
-//                .enabled(false)
                 .build();
     }
 

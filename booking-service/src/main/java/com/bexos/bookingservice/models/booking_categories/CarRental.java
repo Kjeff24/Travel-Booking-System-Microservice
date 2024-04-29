@@ -10,7 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @EqualsAndHashCode(callSuper = true)
 @Data
 @Builder
-@TypeAlias("CarRental")
+@TypeAlias("CarRentalRepository")
 @Document
 public class CarRental extends Booking {
     private String carType;

@@ -10,6 +10,7 @@ import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
 import com.bexos.bookingservice.models.booking_categories.Hotel;
+import com.bexos.bookingservice.repositories.AccommodationRepository;
 import com.bexos.bookingservice.services.BookingServiceImpl;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -28,42 +29,58 @@ public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;
 
-    @GetMapping("/all")
-    public ResponseEntity<List<Booking>> findAllBookings(){
-        return bookingServiceImpl.findAllBookings();
-    }
+//    @GetMapping("/all")
+//    public ResponseEntity<List<Booking>> findAllBookings(){
+//        return bookingServiceImpl.findAllBookings();
+//    }
+//
+//    @GetMapping("/hello")
+//    public String hello(){
+//        return "Hello from booker service";
+//    }
+//
+//    @GetMapping("/{id}")
+//    public ResponseEntity<Booking> findBookingById(@PathVariable ObjectId id){
+//        return bookingServiceImpl.findBookingById(id);
+//    }
 
-    @GetMapping("/hello")
-    public String hello(){
-        return "Hello from booker service";
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<Booking> findBookingById(@PathVariable ObjectId id){
-        return bookingServiceImpl.findBookingById(id);
+    @GetMapping("/accommodation")
+    public ResponseEntity<List<Accommodation>> findAllAccommodations() {
+        return bookingServiceImpl.findAllAccommodations();
     }
 
     @PostMapping("/accommodation")
     public ResponseEntity<Accommodation> createAccommodationOffer(@Valid @RequestBody AccommodationRequest accommodationRequest) {
-        Accommodation booking = bookingServiceImpl.createBookingOffer(bookingMapper.toAccommodation(accommodationRequest));
-        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        return bookingServiceImpl.createAccommodationOffer(accommodationRequest);
+    }
+
+    @GetMapping("/hotel")
+    public ResponseEntity<List<Hotel>> findAllHotels() {
+        return bookingServiceImpl.findAllHotels();
     }
 
     @PostMapping("/hotel")
     public ResponseEntity<Hotel> createHotelOffer(@Valid @RequestBody HotelRequest hotelRequest) {
-        Hotel booking = bookingServiceImpl.createBookingOffer(bookingMapper.toHotel(hotelRequest));
-        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        return bookingServiceImpl.createHotelOffer(hotelRequest);
+    }
+
+    @GetMapping("/flight")
+    public ResponseEntity<List<Flight>> findAllFlights() {
+        return bookingServiceImpl.findAllFlights();
     }
 
     @PostMapping("/flight")
     public ResponseEntity<Flight> createFlightOffer(@Valid @RequestBody FlightRequest flightRequest) {
-        Flight booking = bookingServiceImpl.createBookingOffer(bookingMapper.toFlight(flightRequest));
-        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        return bookingServiceImpl.createFlightOffer(flightRequest);
+    }
+
+    @GetMapping("/car-rental")
+    public ResponseEntity<List<CarRental>> findAllCarRentals() {
+        return bookingServiceImpl.findAllCarRentals();
     }
 
     @PostMapping("/car-rental")
     public ResponseEntity<CarRental> createCarRentalOffer(@Valid @RequestBody CarRentalRequest carRentalRequest) {
-        CarRental booking = bookingServiceImpl.createBookingOffer(bookingMapper.toCarRental(carRentalRequest));
-        return new ResponseEntity<>(booking, HttpStatus.CREATED);
+        return bookingServiceImpl.createCarRentalOffer(carRentalRequest);
     }
 }

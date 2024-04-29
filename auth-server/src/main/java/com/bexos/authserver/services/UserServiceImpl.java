@@ -3,7 +3,6 @@ package com.bexos.authserver.services;
 import com.bexos.authserver.dto.ChangePasswordRequest;
 import com.bexos.authserver.dto.FormRegisterDto;
 import com.bexos.authserver.dto.RegisterRequestDto;
-import com.bexos.authserver.enums.RoleName;
 import com.bexos.authserver.mappers.UserMapper;
 import com.bexos.authserver.models.ConfirmationToken;
 import com.bexos.authserver.models.User;
@@ -55,13 +54,14 @@ public class UserServiceImpl implements UserService {
         return ResponseEntity.ok("Verify email by the link sent to your email address");
     }
 
-    public ResponseEntity<String> changePassword(ChangePasswordRequest request) {
+
+    public ResponseEntity<?> changePassword(ChangePasswordRequest request) {
         Optional<User> user = userRepository.findById(request.userId());
         if (user.isEmpty()) {
             return ResponseEntity.badRequest().body("Error: User not found!");
         }
 
-        if(!isValidPassword(request.newPassword())){
+        if(!isStrongPassword(request.newPassword())){
             return ResponseEntity.badRequest().body("New Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
         }
 
@@ -112,10 +112,7 @@ public class UserServiceImpl implements UserService {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
-    public boolean isValidPassword(String password) {
-        if (password.length() < 8) {
-            return false;
-        }
+    public boolean isStrongPassword(String password) {
 
         boolean containsUpperCase = false;
         boolean containsLowerCase = false;
@@ -134,6 +131,6 @@ public class UserServiceImpl implements UserService {
             }
         }
 
-        return containsUpperCase && containsLowerCase && containsSpecialCharacter && containsDigit;
+        return containsUpperCase && containsLowerCase && containsSpecialCharacter && containsDigit && (password.length() < 8);
     }
 }

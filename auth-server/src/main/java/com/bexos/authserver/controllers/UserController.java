@@ -22,7 +22,7 @@ public class UserController {
     public ResponseEntity<?> register(
             @RequestBody RegisterRequestDto request
     ){
-        return ResponseEntity.ok(userService.register(request));
+        return userService.register(request);
     }
 
     @PostMapping("/change-password")
