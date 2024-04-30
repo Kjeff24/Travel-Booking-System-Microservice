@@ -2,6 +2,7 @@ package com.bexos.authserver.config;
 
 import com.bexos.authserver.federated.FederatedIdentityAuthenticationSuccessHandler;
 import com.bexos.authserver.federated.GithubGoogleUserHandler;
+import com.bexos.authserver.models.User;
 import com.bexos.authserver.repositories.UserRepository;
 import com.nimbusds.jose.jwk.JWKSet;
 import com.nimbusds.jose.jwk.RSAKey;
@@ -39,6 +40,7 @@ import java.security.interfaces.RSAPublicKey;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -55,7 +57,7 @@ public class SecurityConfig {
             throws Exception {
         http
                 .cors(Customizer.withDefaults())
-                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
+                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account/**", "/login", "/register", "/signup", "/client/**", "/change-password"));
         OAuth2AuthorizationServerConfiguration.applyDefaultSecurity(http);
         http.getConfigurer(OAuth2AuthorizationServerConfigurer.class)
                 .oidc(Customizer.withDefaults());	// Enable OpenID Connect 1.0
@@ -78,10 +80,10 @@ public class SecurityConfig {
     public SecurityFilterChain appSecurity(HttpSecurity http) throws Exception {
         http
                 .cors(Customizer.withDefaults())
-                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account", "/login", "/register", "/signup", "/client/**"));
+                .csrf(csrfConfigurer -> csrfConfigurer.ignoringRequestMatchers(  "/confirm-account/**", "/login", "/register", "/signup", "/client/**", "/change-password/**"));
         http
                 .authorizeHttpRequests(request -> request
-                        .requestMatchers("/","/images/**", "/styles/**", "/confirm-account", "/login", "/register", "/signup","/logout", "/client/**").permitAll()
+                        .requestMatchers("/","/images/**", "/styles/**", "/confirm-account/**", "/login", "/register", "/signup","/logout", "/client/**", "/change-password/**").permitAll()
                         .anyRequest().authenticated())
 
                 .oauth2Login(oauth2 ->
@@ -105,13 +107,28 @@ public class SecurityConfig {
     public OAuth2TokenCustomizer<JwtEncodingContext> tokenCustomizer(){
         return context -> {
             Authentication principal = context.getPrincipal();
+            User user = null;
+
+            if(principal.getName().contains("@")){
+                Optional<User> getUserWithEmail = userRepository.findByEmailIgnoreCase(principal.getName());
+                user = getUserWithEmail.orElse(null);
+            }
+            else {
+                Optional<User> getUserWithUsername = userRepository.findByUsernameIgnoreCase(principal.getName());
+                user = getUserWithUsername.orElse(null);
+            }
+
             if(context.getTokenType().getValue().equals("id_token")){
                 context.getClaims().claim("token_type", "id token");
             }
             if(context.getTokenType().getValue().equals("access_token")){
                 context.getClaims().claim("token_type", "access token");
-                Set<String> roles = principal.getAuthorities().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
-                context.getClaims().claim("roles", roles).claim("username", principal.getName());
+                assert user != null;
+                Set<String> roles = user.getRoles().stream().map(GrantedAuthority::getAuthority).collect(Collectors.toSet());
+                context.getClaims()
+                        .claim("roles", roles)
+                        .claim("username", principal.getName())
+                        .claim("userId", user.getId());
                 Instant expirationTime = Instant.now().plus(6, ChronoUnit.HOURS);
                 context.getClaims().expiresAt(Date.from(expirationTime).toInstant());
             }

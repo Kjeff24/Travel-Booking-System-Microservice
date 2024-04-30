@@ -25,8 +25,13 @@
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 order-lg-1 order-md-2">
-                <div th:if="${registration_error}" class="alert alert-danger" role="alert">
-                    <p class="text-center" th:text="${registration_error}"></p>
+                <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Oops! </strong><span th:text="${error}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                <div th:if="${success}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Hurray! </strong><span th:text="${success}"></span>
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
                 <form method="POST" th:action="@{/signup}" th:object="${user}">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start">

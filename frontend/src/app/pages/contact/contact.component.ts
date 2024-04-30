@@ -3,11 +3,12 @@ import { FooterComponent } from '../../components/footer/footer.component';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { RouterLink } from '@angular/router';
 import { FormControl, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { MiniAboutComponent } from '../../components/mini-about/mini-about.component';
 
 @Component({
   selector: 'app-contact',
   standalone: true,
-  imports: [NavbarComponent, FooterComponent, RouterLink, ReactiveFormsModule],
+  imports: [NavbarComponent, FooterComponent, RouterLink, ReactiveFormsModule, MiniAboutComponent],
   templateUrl: './contact.component.html',
   styleUrl: './contact.component.css'
 })

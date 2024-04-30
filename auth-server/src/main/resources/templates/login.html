@@ -29,12 +29,20 @@
                      class="img-fluid" alt="Sample image">
             </div>
             <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1">
-                <div th:if="${param.error}" class="alert alert-danger" role="alert">
-                    <p class="text-center">Bad Credentials</p>
+                <div th:if="${param.error}" class="alert alert-warning alert-dismissible fade show" role="alert">
+                    <strong>Oops!</strong> Bad Credentials.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
-                <div th:if="${param.logout}" class="alert alert-success" role="alert">
-                    You have logged out.
+                <div th:if="${param.logout}" class="alert alert-success alert-dismissible fade show" role="alert">
+                    <strong>Great!</strong> You have logged out successfully.
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
+<!--                <div th:if="${param.error}" class="alert alert-danger" role="alert">-->
+<!--                    <p class="text-center">Bad Credentials</p>-->
+<!--                </div>-->
+<!--                <div th:if="${param.logout}" class="alert alert-success" role="alert">-->
+<!--                    You have logged out.-->
+<!--                </div>-->
                 <form method="post" th:action="@{/login}">
                     <div class="d-flex flex-row align-items-center justify-content-center justify-content-lg-start mt-3">
                         <p class="lead fw-normal mb-0 me-3">Sign in with</p>

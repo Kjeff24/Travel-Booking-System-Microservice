@@ -1,35 +1,50 @@
 package com.bexos.authserver.services;
 
-import com.bexos.authserver.dto.ChangePasswordRequest;
+import com.bexos.authserver.dto.FormChangePasswordDto;
 import com.bexos.authserver.dto.FormRegisterDto;
-import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.mappers.UserMapper;
 import com.bexos.authserver.models.ConfirmationToken;
+import com.bexos.authserver.models.Password;
 import com.bexos.authserver.models.User;
 import com.bexos.authserver.repositories.ConfirmationTokenRepository;
+import com.bexos.authserver.repositories.PasswordRepository;
 import com.bexos.authserver.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final UserRepository userRepository;
-    private final UserMapper userMapper;
     private final ConfirmationTokenRepository confirmationTokenRepository;
+    private final PasswordRepository passwordRepository;
+    private final UserMapper userMapper;
     private final EmailService emailService;
     private final PasswordEncoder passwordEncoder;
 
-    public void form_register(FormRegisterDto user){
+    private static final String PASSWORD_PATTERN =
+            "^(?=.*[0-9])" +
+                    "(?=.*[a-z])" +
+                    "(?=.*[A-Z])" +
+                    "(?=.*[^a-zA-Z0-9 ])" +
+                    "(?=\\S+$)" +
+                    ".{8,}$";
 
-        User newUser = userRepository.save(userMapper.registerUser(user));
+    private static final Pattern pattern = Pattern.compile(PASSWORD_PATTERN);
+
+    public void form_register(FormRegisterDto user) {
+
+        User newUser = userRepository.save(userMapper.toUser(user));
+        passwordRepository.save(userMapper.createPassword(newUser));
+
         ConfirmationToken confirmationToken = ConfirmationToken.builder()
                 .user(newUser)
                 .confirmationToken(UUID.randomUUID().toString())
@@ -38,44 +53,29 @@ public class UserServiceImpl implements UserService {
         emailService.sendEmail(createEmail(newUser, emailConfirmationToken));
     }
 
-    public ResponseEntity<?> register(RegisterRequestDto request) {
-        if (userRepository.existsByEmailIgnoreCase(request.email())) {
-            return ResponseEntity.badRequest().body("Error: Email is already in use!");
+    public Map<String, String> changePassword(FormChangePasswordDto passwordField, String userId) {
+        Map<String, String> message = new HashMap<>();
+        User updateUser = userRepository.findById(userId).orElse(null);
+        if (updateUser == null) {
+            message.put("error", "User not found");
+            return message;
         }
+        Password password = passwordRepository.findByUserId(userId);
+        boolean passwordHasBeenUsed = password.getUserPasswords().stream()
+                .anyMatch(p -> passwordEncoder.matches(passwordField.getNewPassword(), p));
 
-        User user = userRepository.save(userMapper.toUser(request));
-        ConfirmationToken confirmationToken = ConfirmationToken.builder()
-                .user(user)
-                .confirmationToken(UUID.randomUUID().toString())
-                .build();
-        ConfirmationToken emailConfirmationToken = confirmationTokenRepository.save(confirmationToken);
-        emailService.sendEmail(createEmail(user, emailConfirmationToken));
-
-        return ResponseEntity.ok("Verify email by the link sent to your email address");
-    }
-
-
-    public ResponseEntity<?> changePassword(ChangePasswordRequest request) {
-        Optional<User> user = userRepository.findById(request.userId());
-        if (user.isEmpty()) {
-            return ResponseEntity.badRequest().body("Error: User not found!");
-        }
-
-        if(!isStrongPassword(request.newPassword())){
-            return ResponseEntity.badRequest().body("New Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
-        }
-
-        User updateUser = user.get();
-
-        boolean checkPassword = isMatchingPassword(updateUser, request.oldPassword());
-
-        if(checkPassword) {
-            updateUser.setPassword(passwordEncoder.encode(request.newPassword()));
+        if (passwordHasBeenUsed) {
+            message.put("error", "Password has already been used");
+            return message;
+        } else if (!validate(passwordField.getNewPassword())) {
+            message.put("error", "New Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
+            return message;
+        } else {
+            updateUser.setPassword(passwordEncoder.encode(passwordField.getNewPassword()));
             userRepository.save(updateUser);
-            return ResponseEntity.ok("Password changed successfully!");
+            message.put("success", "Password changed successfully");
         }
-
-        return ResponseEntity.badRequest().body("Error: Passwords do not match!");
+        return message;
 
     }
 
@@ -89,48 +89,31 @@ public class UserServiceImpl implements UserService {
         return mailMessage;
     }
 
-    public ResponseEntity<?> confirmEmail(String confirmationToken) {
+    public Map<String, String> confirmEmail(String confirmationToken) {
+        Map<String, String> message = new HashMap<>();
         ConfirmationToken token = confirmationTokenRepository.findByConfirmationToken(confirmationToken);
+
         if (token == null) {
-            return ResponseEntity.badRequest().body("Error: Couldn't verify email");
-        }
-
-        Optional<User> userOptional = userRepository.findByEmailIgnoreCase(token.getUser().getEmail());
-
-        if (userOptional.isPresent()) {
-            User user = userOptional.get();
-            user.setEnabled(true);
-            userRepository.save(user);
-
-            return ResponseEntity.ok("Email verified successfully!");
+            message.put("error", "Couldn't verify email");
         } else {
-            return ResponseEntity.badRequest().body("Error: User not found");
+            User user = userRepository.findByEmailIgnoreCase(token.getUser().getEmail()).orElse(null);
+            if (user != null) {
+                user.setEnabled(true);
+                userRepository.save(user);
+                message.put("success", "Email verified Successfully");
+            } else {
+                message.put("error", "User not found.");
+            }
         }
+        return message;
     }
 
-    private boolean isMatchingPassword(User user, String oldPassword) {
+
+    public boolean isMatchingPassword(User user, String oldPassword) {
         return passwordEncoder.matches(oldPassword, user.getPassword());
     }
 
-    public boolean isStrongPassword(String password) {
-
-        boolean containsUpperCase = false;
-        boolean containsLowerCase = false;
-        boolean containsSpecialCharacter = false;
-        boolean containsDigit = false;
-
-        for (char ch : password.toCharArray()) {
-            if (Character.isUpperCase(ch)) {
-                containsUpperCase = true;
-            } else if (Character.isLowerCase(ch)) {
-                containsLowerCase = true;
-            } else if (Character.isDigit(ch)) {
-                containsDigit = true;
-            } else {
-                containsSpecialCharacter = true;
-            }
-        }
-
-        return containsUpperCase && containsLowerCase && containsSpecialCharacter && containsDigit && (password.length() < 8);
+    public boolean validate(final String password) {
+        return pattern.matcher(password).matches();
     }
 }

@@ -29,28 +29,13 @@ public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;
 
-//    @GetMapping("/all")
-//    public ResponseEntity<List<Booking>> findAllBookings(){
-//        return bookingServiceImpl.findAllBookings();
-//    }
-//
-//    @GetMapping("/hello")
-//    public String hello(){
-//        return "Hello from booker service";
-//    }
-//
-//    @GetMapping("/{id}")
-//    public ResponseEntity<Booking> findBookingById(@PathVariable ObjectId id){
-//        return bookingServiceImpl.findBookingById(id);
-//    }
-
     @GetMapping("/accommodation")
     public ResponseEntity<List<Accommodation>> findAllAccommodations() {
         return bookingServiceImpl.findAllAccommodations();
     }
 
     @PostMapping("/accommodation")
-    public ResponseEntity<Accommodation> createAccommodationOffer(@Valid @RequestBody AccommodationRequest accommodationRequest) {
+    public ResponseEntity<?> createAccommodationOffer(@Valid @RequestBody AccommodationRequest accommodationRequest) {
         return bookingServiceImpl.createAccommodationOffer(accommodationRequest);
     }
 
@@ -60,7 +45,7 @@ public class BookingController {
     }
 
     @PostMapping("/hotel")
-    public ResponseEntity<Hotel> createHotelOffer(@Valid @RequestBody HotelRequest hotelRequest) {
+    public ResponseEntity<?> createHotelOffer(@Valid @RequestBody HotelRequest hotelRequest) {
         return bookingServiceImpl.createHotelOffer(hotelRequest);
     }
 
@@ -70,7 +55,7 @@ public class BookingController {
     }
 
     @PostMapping("/flight")
-    public ResponseEntity<Flight> createFlightOffer(@Valid @RequestBody FlightRequest flightRequest) {
+    public ResponseEntity<?> createFlightOffer(@Valid @RequestBody FlightRequest flightRequest) {
         return bookingServiceImpl.createFlightOffer(flightRequest);
     }
 
@@ -80,7 +65,7 @@ public class BookingController {
     }
 
     @PostMapping("/car-rental")
-    public ResponseEntity<CarRental> createCarRentalOffer(@Valid @RequestBody CarRentalRequest carRentalRequest) {
+    public ResponseEntity<?> createCarRentalOffer(@Valid @RequestBody CarRentalRequest carRentalRequest) {
         return bookingServiceImpl.createCarRentalOffer(carRentalRequest);
     }
 }

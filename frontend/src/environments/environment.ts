@@ -1,5 +1,5 @@
 export const environment = {
-    authorize_uri: 'http://localhost:8080/oauth2/authorize?',
+    auth_server_uri: 'http://localhost:8080',
     client_id : 'angular-client',
     redirect_uri: 'http://127.0.0.1:4200/login/oauth2/code/angular-client',
     scope: 'openid profile',
@@ -9,7 +9,5 @@ export const environment = {
     token_url: 'http://localhost:8080/oauth2/token',
     grant_type: 'authorization_code',
     gateway_url: 'http://localhost:8765',
-    logout_url: 'http://localhost:8080/logout',
-    signup_url: 'http://localhost:8080/signup',
     secret_pkce: 'secret'
 };

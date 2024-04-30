@@ -17,7 +17,7 @@ import java.util.Set;
 @Data
 @Builder
 @TypeAlias("Client")
-@Document(value = "client")
+@Document(value = "Clients")
 public class Client {
     @Id
     private String id;

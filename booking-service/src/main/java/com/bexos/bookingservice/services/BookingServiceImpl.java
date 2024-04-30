@@ -4,6 +4,7 @@ import com.bexos.bookingservice.dto.AccommodationRequest;
 import com.bexos.bookingservice.dto.CarRentalRequest;
 import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.dto.HotelRequest;
+import com.bexos.bookingservice.feign.CategoryClient;
 import com.bexos.bookingservice.mappers.BookingMapper;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
@@ -19,6 +20,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -28,25 +30,45 @@ public class BookingServiceImpl implements BookingService {
     private final CarRentalRepository carRentalRepository;
     private final FlightRepository flightRepository;
     private final HotelRepository hotelRepository;
+    private final CategoryClient categoryClient;
 
-    public ResponseEntity<Accommodation> createAccommodationOffer(AccommodationRequest accommodationRequest) {
-        Accommodation newAccommodation = accommodationRepository.save(bookingMapper.toAccommodation(accommodationRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newAccommodation);
+    public ResponseEntity<?> createAccommodationOffer(AccommodationRequest accommodationRequest) {
+        boolean existsById = categoryClient.existsCategoryById(accommodationRequest.categoryId());
+        if(existsById){
+            Accommodation newAccommodation = accommodationRepository.save(bookingMapper.toAccommodation(accommodationRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(newAccommodation);
+        }
+        return ResponseEntity.badRequest().body("Category does not exist");
     }
 
-    public ResponseEntity<Hotel> createHotelOffer(HotelRequest hotelRequest) {
-        Hotel newHotel = hotelRepository.save(bookingMapper.toHotel(hotelRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newHotel);
+    public ResponseEntity<?> createHotelOffer(HotelRequest hotelRequest) {
+        boolean existsById = categoryClient.existsCategoryById(hotelRequest.categoryId());
+        if(existsById){
+            Hotel newHotel = hotelRepository.save(bookingMapper.toHotel(hotelRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(newHotel);
+        }
+
+        return ResponseEntity.badRequest().body("Category does not exist");
     }
 
-    public ResponseEntity<Flight> createFlightOffer(FlightRequest flightRequest) {
-        Flight newFlight = flightRepository.save(bookingMapper.toFlight(flightRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newFlight);
+    public ResponseEntity<?> createFlightOffer(FlightRequest flightRequest) {
+        boolean existsById = categoryClient.existsCategoryById(flightRequest.categoryId());
+        if(existsById){
+            Flight newFlight = flightRepository.save(bookingMapper.toFlight(flightRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(newFlight);
+        }
+
+        return ResponseEntity.badRequest().body("Category does not exist");
     }
 
-    public ResponseEntity<CarRental> createCarRentalOffer(CarRentalRequest carRentalRequest) {
-        CarRental newCarRental = carRentalRepository.save(bookingMapper.toCarRental(carRentalRequest));
-        return ResponseEntity.status(HttpStatus.CREATED).body(newCarRental);
+    public ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest) {
+        boolean existsById = categoryClient.existsCategoryById(carRentalRequest.categoryId());
+        if(existsById){
+            CarRental newCarRental = carRentalRepository.save(bookingMapper.toCarRental(carRentalRequest));
+            return ResponseEntity.status(HttpStatus.CREATED).body(newCarRental);
+        }
+
+        return ResponseEntity.badRequest().body("Category does not exist");
     }
 
     public ResponseEntity<List<Accommodation>> findAllAccommodations() {

@@ -7,11 +7,10 @@ const REFRESH_TOKEN = 'refresh_token';
 const CODE_VERIFIER = 'code_verifier';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class TokenService {
-
-  constructor() { }
+  constructor() {}
 
   setTokens(access_token: string, refresh_token: string): void {
     localStorage.removeItem(ACCESS_TOKEN);
@@ -33,41 +32,62 @@ export class TokenService {
     localStorage.removeItem(REFRESH_TOKEN);
   }
 
-  isLoggedIn(): boolean{
+  isLoggedIn(): boolean {
     return localStorage.getItem(ACCESS_TOKEN) != null;
   }
-  
+
+  hasRole(role: string): boolean {
+    if (!this.isLoggedIn()) {
+      return false;
+    }
+    const token = this.getAccessToken();
+    const payload = token.split('.')[1];
+    const decodedPayload = atob(payload);
+    const values = JSON.parse(decodedPayload);
+    const roles = values.roles;
+    return roles.indexOf(role) >= 0;
+  }
+
   isAdmin(): boolean {
-    if(!this.isLoggedIn()) {
-      return false
+    return this.hasRole('ADMIN');
+  }
+
+  isCustomer(): boolean {
+    return this.hasRole('CUSTOMER');
+  }
+
+  getUserId() : string {
+    if (!this.isLoggedIn()) {
+      return null; // or handle appropriately if not logged in
     }
     const token = this.getAccessToken();
     const payload = token.split(".")[1];
     const decodedPayload = atob(payload);
     const values = JSON.parse(decodedPayload);
-    const roles = values.roles;
-    if(roles.indexOf('ADMIN') < 0) {
-      return false;
-    }
-    return true;
+    return values.userId;
   }
 
-  setCodeVerifier(code_verifier: string): void{
-    if(localStorage.getItem(CODE_VERIFIER)){
+  setCodeVerifier(code_verifier: string): void {
+    if (localStorage.getItem(CODE_VERIFIER)) {
       this.deleteVerifier();
     }
-    const encrypted = CryptoJS.AES.encrypt(code_verifier, environment.secret_pkce);
+    const encrypted = CryptoJS.AES.encrypt(
+      code_verifier,
+      environment.secret_pkce
+    );
     localStorage.setItem(CODE_VERIFIER, encrypted.toString());
   }
 
-  getCodeVerifier(): string{
-    const encrypted = localStorage.getItem(CODE_VERIFIER)
-    const decrypted = CryptoJS.AES.decrypt(encrypted, environment.secret_pkce).toString(CryptoJS.enc.Utf8);
-    return decrypted
+  getCodeVerifier(): string {
+    const encrypted = localStorage.getItem(CODE_VERIFIER);
+    const decrypted = CryptoJS.AES.decrypt(
+      encrypted,
+      environment.secret_pkce
+    ).toString(CryptoJS.enc.Utf8);
+    return decrypted;
   }
 
   deleteVerifier(): void {
-    localStorage.removeItem(CODE_VERIFIER)
+    localStorage.removeItem(CODE_VERIFIER);
   }
-
 }

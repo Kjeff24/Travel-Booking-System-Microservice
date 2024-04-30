@@ -22,7 +22,7 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" [routerLink]="['/store/category/accommodation', accomodationId]" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+            <a class="nav-link" aria-current="page" [routerLink]="['/store/category/accommodation']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
               true}"
               >Store</a
             >
@@ -51,22 +51,29 @@
           </li>
         </ul>
         <a class="m-lg-3 text-decoration-none" [routerLink]="['/cart']" routerLinkActive="active">
-          <img src="../assets/svg/cart.svg" alt="cart" />
+          <img src="../../../assets/svg/cart.svg" alt="cart" />
           <span
             class="text-dark position-relative top-0 start-0 translate-middle badge rounded-pill bg-transparent border border-secondary"
             >6</span
           >
         </a>
-        <!-- <form class="d-flex" action="" method="GET">
-          <input
-            class="form-control me-2"
-            type="text"
-            placeholder="Search for items..."
-            name="q"
-            aria-label="Search"
-          />
-          <button class="btn btn-outline-dark" type="submit" >Search</button>
-        </form> -->
+        <br>
+        <div class="btn-group dropdown" *ngIf="isLoggedIn && isCustomer">
+          <button
+            type="button"
+            class="btn"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+          Settings
+          <img src="../../assets/svg/settings.svg" alt="settings">
+          </button>
+          <ul class="dropdown-menu">
+            <li class="list-style-none text-center">
+              <a (click)="onChangePassword()" class="text-decoration-none change-password click-pointer">Change password</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </nav>

@@ -1,21 +1,22 @@
-<div class="d-flex  justify-content-between align-items-center">
-    <h6 class="ms-2">Car Rental</h6>
-    <form class="d-flex" action="" method="GET">
+<div class="d-flex  justify-content-between align-items-center mx-2">
+    <h6 class="">Car Rental</h6>
+    <div class="d-flex">
         <input
           class="form-control"
           type="text"
           placeholder="Search for items..."
-          name="q"
+          
+      #filter
           aria-label="Search"
         />
-        <button class="btn btn-outline-dark" type="submit" >Search</button>
-      </form>
+        <button class="btn btn-outline-dark" type="submit" (click)="filterResults(filter.value)" >Search</button>
+      </div>
     </div>
 <div class="row booking-category-container ">
   <div
     class="col-sm-3 item"
     data-price="1"
-    *ngFor="let carRentalItem of carRentalItemList"
+    *ngFor="let carRentalItem of filteredCarRentalList"
   >
     <div class="booking-category-card d-flex flex-column">
       <div>

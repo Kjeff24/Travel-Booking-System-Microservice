@@ -28,7 +28,7 @@
     >
       <li 
       *ngFor="let categoryItem of categoryItemList">
-        <a [routerLink]="getRouterLink(categoryItem.code, categoryItem.id)" class="dropdown-item"
+        <a [routerLink]="getRouterLink(categoryItem.code)" class="dropdown-item"
           >{{ categoryItem.name }}</a
         >
       </li>

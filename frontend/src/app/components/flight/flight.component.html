@@ -1,21 +1,22 @@
-<div class="d-flex  justify-content-between align-items-center">
-    <h6 class="ms-2">Flight</h6>
-    <form class="d-flex" action="" method="GET">
+<div class="d-flex  justify-content-between align-items-center mx-2">
+    <h6 class="">Flight</h6>
+    <div class="d-flex" >
         <input
           class="form-control"
           type="text"
           placeholder="Search for items..."
-          name="q"
+          
+      #filter
           aria-label="Search"
         />
-        <button class="btn btn-outline-dark" type="submit" >Search</button>
-      </form>
+        <button class="btn btn-outline-dark" type="submit" (click)="filterResults(filter.value)" >Search</button>
+      </div>
     </div>
 <div class="row booking-category-container ">
   <div
     class="col-sm-3 item"
     data-price="1"
-    *ngFor="let flightItem of flightItemList"
+    *ngFor="let flightItem of filteredFlightList"
   >
     <div class="booking-category-card d-flex flex-column">
       <div>

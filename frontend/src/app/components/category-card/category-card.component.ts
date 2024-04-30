@@ -16,13 +16,13 @@ export class CategoryCardComponent {
   getRouterLink(): any[] {
     switch (this.categoryItem.code) {
       case 'ACC':
-        return ['/store/category/accommodation', this.categoryItem.id];
+        return ['/store/category/accommodation'];
       case 'HOT':
-        return ['/store/category/hotel', this.categoryItem.id];
+        return ['/store/category/hotel'];
       case 'CAR':
-        return ['/store/category/car-rental', this.categoryItem.id];
+        return ['/store/category/car-rental'];
       case 'FLI':
-        return ['/store/category/flight', this.categoryItem.id];
+        return ['/store/category/flight'];
       default:
         return ['']; 
     }

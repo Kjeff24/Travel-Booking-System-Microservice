@@ -36,22 +36,22 @@ export const routes: Routes = [
     title: 'ExcursionEase | Store',
     children: [
       {
-        path: 'category/accommodation/:id',
+        path: 'category/accommodation',
         component: AccommodationComponent,
         title: 'ExcursionEase | Accommodation',
       },
       {
-        path: 'category/hotel/:id',
+        path: 'category/hotel',
         component: HotelComponent,
         title: 'ExcursionEase | Hotel',
       },
       {
-        path: 'category/car-rental/:id',
+        path: 'category/car-rental',
         component: CarRentalComponent,
         title: 'ExcursionEase | Car Rental',
       },
       {
-        path: 'category/flight/:id',
+        path: 'category/flight',
         component: FlightComponent,
         title: 'ExcursionEase | Flight',
       }
@@ -81,25 +81,5 @@ export const routes: Routes = [
     path: 'checkout',
     component: CheckoutComponent,
     title: 'ExcursionEase | Checkout',
-  },
-  // {
-  //   path: 'store/category/accommodation/:id',
-  //   component: AccommodationComponent,
-  //   title: 'ExcursionEase | Accommodation',
-  // },
-  // {
-  //   path: 'store/category/hotel/:id',
-  //   component: HotelComponent,
-  //   title: 'ExcursionEase | Hotel',
-  // },
-  // {
-  //   path: 'store/category/car-rental/:id',
-  //   component: CarRentalComponent,
-  //   title: 'ExcursionEase | Car Rental',
-  // },
-  // {
-  //   path: 'store/category/flight/:id',
-  //   component: FlightComponent,
-  //   title: 'ExcursionEase | Flight',
-  // }
+  }
 ];

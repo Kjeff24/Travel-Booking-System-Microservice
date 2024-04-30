@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { FooterComponent } from '../../components/footer/footer.component';
 import {
@@ -6,11 +6,11 @@ import {
   Router,
   RouterLink,
 } from '@angular/router';
-import { BookingService } from '../../services/booking/booking.service';
 import { CategoryCardComponent } from '../../components/category-card/category-card.component';
 import { CategoryItem } from '../../models/category-item';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category/category.service';
+import { MiniAboutComponent } from '../../components/mini-about/mini-about.component';
 
 @Component({
   selector: 'app-home',
@@ -18,6 +18,7 @@ import { CategoryService } from '../../services/category/category.service';
   imports: [
     NavbarComponent,
     FooterComponent,
+    MiniAboutComponent,
     RouterLink,
     CategoryCardComponent,
     CommonModule,
@@ -29,7 +30,6 @@ export class HomeComponent implements OnInit {
   @ViewChild('navbar') navbar: NavbarComponent;
 
   categoryItemList!: CategoryItem[];
-  accomodationId!: string;
   constructor(
     private categoryService: CategoryService, 
     private router: Router
@@ -45,7 +45,6 @@ export class HomeComponent implements OnInit {
       next: (data: CategoryItem[]) => {
         console.log('Data received');
         this.categoryItemList = data;
-        this.accomodationId = this.categoryItemList[0].id;
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);

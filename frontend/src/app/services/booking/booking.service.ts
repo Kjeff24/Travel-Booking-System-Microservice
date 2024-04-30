@@ -27,4 +27,9 @@ export class BookingService {
   public getAllCarRental(): Observable<any>{
     return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/car-rental')
   }
+
+  public searchAccommodations(query: string): Observable<any>{
+    const url = `${this.gateway_url}/api/booking-service/accommodation/?${query}`;
+    return this.httpClient.get<any>(url);  
+  }
 }

@@ -23,7 +23,7 @@ public class CategoryController {
 
     @GetMapping("/hello")
     public String hello(){
-        return "Hello fron category controller";
+        return "Hello from category controller";
     }
 
     @GetMapping("/all")
@@ -42,7 +42,7 @@ public class CategoryController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Category> findCategoryById(@PathVariable ObjectId id) {
+    public ResponseEntity<?> findCategoryById(@PathVariable String id) {
         return categoryServiceImpl.findCategoryById(id);
     }
 
@@ -54,5 +54,10 @@ public class CategoryController {
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Invalid category code: " + categoryRequest.code() + ". It should be either ACC, FLI, CAR, or HOT", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @GetMapping("/exists-by-id/{id}")
+    public boolean existsCategoryById(@PathVariable String id) {
+        return categoryServiceImpl.existCategoryById(id);
     }
 }

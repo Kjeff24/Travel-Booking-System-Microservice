@@ -6,8 +6,6 @@ import { HttpParams } from '@angular/common/http';
 import { TokenService } from '../../services/token/token.service';
 import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
-import { CategoryService } from '../../services/category/category.service';
-import { CategoryItem } from '../../models/category-item';
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -19,13 +17,14 @@ const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz01234567
   styleUrl: './navbar.component.css'
 })
 export class NavbarComponent implements OnInit {
-  signup_uri = environment.signup_url;
-  authorize_uri = environment.authorize_uri;
-  logout_uri = environment.logout_url;
+  signup_uri = environment.auth_server_uri + '/signup';
+  authorize_uri = environment.auth_server_uri + '/oauth2/authorize?';
+  logout_uri = environment.auth_server_uri + '/logout';
+  change_password_uri = environment.auth_server_uri + '/change-password';
   isLoggedIn: boolean;
   isAdmin: boolean;
-  categoryItemList!: CategoryItem[];
-  accomodationId!: string;
+  isCustomer: boolean;
+  userId: String;
 
   params: any = {
     client_id: environment.client_id,
@@ -39,19 +38,11 @@ export class NavbarComponent implements OnInit {
   loginObj: Login;
 
   constructor(
-    private tokenService: TokenService,
-    private categoryService: CategoryService
+    private tokenService: TokenService
   ){}
 
   ngOnInit(): void {
     this.getLogged();
-    this.categoryService.getAllCategory().subscribe({
-      next: (data: CategoryItem[]) => {
-        console.log('Data received');
-        this.categoryItemList = data;
-        this.accomodationId = this.categoryItemList[0].id;
-      },
-    })
   }
 
   onSignUp(): void{
@@ -74,9 +65,15 @@ export class NavbarComponent implements OnInit {
     location.href = this.logout_uri;
   }
 
+  onChangePassword(): void{
+    location.href = this.change_password_uri + '/' + this.userId;
+  }
+
   getLogged(): void{
     this.isLoggedIn = this.tokenService.isLoggedIn();
     this.isAdmin = this.tokenService.isAdmin();
+    this.isCustomer = this.tokenService.isCustomer();
+    this.userId = this.tokenService.getUserId();
   }
 
   generateCodeVerifier(): string{

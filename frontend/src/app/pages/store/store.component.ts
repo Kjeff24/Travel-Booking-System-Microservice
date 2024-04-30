@@ -25,20 +25,21 @@ export class StoreComponent implements OnInit{
       next: (data: CategoryItem[]) => {
         console.log('Data received');
         this.categoryItemList = data;
+        console.log(data)
       },
     })
   }
 
-  getRouterLink(code: string, id: string): any[] {
+  getRouterLink(code: string): any[] {
     switch (code) {
       case 'ACC':
-        return ['/store/category/accommodation', id];
+        return ['/store/category/accommodation'];
       case 'HOT':
-        return ['/store/category/hotel', id];
+        return ['/store/category/hotel'];
       case 'CAR':
-        return ['/store/category/car-rental', id];
+        return ['/store/category/car-rental'];
       case 'FLI':
-        return ['/store/category/flight', id];
+        return ['/store/category/flight'];
       default:
         return ['']; 
     }

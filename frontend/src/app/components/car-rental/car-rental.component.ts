@@ -12,7 +12,8 @@ import { BookingService } from '../../services/booking/booking.service';
 })
 export class CarRentalComponent implements  OnInit {
 
-  carRentalItemList!: CarRentalItem[];
+  carRentalList!: CarRentalItem[];
+  filteredCarRentalList!: CarRentalItem[];
 
   constructor(
     private bookingService: BookingService
@@ -22,12 +23,26 @@ export class CarRentalComponent implements  OnInit {
     this.bookingService.getAllCarRental().subscribe({
       next: (data: CarRentalItem[]) => {
         console.log('Data received');
-        this.carRentalItemList = data;
+        this.carRentalList = data;
+        this.filteredCarRentalList = this.carRentalList
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);
       },
     });
   }
+
+  filterResults(text: string) {
+    if (!text) {
+      this.filteredCarRentalList = this.carRentalList;
+      return;
+    }
+    
+    text = text.toLowerCase().trim();
+    this.filteredCarRentalList = this.carRentalList.filter(
+    item => item?.carType.toLowerCase().includes(text)
+    );
+  }
+
 
 }

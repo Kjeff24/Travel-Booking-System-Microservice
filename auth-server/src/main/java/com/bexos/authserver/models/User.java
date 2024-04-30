@@ -15,6 +15,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -22,7 +23,7 @@ import java.util.Set;
 @Data
 @Builder
 @TypeAlias("User")
-@Document(value = "USERS")
+@Document(value = "Users")
 public class User implements UserDetails {
     @Id
     private String id;
@@ -68,21 +69,29 @@ public class User implements UserDetails {
     }
 
     public static User fromOAuth2GithubUser(OAuth2User user){
+        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(customerRole);
         return User.builder()
                 .email(user.getAttribute("email"))
                 .fullName(user.getAttribute("name"))
                 .username(user.getAttribute("login"))
                 .pictureUrl(user.getAttribute("avatar_url"))
+                .roles(roles)
                 .enabled(true)
                 .build();
     }
 
     public static User fromOauth2GoogleUser(OAuth2User user){
+        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(customerRole);
         return User.builder()
                 .email(user.getAttributes().get("email").toString())
                 .fullName(user.getAttributes().get("name").toString())
                 .username(user.getAttributes().get("given_name").toString())
                 .pictureUrl(user.getAttributes().get("picture").toString())
+                .roles(roles)
                 .enabled(true)
                 .build();
     }

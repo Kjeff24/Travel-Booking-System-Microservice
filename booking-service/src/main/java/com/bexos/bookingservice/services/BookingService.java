@@ -13,13 +13,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface BookingService {
-    ResponseEntity<Accommodation> createAccommodationOffer(AccommodationRequest accommodationRequest);
+    ResponseEntity<?> createAccommodationOffer(AccommodationRequest accommodationRequest);
 
-    ResponseEntity<Hotel> createHotelOffer(HotelRequest hotelRequest);
+    ResponseEntity<?> createHotelOffer(HotelRequest hotelRequest);
 
-    ResponseEntity<Flight> createFlightOffer(FlightRequest flightRequest);
+    ResponseEntity<?> createFlightOffer(FlightRequest flightRequest);
 
-    ResponseEntity<CarRental> createCarRentalOffer(CarRentalRequest carRentalRequest);
+    ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest);
 
     ResponseEntity<List<Accommodation>> findAllAccommodations();
 

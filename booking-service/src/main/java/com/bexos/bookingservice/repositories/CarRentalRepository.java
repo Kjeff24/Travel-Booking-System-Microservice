@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface CarRentalRepository extends MongoRepository<CarRental, Integer> {
     Optional<CarRental> findByCategoryId(String categoryId);
+
 }

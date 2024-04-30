@@ -1,11 +1,8 @@
 package com.bexos.authserver.services;
 
-import com.bexos.authserver.dto.ChangePasswordRequest;
-import com.bexos.authserver.dto.RegisterRequestDto;
-import org.springframework.http.ResponseEntity;
+import com.bexos.authserver.dto.FormRegisterDto;
 
 public interface UserService {
-    ResponseEntity<?> register(RegisterRequestDto request);
+    void form_register(FormRegisterDto user);
 
-    ResponseEntity<?> changePassword(ChangePasswordRequest request);
 }

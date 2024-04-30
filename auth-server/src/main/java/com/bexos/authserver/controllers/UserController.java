@@ -1,10 +1,7 @@
 package com.bexos.authserver.controllers;
 
-import com.bexos.authserver.dto.ChangePasswordRequest;
-import com.bexos.authserver.dto.RegisterRequestDto;
 import com.bexos.authserver.services.UserServiceImpl;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -12,23 +9,5 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     private final UserServiceImpl userService;
-
-    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-    public ResponseEntity<?> confirmUserAccount(@RequestParam("token")String confirmationToken) {
-        return userService.confirmEmail(confirmationToken);
-    }
-
-    @PostMapping("/register")
-    public ResponseEntity<?> register(
-            @RequestBody RegisterRequestDto request
-    ){
-        return userService.register(request);
-    }
-
-    @PostMapping("/change-password")
-    public ResponseEntity<?> changePassword(ChangePasswordRequest request){
-        return userService.changePassword(request);
-    }
-
 
 }
