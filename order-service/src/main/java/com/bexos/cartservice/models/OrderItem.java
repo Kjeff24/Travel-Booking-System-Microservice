@@ -16,4 +16,5 @@ public class OrderItem {
     private String id;
     private String bookingId;
     private int quantity;
+    private String orderId;
 }

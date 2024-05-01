@@ -13,6 +13,6 @@ export const appConfig: ApplicationConfig = {
     provideClientHydration(), 
     provideAnimations(), 
     provideHttpClient(),
-    {provide: HTTP_INTERCEPTORS, useClass: ResourceInterceptor, multi: true}
+    // {provide: HTTP_INTERCEPTORS, useClass: ResourceInterceptor, multi: true}
   ]
 };

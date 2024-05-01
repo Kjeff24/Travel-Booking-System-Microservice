@@ -17,7 +17,17 @@ public class OrderServiceImpl implements OrderService{
     private final OrderRepository orderRepository;
 
     public ResponseEntity<Order> createOrder(Order order) {
-        return null;
+
+        return ResponseEntity.ok(orderRepository.save(order));
+    }
+
+    public boolean existByUserId(String userId) {
+        return orderRepository.existsByUserId(userId);
+    }
+
+    public ResponseEntity<Order> findOrderByUserId(String userId) {
+        Optional<Order> order = orderRepository.findByUserId(userId);
+        return order.map(ResponseEntity::ok).orElseGet(() -> ResponseEntity.notFound().build());
     }
 
     public ResponseEntity<List<Order>> getAllOrders() {
@@ -39,4 +49,6 @@ public class OrderServiceImpl implements OrderService{
     public void deleteOrder(String orderId) {
         orderRepository.deleteById(orderId);
     }
+
+
 }

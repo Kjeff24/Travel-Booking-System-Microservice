@@ -25,6 +25,16 @@ public class OrderController {
         return orderService.getAllOrders();
     }
 
+    @GetMapping("/exist-by-userId/{userId}")
+    public boolean existByUserId(@PathVariable String userId) {
+        return orderService.existByUserId(userId);
+    }
+
+    @GetMapping("/find-by-userId/{userId}")
+    public ResponseEntity<Order> findByUserId(@PathVariable String userId) {
+        return orderService.findOrderByUserId(userId);
+    }
+
     @GetMapping("/{orderId}")
     public ResponseEntity<Order> getOrderById(@PathVariable String orderId) {
         return orderService.getOrderById(orderId);

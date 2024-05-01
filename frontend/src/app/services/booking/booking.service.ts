@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ export class BookingService {
 
   gateway_url = environment.gateway_url
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   public getAllAccommodations(): Observable<any>{
     return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/accommodation')
@@ -28,8 +29,29 @@ export class BookingService {
     return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/car-rental')
   }
 
-  public searchAccommodations(query: string): Observable<any>{
-    const url = `${this.gateway_url}/api/booking-service/accommodation/?${query}`;
-    return this.httpClient.get<any>(url);  
+  public createOrder(data: any): Observable<any>{
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.post<any>(this.gateway_url + '/api/order-service/orders', data, { headers, observe: "response"  })
   }
+
+  public findOrderByUserId(id:string): Observable<any>{
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(this.gateway_url + `/api/order-service/orders/find-by-userId/${id}`, { headers, observe: "response" })
+  }
+
+  public addOrderItem(orderId: string, data: any): Observable<any>{
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.post<any>(this.gateway_url + `/api/order-service/order-items/${orderId}`, data, { headers, observe: "response"  })
+  }
+
+  public getBookingHello(): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/hello', {headers});
+  }
+
+  
 }

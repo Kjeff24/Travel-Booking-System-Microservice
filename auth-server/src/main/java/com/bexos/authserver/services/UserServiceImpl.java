@@ -14,9 +14,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -56,25 +54,13 @@ public class UserServiceImpl implements UserService {
     public Map<String, String> changePassword(FormChangePasswordDto passwordField, String userId) {
         Map<String, String> message = new HashMap<>();
         User updateUser = userRepository.findById(userId).orElse(null);
-        if (updateUser == null) {
-            message.put("error", "User not found");
-            return message;
-        }
-        Password password = passwordRepository.findByUserId(userId);
-        boolean passwordHasBeenUsed = password.getUserPasswords().stream()
-                .anyMatch(p -> passwordEncoder.matches(passwordField.getNewPassword(), p));
+        if (updateUser == null) return message;
 
-        if (passwordHasBeenUsed) {
-            message.put("error", "Password has already been used");
-            return message;
-        } else if (!validate(passwordField.getNewPassword())) {
-            message.put("error", "New Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
-            return message;
-        } else {
-            updateUser.setPassword(passwordEncoder.encode(passwordField.getNewPassword()));
-            userRepository.save(updateUser);
-            message.put("success", "Password changed successfully");
-        }
+        Password password = passwordRepository.findByUserId(userId);
+        if (isPasswordUsed(password, passwordField.getNewPassword(), message)) return message;
+        if (!isValidPassword(passwordField.getNewPassword(), message)) return message;
+
+        updatePassword(updateUser, password, passwordField.getNewPassword(), message);
         return message;
 
     }
@@ -108,12 +94,42 @@ public class UserServiceImpl implements UserService {
         return message;
     }
 
-
-    public boolean isMatchingPassword(User user, String oldPassword) {
-        return passwordEncoder.matches(oldPassword, user.getPassword());
-    }
-
     public boolean validate(final String password) {
         return pattern.matcher(password).matches();
     }
+
+    private User findUser(String userId, Map<String, String> message) {
+        User updateUser = userRepository.findById(userId).orElse(null);
+        if (updateUser == null) message.put("error", "User not found");
+        return updateUser;
+    }
+
+    private boolean isPasswordUsed(Password password, String newPassword, Map<String, String> message) {
+        boolean passwordHasBeenUsed = password.getUserPasswords().stream()
+                .anyMatch(p -> passwordEncoder.matches(newPassword, p));
+        if (passwordHasBeenUsed) message.put("error", "Password has already been used");
+        return passwordHasBeenUsed;
+    }
+
+    private boolean isValidPassword(String newPassword, Map<String, String> message) {
+        if (!validate(newPassword)) {
+            message.put("error", "New Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
+            return false;
+        }
+        return true;
+    }
+
+    private void updatePassword(User updateUser, Password password, String newPassword, Map<String, String> message) {
+        updateUser.setPassword(passwordEncoder.encode(newPassword));
+        userRepository.save(updateUser);
+        List<String> updatedPasswords = new ArrayList<>(password.getUserPasswords());
+        updatedPasswords.add(passwordEncoder.encode(newPassword));
+        Password newPasswordEntity = Password.builder()
+                .userId(updateUser.getId())
+                .userPasswords(updatedPasswords)
+                .build();
+        passwordRepository.save(newPasswordEntity);
+        message.put("success", "Password changed successfully");
+    }
+
 }

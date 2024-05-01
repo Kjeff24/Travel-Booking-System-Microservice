@@ -21,22 +21,12 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/booking-service/**").permitAll()
+                        .requestMatchers("/api/booking-service/accommodation/**",
+                                "/api/booking-service/hotel/**",
+                                "/api/booking-service/flight/**",
+                                "/api/booking-service/car-rental/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
-    }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration cors = new CorsConfiguration();
-        cors.addAllowedHeader("*");
-        cors.addAllowedMethod("*");
-        cors.setAllowCredentials(true);
-        cors.addAllowedOrigin("http://127.0.0.1:4200");
-        cors.addAllowedOrigin("http://localhost:4200");
-        source.registerCorsConfiguration("/**", cors);
-        return source;
     }
 }

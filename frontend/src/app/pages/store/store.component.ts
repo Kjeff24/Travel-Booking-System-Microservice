@@ -16,19 +16,27 @@ import { CategoryItem } from '../../models/category-item';
 export class StoreComponent implements OnInit{
 
   categoryItemList!: CategoryItem[];
+
   constructor(
-    private categoryService: CategoryService 
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
+    
     this.categoryService.getAllCategory().subscribe({
       next: (data: CategoryItem[]) => {
         console.log('Data received');
         this.categoryItemList = data;
-        console.log(data)
       },
+      error: () => {
+        console.log( "Error");
+      }
     })
+
+
   }
+
+  
 
   getRouterLink(code: string): any[] {
     switch (code) {
@@ -44,6 +52,8 @@ export class StoreComponent implements OnInit{
         return ['']; 
     }
   }
+
+  
 
 
   

@@ -13,7 +13,10 @@ public interface OrderService {
 
     ResponseEntity<Order> getOrderById(String orderId);
 
+    ResponseEntity<Order> findOrderByUserId(String userId);
     void updateOrder(Order Updatedorder);
 
     void deleteOrder(String orderId);
+
+    boolean existByUserId(String userId);
 }

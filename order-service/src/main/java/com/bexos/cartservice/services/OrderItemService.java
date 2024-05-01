@@ -7,11 +7,13 @@ import java.util.List;
 
 public interface OrderItemService {
 
-    ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId);
-
     ResponseEntity<OrderItem> addOrderItem(String orderId, OrderItem orderItem);
 
-    void removeOrderItem(String orderId, String bookingId);
+    ResponseEntity<OrderItem> findOrderItemById(String orderItemId);
+//    ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId);
 
-    void updateOrderItemQuantity(String orderId, String productId, int newQuantity);
+
+//    void removeOrderItem(String orderId, String bookingId);
+//
+//    void updateOrderItemQuantity(String orderId, String productId, int newQuantity);
 }

@@ -1,11 +1,11 @@
-.booking-category-container {
+/* .booking-category-container {
     margin: 5px;
   }
   
   
   .booking-title {
     margin-top: 10px;
-  }
+  } */
   
   .item {
     background-color: #fff;
@@ -13,11 +13,11 @@
   
   .item .booking-title {
     font-size: 14px;
-    padding: 8px 0;
+    /* padding: 8px 0; */
   }
   
   .item .booking-title span {
-    float: right;
+    /* float: right; */
     font-weight: bold;
   }
   

@@ -4,7 +4,7 @@ spring:
     authentication-database: admin
     username: root
     password: password
-    database: cart-service
+    database: order-service
     port: 27017
     host: localhost
   # RabbitMQ config

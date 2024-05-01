@@ -16,7 +16,4 @@ public class Order {
     @Id
     private String id;
     private String userId;
-    @DBRef
-    private List<OrderItem> items;
-    private double totalAmount;
 }

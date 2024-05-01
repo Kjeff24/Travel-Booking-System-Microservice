@@ -26,19 +26,4 @@ public class SecurityConfiguration {
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();
     }
-
-    @Bean
-    public CorsConfigurationSource corsConfigurationSource() {
-        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration cors = new CorsConfiguration();
-        cors.addAllowedHeader("*");
-        cors.addAllowedMethod("*");
-        cors.setAllowCredentials(true);
-        cors.addAllowedOrigin("http://127.0.0.1:4200");
-        cors.addAllowedOrigin("http://localhost:4200");
-        cors.addAllowedOrigin("http://127.0.0.1:8765");
-        cors.addAllowedOrigin("http://localhost:8765");
-        source.registerCorsConfiguration("/**", cors);
-        return source;
-    }
 }

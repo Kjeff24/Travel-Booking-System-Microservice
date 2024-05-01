@@ -24,11 +24,16 @@
           {{ accommodationItem.location }}
           <span>$ {{ accommodationItem.price }}</span>
         </div>
-        <div class="description">
-          {{ accommodationItem.type }} | {{ accommodationItem.capacity }}
+        <div class="description d-flex justify-content-between align-items-center">
+          <span>
+            Room type: {{ accommodationItem.type }} 
+          </span>
+          <span>
+            Capacity: {{ accommodationItem.capacity }}
+          </span>
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap">
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="createOrder(accommodationItem.id)">
         <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
       </button>
     </div>

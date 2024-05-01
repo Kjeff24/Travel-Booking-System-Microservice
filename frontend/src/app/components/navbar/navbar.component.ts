@@ -54,7 +54,6 @@ export class NavbarComponent implements OnInit {
     const code_verifier = this.generateCodeVerifier();
     this.tokenService.setCodeVerifier(code_verifier);
     this.params.code_challenge = this.generateCodeChallenge(code_verifier);
-    console.log("login")
     const httpParams = new HttpParams({fromObject: this.params})
     const codeUrl = this.authorize_uri + httpParams.toString();
     location.href = codeUrl;

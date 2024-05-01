@@ -29,6 +29,11 @@ public class BookingController {
     private final BookingServiceImpl bookingServiceImpl;
     private final BookingMapper bookingMapper;
 
+    @GetMapping("hello")
+    public String hello() {
+        return "Welcome to accommodation service secured";
+    }
+
     @GetMapping("/accommodation")
     public ResponseEntity<List<Accommodation>> findAllAccommodations() {
         return bookingServiceImpl.findAllAccommodations();
