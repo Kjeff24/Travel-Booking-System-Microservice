@@ -5,65 +5,48 @@ import { Observable } from 'rxjs';
 import { TokenService } from '../token/token.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class BookingService {
+  gateway_url = environment.gateway_url;
 
-  gateway_url = environment.gateway_url
+  constructor(
+    private httpClient: HttpClient,
+    private tokenService: TokenService
+  ) {}
 
-  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
-
-  public getAllAccommodations(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/accommodation')
+  public getAllAccommodations(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/booking-service/accommodation'
+    );
   }
 
-  public getAllHotel(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/hotel')
+  public getAllHotel(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/booking-service/hotel'
+    );
   }
 
-  public getAllFlight(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/flight')
+  public getAllFlight(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/booking-service/flight'
+    );
   }
 
-  public getAllCarRental(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/car-rental')
+  public getAllCarRental(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/booking-service/car-rental'
+    );
   }
 
-  public createOrder(data: any): Observable<any>{
+  public addToCart(data: any): Observable<any> {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.post<any>(this.gateway_url + '/api/order-service/orders', data, { headers, observe: "response"  })
+    return this.httpClient.post<any>(
+      this.gateway_url + '/api/order-service/order-items/add-to-cart',
+      data,
+      { headers, observe: 'response' }
+    );
   }
 
-  public findOrderByUserId(id:string): Observable<any>{
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.get<any>(this.gateway_url + `/api/order-service/orders/find-by-userId/${id}`, { headers, observe: "response" })
-  }
-
-  public addOrderItem(data: any): Observable<any>{
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.post<any>(this.gateway_url + '/api/order-service/order-items', data, { headers, observe: "response"  })
-  }
-
-  public updateOrderItem(orderItemId: string, data: any): Observable<any>{
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.patch<any>(this.gateway_url + `/api/order-service/order-items/update-order-quantity/${orderItemId}`, data, { headers, observe: "response"  })
-  }
-
-  public findOrderItemById(id:string): Observable<any>{
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.get<any>(this.gateway_url + `/api/order-service/order-items/find-by-id/${id}`, { headers, observe: "response" })
-  }
-
-  public getBookingHello(): Observable<any> {
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.get<any>(this.gateway_url + '/api/booking-service/hello', {headers});
-  }
-
-  
 }

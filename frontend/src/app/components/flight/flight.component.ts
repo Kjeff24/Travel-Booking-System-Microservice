@@ -2,6 +2,8 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { FlightItem } from '../../models/flight-item';
 import { BookingService } from '../../services/booking/booking.service';
+import { TokenService } from '../../services/token/token.service';
+import { OrderItem } from '../../models/order-item';
 
 @Component({
   selector: 'app-flight',
@@ -14,12 +16,19 @@ export class FlightComponent {
 
   flightList!: FlightItem[];
   filteredFlightList!: FlightItem[];
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+  isCustomer: boolean;
+  userId: string;
+  orderItem: OrderItem;
 
   constructor(
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private tokenService: TokenService
   ){}
 
   ngOnInit(): void {
+    this.getLogged();
     this.bookingService.getAllFlight().subscribe({
       next: (data: FlightItem[]) => {
         console.log('Data received');
@@ -45,5 +54,22 @@ export class FlightComponent {
     );
   }
 
+  getLogged(): void {
+    this.isLoggedIn = this.tokenService.isLoggedIn();
+    this.isAdmin = this.tokenService.isAdmin();
+    this.isCustomer = this.tokenService.isCustomer();
+    this.userId = this.tokenService.getUserId();
+  }
+
+  addToCart(bookingId: string): void {
+    if(this.isLoggedIn){
+      this.bookingService.addToCart({userId: this.userId, bookingId}).subscribe({
+        next: (data:any) => {
+          console.log(data.body)
+          this.orderItem = data.body
+        }
+      })
+    }
+  }
 
 }

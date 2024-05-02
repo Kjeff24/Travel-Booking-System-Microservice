@@ -28,7 +28,7 @@
           {{ carRentalItem.carType }}
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap">
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(carRentalItem.id)">
         <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
       </button>
     </div>

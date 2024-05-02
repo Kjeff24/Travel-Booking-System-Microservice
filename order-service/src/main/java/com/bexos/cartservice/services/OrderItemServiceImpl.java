@@ -1,5 +1,8 @@
 package com.bexos.cartservice.services;
 
+import com.bexos.cartservice.dto.AddToCartRequest;
+import com.bexos.cartservice.mappers.OrderMapper;
+import com.bexos.cartservice.models.Order;
 import com.bexos.cartservice.models.OrderItem;
 import com.bexos.cartservice.repositories.OrderItemRepository;
 import com.bexos.cartservice.repositories.OrderRepository;
@@ -15,71 +18,33 @@ public class OrderItemServiceImpl implements OrderItemService {
 
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
+    private final OrderMapper orderMapper;
 
-    public ResponseEntity<OrderItem> addOrderItem(OrderItem orderItem) {
-        OrderItem orderItemSaved = orderItemRepository.save(orderItem);
-        return ResponseEntity.ok(orderItemSaved);
-    }
 
-    public ResponseEntity<OrderItem> findOrderItemById(String orderItemId) {
-        Optional<OrderItem> orderItem = orderItemRepository.findById(orderItemId);
-        return orderItem.map(ResponseEntity::ok).orElse(null);
-    }
-
-    public ResponseEntity<OrderItem> updateOrderItemQuantity(String orderItemId, OrderItem orderItem) {
-        Optional<OrderItem> existingOrderItemOptional = orderItemRepository.findById(orderItemId);
+    public ResponseEntity<OrderItem> addToCart(AddToCartRequest request) {
+        String userId = request.userId();
+        String bookingId = request.bookingId();
+        Optional<OrderItem> existingOrderItemOptional = orderItemRepository.findByBookingId(bookingId);
         if (existingOrderItemOptional.isPresent()) {
-            OrderItem existingOrderItem = existingOrderItemOptional.get();
-            existingOrderItem.setQuantity(orderItem.getQuantity());
-            OrderItem updatedOrderItem = orderItemRepository.save(existingOrderItem);
-            return ResponseEntity.ok(updatedOrderItem);
+            return ResponseEntity.ok(updateOrderItemQuantity(existingOrderItemOptional.get()));
         }
-        return ResponseEntity.notFound().build();
+        Optional<Order> existingOrderOptional = orderRepository.findByUserId(userId);
+        if (existingOrderOptional.isPresent()) {
+            return ResponseEntity.ok(createNewOrderItem(bookingId, existingOrderOptional.get().getId()));
+        }
+
+        Order savedOrder = orderRepository.save(Order.builder().userId(userId).build());
+        return ResponseEntity.ok(createNewOrderItem(bookingId, savedOrder.getId()));
+    }
+
+    private OrderItem updateOrderItemQuantity(OrderItem existingOrderItem) {
+        existingOrderItem.setQuantity(existingOrderItem.getQuantity() + 1);
+        return orderItemRepository.save(existingOrderItem);
+    }
+
+    private OrderItem createNewOrderItem(String bookingId, String orderId) {
+        return orderItemRepository.save(orderMapper.toNewOrderItem(bookingId, 1, orderId));
     }
 
 
-//    @Override
-//    public ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId) {
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//
-//        if (order != null) {
-//            List<OrderItem> orderItems = order.getItems();
-//            return ResponseEntity.ok(orderItems);
-//        }
-//        return null;
-//    }
-
-//    public ResponseEntity<OrderItem> addOrderItem(String orderId, OrderItem orderItem) {
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//        if (order != null) {
-//            order.getItems().add(orderItem);
-//            orderRepository.save(order);
-//            return ResponseEntity.ok(orderItem);
-//        }
-//        return null;
-//    }
-
-//    @Override
-//    public void removeOrderItem(String orderId, String bookingId) {
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//        if (order != null) {
-//            order.getItems().removeIf(item -> item.getBookingId().equals(bookingId));
-//            orderRepository.save(order);
-//        }
-//    }
-//
-//    @Override
-//    public void updateOrderItemQuantity(String orderId, String productId, int newQuantity) {
-//        Order order = orderRepository.findById(orderId).orElse(null);
-//        if (order != null) {
-//            List<OrderItem> items = order.getItems();
-//            for (OrderItem item : items) {
-//                if (item.getBookingId().equals(productId)) {
-//                    item.setQuantity(newQuantity);
-//                    break;
-//                }
-//            }
-//            orderRepository.save(order);
-//        }
-//    }
 }

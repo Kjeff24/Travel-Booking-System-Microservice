@@ -1,21 +1,10 @@
 package com.bexos.cartservice.services;
 
+import com.bexos.cartservice.dto.AddToCartRequest;
 import com.bexos.cartservice.models.OrderItem;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
-
 public interface OrderItemService {
 
-    ResponseEntity<OrderItem> addOrderItem(OrderItem orderItem);
-
-    ResponseEntity<OrderItem> findOrderItemById(String orderItemId);
-
-    ResponseEntity<OrderItem> updateOrderItemQuantity(String orderItemId, OrderItem orderItem);
-//    ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId);
-
-
-//    void removeOrderItem(String orderId, String bookingId);
-//
-//    void updateOrderItemQuantity(String orderId, String productId, int newQuantity);
+    ResponseEntity<OrderItem> addToCart(AddToCartRequest request);
 }

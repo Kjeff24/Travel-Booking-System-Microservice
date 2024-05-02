@@ -28,7 +28,7 @@
           Location: <span>{{ hotelItem.location }}</span> | room Type: <span>{{ hotelItem.roomType }}</span>
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap">
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(hotelItem.id)">
         <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
       </button>
     </div>
