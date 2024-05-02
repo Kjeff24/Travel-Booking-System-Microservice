@@ -30,7 +30,6 @@ export class HotelComponent implements OnInit{
     this.getLogged();
     this.bookingService.getAllHotel().subscribe({
       next: (data: HotelItem[]) => {
-        console.log('Data received');
         this.hotelList = data;
         this.filteredHotelList = this.hotelList;
       },
@@ -65,8 +64,8 @@ export class HotelComponent implements OnInit{
     if(this.isLoggedIn){
       this.bookingService.addToCart({userId: this.userId, bookingId}).subscribe({
         next: (data:any) => {
-          console.log(data.body)
-          this.orderItem = data.body
+          this.orderItem = data.body;
+          window.location.reload();
         }
       })
     }

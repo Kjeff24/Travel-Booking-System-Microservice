@@ -6,6 +6,7 @@ import { HttpParams } from '@angular/common/http';
 import { TokenService } from '../../services/token/token.service';
 import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
+import { BookingService } from '../../services/booking/booking.service';
 
 const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
@@ -24,7 +25,8 @@ export class NavbarComponent implements OnInit {
   isLoggedIn: boolean;
   isAdmin: boolean;
   isCustomer: boolean;
-  userId: String;
+  userId: string;
+  totalCartsItem: number;
 
   params: any = {
     client_id: environment.client_id,
@@ -38,11 +40,13 @@ export class NavbarComponent implements OnInit {
   loginObj: Login;
 
   constructor(
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private bookingService: BookingService
   ){}
 
   ngOnInit(): void {
     this.getLogged();
+    this.getCartsTotalQuantity();
   }
 
   onSignUp(): void{
@@ -73,6 +77,16 @@ export class NavbarComponent implements OnInit {
     this.isAdmin = this.tokenService.isAdmin();
     this.isCustomer = this.tokenService.isCustomer();
     this.userId = this.tokenService.getUserId();
+  }
+
+  getCartsTotalQuantity(): void{
+    this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
+      next : (data: any) => {
+        this.totalCartsItem = data.body;
+        console.log(this.totalCartsItem);
+      }
+
+    })
   }
 
   generateCodeVerifier(): string{

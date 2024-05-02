@@ -31,7 +31,6 @@ export class CarRentalComponent implements  OnInit {
     this.getLogged();
     this.bookingService.getAllCarRental().subscribe({
       next: (data: CarRentalItem[]) => {
-        console.log('Data received');
         this.carRentalList = data;
         this.filteredCarRentalList = this.carRentalList
       },
@@ -64,8 +63,8 @@ export class CarRentalComponent implements  OnInit {
     if(this.isLoggedIn){
       this.bookingService.addToCart({userId: this.userId, bookingId}).subscribe({
         next: (data:any) => {
-          console.log(data.body)
-          this.orderItem = data.body
+          this.orderItem = data.body;
+          window.location.reload();
         }
       })
     }

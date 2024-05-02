@@ -39,6 +39,15 @@ export class BookingService {
     );
   }
 
+  public getCartsTotalQuantity(userId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/order-service/order-items/get-order-quantity/${userId}`,
+      { headers, observe: 'response' }
+    );
+  }
+
   public addToCart(data: any): Observable<any> {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);

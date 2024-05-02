@@ -9,8 +9,8 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 @Data
 @Builder
-@TypeAlias("Order")
-@Document(value = "Order")
+@TypeAlias("Orders")
+@Document(value = "Orders")
 public class Order {
     @Id
     private String id;
