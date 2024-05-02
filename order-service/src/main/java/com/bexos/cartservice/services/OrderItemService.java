@@ -7,9 +7,11 @@ import java.util.List;
 
 public interface OrderItemService {
 
-    ResponseEntity<OrderItem> addOrderItem(String orderId, OrderItem orderItem);
+    ResponseEntity<OrderItem> addOrderItem(OrderItem orderItem);
 
     ResponseEntity<OrderItem> findOrderItemById(String orderItemId);
+
+    ResponseEntity<OrderItem> updateOrderItemQuantity(String orderItemId, OrderItem orderItem);
 //    ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId);
 
 

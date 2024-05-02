@@ -3,6 +3,7 @@ import { AccommodationItem } from '../../models/accommodation-item';
 import { BookingService } from '../../services/booking/booking.service';
 import { CommonModule } from '@angular/common';
 import { TokenService } from '../../services/token/token.service';
+import { Order } from '../../models/order';
 import { OrderItem } from '../../models/order-item';
 
 @Component({
@@ -19,7 +20,8 @@ export class AccommodationComponent implements OnInit {
   isAdmin: boolean;
   isCustomer: boolean;
   userId: string;
-  orders: OrderItem;
+  order: Order;
+  orderItem: OrderItem;
 
   constructor(
     private bookingService: BookingService,
@@ -62,17 +64,54 @@ export class AccommodationComponent implements OnInit {
   }
 
   addItemToCart(bookingId: string): void {
+    if (!this.orderItem) {
+      this.addOrderItem(bookingId);
+      return;
+    }
+    this.bookingService.findOrderItemById(this.orderItem.id).subscribe({
+      next: (data: OrderItem) => {
+        const updatedQuantity = this.orderItem.quantity + 1;
+        this.updateOrderItem(updatedQuantity);
+      },
+      error: (error: any) => {
+        if (error.status === 404) {
+          this.addOrderItem(bookingId);
+        }
+      },
+    });
+  }
+
+  updateOrderItem(updatedQuantity: number): void {
     this.bookingService
-        .addOrderItem(this.orders.id, { bookingId: bookingId, quantity: 1 })
-        .subscribe({
-          next: () => {
-            alert('Booking added to cart');
-            window.location.reload();
-          },
-          error: (e: string) => {
-            alert(`Failed to add the booking`);
-          },
-        });
+      .updateOrderItem(this.orderItem.id, { quantity: updatedQuantity })
+      .subscribe({
+        next: (newdata: any) => {
+          this.orderItem = newdata.body;
+        },
+        error: (error: string) => {
+          console.log('failed to update');
+        },
+      });
+  }
+
+  addOrderItem(bookingId: string): void {
+    console.log('Hello from addOrderItem');
+    this.bookingService
+      .addOrderItem({
+        bookingId: bookingId,
+        quantity: 1,
+        orderId: this.order.id,
+      })
+      .subscribe({
+        next: (data) => {
+          console.log('Booking added to cart');
+          this.orderItem = data.body;
+          console.log(this.orderItem);
+        },
+        error: (e: string) => {
+          console.log(`Failed to add the booking`);
+        },
+      });
   }
 
   createOrder(bookingId: string): void {
@@ -81,20 +120,20 @@ export class AccommodationComponent implements OnInit {
       this.bookingService.findOrderByUserId(this.userId).subscribe({
         next: (data: any) => {
           console.log('Orders found:', data.body);
-          this.orders = data.body;
-          console.log("id oo")
-          console.log(data.body.id)
+          this.order = data.body;
+          console.log('id oo');
+          console.log(this.order.id);
           this.addItemToCart(bookingId);
         },
         error: (error: any) => {
           if (error.status === 404) {
-            console.log('No orders found, creating new order...');
+            console.log('No order found, creating new order...');
             this.bookingService.createOrder({ userId: this.userId }).subscribe({
               next: (data: any) => {
                 console.log('New order created:', data.body);
-                this.orders = data.body;
-                console.log("id oo")
-                console.log(data.body.id)
+                this.order = data.body;
+                console.log('id oo');
+                console.log(data.body.id);
                 this.addItemToCart(bookingId);
               },
               error: (err: any) => {
@@ -102,7 +141,7 @@ export class AccommodationComponent implements OnInit {
               },
             });
           } else {
-            console.log('Error finding orders:', error);
+            console.log('Error finding order:', error);
           }
         },
       });

@@ -12,6 +12,8 @@ import java.util.List;
 
 @Data
 @Builder
+@TypeAlias("Order")
+@Document(value = "Order")
 public class Order {
     @Id
     private String id;

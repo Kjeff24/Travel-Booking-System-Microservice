@@ -44,7 +44,6 @@ public class ClientService implements RegisteredClientRepository {
         return new MessageDto("client " + client.getClientId() + " saved");
     }
 
-    // private methods
     private Client clientFromDto(CreateClientDto dto) {
         return Client.builder()
                 .clientId(dto.getClientId())

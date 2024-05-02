@@ -3,9 +3,8 @@ package com.bexos.authserver.controllers;
 import com.bexos.authserver.dto.FormChangePasswordDto;
 import com.bexos.authserver.dto.FormRegisterDto;
 import com.bexos.authserver.repositories.UserRepository;
-import com.bexos.authserver.services.UserServiceImpl;
+import com.bexos.authserver.services.UserService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +16,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 public class AuthController {
 
-    private final UserServiceImpl userServiceImpl;
+    private final UserService userService;
     private final UserRepository userRepository;
 
     @GetMapping("/login")
@@ -50,13 +49,13 @@ public class AuthController {
         } else if (userRepository.existsByUsernameIgnoreCase(user.getUsername())) {
             model.addAttribute("error", "User with this username already exists.");
 
-        } else if (!userServiceImpl.validate(user.getPassword())) {
+        } else if (!userService.validate(user.getPassword())) {
             model.addAttribute(
                     "error",
                     "Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");
 
         } else {
-            userServiceImpl.form_register(user);
+            userService.form_register(user);
             model.addAttribute(
                     "success",
                     "Registration was successful, verification email has been sent to your account.");
@@ -65,13 +64,12 @@ public class AuthController {
         return "signup";
     }
 
-    @RequestMapping(value="/confirm-account", method= {RequestMethod.GET, RequestMethod.POST})
-    public String confirmUserAccount(@RequestParam("token")String confirmationToken, Model model) {
-        Map<String, String> message = userServiceImpl.confirmEmail(confirmationToken);
+    @RequestMapping(value = "/confirm-account", method = {RequestMethod.GET, RequestMethod.POST})
+    public String confirmUserAccount(@RequestParam("token") String confirmationToken, Model model) {
+        Map<String, String> message = userService.confirmEmail(confirmationToken);
         if (message.get("error") != null) {
             model.addAttribute("error", message.get("error"));
-        }
-        else {
+        } else {
             model.addAttribute("success", message.get("success"));
         }
         return "confirm-email";
@@ -87,11 +85,10 @@ public class AuthController {
 
     @PostMapping("/change-password/{userId}")
     public String formChangePassword(@PathVariable("userId") String userId, @ModelAttribute("passwordRequest") FormChangePasswordDto passwordField, Model model) {
-        Map<String, String> message = userServiceImpl.changePassword(passwordField, userId);
-        if(message.get("error") != null) {
+        Map<String, String> message = userService.changePassword(passwordField, userId);
+        if (message.get("error") != null) {
             model.addAttribute("error", message.get("error"));
-        }
-        else {
+        } else {
             model.addAttribute("success", message.get("success"));
         }
         return "change-password";

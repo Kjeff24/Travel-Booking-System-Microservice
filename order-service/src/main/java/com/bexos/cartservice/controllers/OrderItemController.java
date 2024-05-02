@@ -17,15 +17,23 @@ public class OrderItemController {
 
     private final OrderItemService orderItemService;
 
-    @PostMapping("/{orderId}")
-    public ResponseEntity<OrderItem> addOrderItem(@PathVariable("orderId") String orderId, @RequestBody OrderItem orderItem) {
-        return orderItemService.addOrderItem(orderId, orderItem);
+    @PostMapping
+    public ResponseEntity<OrderItem> addOrderItem(@RequestBody OrderItem orderItem) {
+
+        return orderItemService.addOrderItem(orderItem);
     }
 
-    @GetMapping("/")
-    public ResponseEntity<OrderItem> findOrderItemById(String orderItemId) {
+    @GetMapping("find-by-id/{orderItemId}")
+    public ResponseEntity<OrderItem> findOrderItemById(@PathVariable String orderItemId) {
         return orderItemService.findOrderItemById(orderItemId);
     }
+
+    @PatchMapping("update-order-quantity/{orderItemId}")
+    public ResponseEntity<OrderItem> updateOrderItemQuantity(@PathVariable String orderItemId, @RequestBody OrderItem orderItem) {
+        return orderItemService.updateOrderItemQuantity(orderItemId, orderItem);
+    }
+
+
 
 //    @GetMapping("/{orderId}")
 //    public ResponseEntity<List<OrderItem>> getOrderItem(@PathVariable("orderId") String orderId) {

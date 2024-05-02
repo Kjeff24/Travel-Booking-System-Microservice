@@ -1,6 +1,5 @@
 package com.bexos.cartservice.services;
 
-import com.bexos.cartservice.models.Order;
 import com.bexos.cartservice.models.OrderItem;
 import com.bexos.cartservice.repositories.OrderItemRepository;
 import com.bexos.cartservice.repositories.OrderRepository;
@@ -8,7 +7,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -18,19 +16,27 @@ public class OrderItemServiceImpl implements OrderItemService {
     private final OrderRepository orderRepository;
     private final OrderItemRepository orderItemRepository;
 
-    public ResponseEntity<OrderItem> addOrderItem(String orderId, OrderItem orderItem) {
-        Order order = orderRepository.findById(orderId).orElse(null);
-        if (order != null) {
-            orderItemRepository.save(orderItem);
-            return ResponseEntity.ok(orderItem);
-        }
-        return null;
+    public ResponseEntity<OrderItem> addOrderItem(OrderItem orderItem) {
+        OrderItem orderItemSaved = orderItemRepository.save(orderItem);
+        return ResponseEntity.ok(orderItemSaved);
     }
 
     public ResponseEntity<OrderItem> findOrderItemById(String orderItemId) {
         Optional<OrderItem> orderItem = orderItemRepository.findById(orderItemId);
         return orderItem.map(ResponseEntity::ok).orElse(null);
     }
+
+    public ResponseEntity<OrderItem> updateOrderItemQuantity(String orderItemId, OrderItem orderItem) {
+        Optional<OrderItem> existingOrderItemOptional = orderItemRepository.findById(orderItemId);
+        if (existingOrderItemOptional.isPresent()) {
+            OrderItem existingOrderItem = existingOrderItemOptional.get();
+            existingOrderItem.setQuantity(orderItem.getQuantity());
+            OrderItem updatedOrderItem = orderItemRepository.save(existingOrderItem);
+            return ResponseEntity.ok(updatedOrderItem);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
 
 //    @Override
 //    public ResponseEntity<List<OrderItem>> getOrderItemsByOrderId(String orderId) {

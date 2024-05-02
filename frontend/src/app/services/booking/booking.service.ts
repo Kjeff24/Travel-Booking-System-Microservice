@@ -41,10 +41,22 @@ export class BookingService {
     return this.httpClient.get<any>(this.gateway_url + `/api/order-service/orders/find-by-userId/${id}`, { headers, observe: "response" })
   }
 
-  public addOrderItem(orderId: string, data: any): Observable<any>{
+  public addOrderItem(data: any): Observable<any>{
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
-    return this.httpClient.post<any>(this.gateway_url + `/api/order-service/order-items/${orderId}`, data, { headers, observe: "response"  })
+    return this.httpClient.post<any>(this.gateway_url + '/api/order-service/order-items', data, { headers, observe: "response"  })
+  }
+
+  public updateOrderItem(orderItemId: string, data: any): Observable<any>{
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.patch<any>(this.gateway_url + `/api/order-service/order-items/update-order-quantity/${orderItemId}`, data, { headers, observe: "response"  })
+  }
+
+  public findOrderItemById(id:string): Observable<any>{
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(this.gateway_url + `/api/order-service/order-items/find-by-id/${id}`, { headers, observe: "response" })
   }
 
   public getBookingHello(): Observable<any> {

@@ -1,4 +1,6 @@
 export interface OrderItem{
-    id: string;
-    userId: string;
+    id: string,
+    bookingId: string,
+    quantity: number,
+    orderId: string,
 }
