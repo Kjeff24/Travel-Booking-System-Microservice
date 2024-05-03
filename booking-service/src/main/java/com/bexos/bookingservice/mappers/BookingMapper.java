@@ -46,7 +46,7 @@ public class BookingMapper {
         return CarRental.builder()
                 .carType(carRentalRequest.carType())
                 .carImage(carRentalRequest.carImage())
-                .pricePerDay(carRentalRequest.pricePerDay())
+                .price(carRentalRequest.price())
                 .categoryId(carRentalRequest.categoryId())
                 .build();
     }

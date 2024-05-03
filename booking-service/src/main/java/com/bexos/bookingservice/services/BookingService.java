@@ -4,6 +4,7 @@ import com.bexos.bookingservice.dto.AccommodationRequest;
 import com.bexos.bookingservice.dto.CarRentalRequest;
 import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.dto.HotelRequest;
+import com.bexos.bookingservice.models.Booking;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
@@ -28,4 +29,6 @@ public interface BookingService {
     ResponseEntity<List<CarRental>> findAllCarRentals();
 
     ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest);
+
+    ResponseEntity<?> findBookingOfferById(String bookingId);
 }

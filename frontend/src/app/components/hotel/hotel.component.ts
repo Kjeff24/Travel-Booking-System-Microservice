@@ -60,9 +60,9 @@ export class HotelComponent implements OnInit{
     );
   }
 
-  addToCart(bookingId: string): void {
+  addToCart(bookingId: string, price: number): void {
     if(this.isLoggedIn){
-      this.bookingService.addToCart({userId: this.userId, bookingId}).subscribe({
+      this.bookingService.addToCart({userId: this.userId, bookingId, price}).subscribe({
         next: (data:any) => {
           this.orderItem = data.body;
           window.location.reload();

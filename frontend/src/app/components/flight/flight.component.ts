@@ -4,6 +4,7 @@ import { FlightItem } from '../../models/flight-item';
 import { BookingService } from '../../services/booking/booking.service';
 import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
+import { producerNotifyConsumers } from '@angular/core/primitives/signals';
 
 @Component({
   selector: 'app-flight',
@@ -60,9 +61,9 @@ export class FlightComponent {
     this.userId = this.tokenService.getUserId();
   }
 
-  addToCart(bookingId: string): void {
+  addToCart(bookingId: string, price: number): void {
     if(this.isLoggedIn){
-      this.bookingService.addToCart({userId: this.userId, bookingId}).subscribe({
+      this.bookingService.addToCart({userId: this.userId, bookingId, producerNotifyConsumers}).subscribe({
         next: (data:any) => {
           this.orderItem = data.body;
           window.location.reload();

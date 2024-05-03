@@ -14,7 +14,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document
 public class CarRental extends Booking {
     private String carType;
-    private double pricePerDay;
+    private double price;
     private String carImage;
     private String categoryId;
 

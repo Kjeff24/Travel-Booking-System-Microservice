@@ -2,6 +2,7 @@ package com.bexos.cartservice.dto;
 
 public record AddToCartRequest(
         String userId,
-        String bookingId
+        String bookingId,
+        int price
 ) {
 }

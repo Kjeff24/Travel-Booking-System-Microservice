@@ -5,7 +5,7 @@
           class="form-control"
           type="text"
           placeholder="Search for items..."
-          
+
       #filter
           aria-label="Search"
         />
@@ -22,13 +22,13 @@
       <img src="https://images.pexels.com/photos/170811/pexels-photo-170811.jpeg?cs=srgb&dl=pexels-mikebirdy-170811.jpg&fm=jpg" class="image-fluid" alt="car-image">
       <div class="d-flex align-items-center justify-content-between">
         <div class="booking-title">
-          <span>$ {{ carRentalItem.pricePerDay }}</span>
+          <span>$ {{ carRentalItem.price }}</span>
         </div>
         <div class="description">
           {{ carRentalItem.carType }}
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(carRentalItem.id)">
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(carRentalItem.id, carRentalItem.price)">
         <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
       </button>
     </div>

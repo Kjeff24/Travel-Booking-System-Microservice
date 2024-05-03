@@ -8,14 +8,15 @@ import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
 import { BookingService } from '../../services/booking/booking.service';
 
-const CHARACTERS = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+const CHARACTERS =
+  'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
 
 @Component({
   selector: 'app-navbar',
   standalone: true,
   imports: [RouterLink, RouterModule, CommonModule],
   templateUrl: './navbar.component.html',
-  styleUrl: './navbar.component.css'
+  styleUrl: './navbar.component.css',
 })
 export class NavbarComponent implements OnInit {
   signup_uri = environment.auth_server_uri + '/signup';
@@ -34,31 +35,30 @@ export class NavbarComponent implements OnInit {
     scope: environment.scope,
     response_type: environment.response_type,
     response_mode: environment.response_mode,
-    code_challenge_method: environment.code_challenge_method
-  }
-  
+    code_challenge_method: environment.code_challenge_method,
+  };
+
   loginObj: Login;
 
   constructor(
     private tokenService: TokenService,
     private bookingService: BookingService
-  ){}
+  ) {}
 
   ngOnInit(): void {
     this.getLogged();
     this.getCartsTotalQuantity();
   }
 
-  onSignUp(): void{
+  onSignUp(): void {
     location.href = this.signup_uri;
   }
 
-
-  onLogin(): void{
+  onLogin(): void {
     const code_verifier = this.generateCodeVerifier();
     this.tokenService.setCodeVerifier(code_verifier);
     this.params.code_challenge = this.generateCodeChallenge(code_verifier);
-    const httpParams = new HttpParams({fromObject: this.params})
+    const httpParams = new HttpParams({ fromObject: this.params });
     const codeUrl = this.authorize_uri + httpParams.toString();
     location.href = codeUrl;
   }
@@ -68,43 +68,44 @@ export class NavbarComponent implements OnInit {
     location.href = this.logout_uri;
   }
 
-  onChangePassword(): void{
+  onChangePassword(): void {
     location.href = this.change_password_uri + '/' + this.userId;
   }
 
-  getLogged(): void{
+  getLogged(): void {
     this.isLoggedIn = this.tokenService.isLoggedIn();
     this.isAdmin = this.tokenService.isAdmin();
     this.isCustomer = this.tokenService.isCustomer();
     this.userId = this.tokenService.getUserId();
   }
 
-  getCartsTotalQuantity(): void{
-    this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
-      next : (data: any) => {
-        this.totalCartsItem = data.body;
-        console.log(this.totalCartsItem);
-      }
-
-    })
+  getCartsTotalQuantity(): void {
+    if (this.isLoggedIn) {
+      this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
+        next: (data: any) => {
+          this.totalCartsItem = data.body;
+        },
+      });
+    }
   }
 
-  generateCodeVerifier(): string{
+  generateCodeVerifier(): string {
     let result = '';
     const char_length = CHARACTERS.length;
-    for(let i =0; i < 44; i++) {
+    for (let i = 0; i < 44; i++) {
       result += CHARACTERS.charAt(Math.floor(Math.random() * char_length));
     }
     return result;
   }
 
   generateCodeChallenge(code_verifier: string): string {
-    const codeverifierHash = CryptoJS.SHA256(code_verifier).toString(CryptoJS.enc.Base64);
+    const codeverifierHash = CryptoJS.SHA256(code_verifier).toString(
+      CryptoJS.enc.Base64
+    );
     const code_challenge = codeverifierHash
-    .replace(/=/g, '')
-    .replace(/\+/g, '-')
-    .replace(/\//g, '_');
+      .replace(/=/g, '')
+      .replace(/\+/g, '-')
+      .replace(/\//g, '_');
     return code_challenge;
   }
-
 }

@@ -24,6 +24,5 @@ eureka:
     hostname: localhost
     instance-id: ${spring.application.name}:${random.uuid}
 
-server.port: 0
 # Below property will enable us to access the /actuator/refresh endpoint
 management.endpoints.web.exposure.include: "*"

@@ -7,9 +7,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 @EnableMethodSecurity
@@ -21,7 +18,9 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/booking-service/accommodation/**",
+                        .requestMatchers(
+                                "/api/booking-service/find-by-id/**",
+                                "/api/booking-service/accommodation/**",
                                 "/api/booking-service/hotel/**",
                                 "/api/booking-service/flight/**",
                                 "/api/booking-service/car-rental/**").permitAll()

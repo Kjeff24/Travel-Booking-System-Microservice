@@ -17,4 +17,5 @@ public class CartItem {
     private String bookingId;
     private int quantity;
     private String orderId;
+    private double totalPrice;
 }

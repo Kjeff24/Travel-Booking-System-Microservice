@@ -2,6 +2,6 @@ export interface CarRentalItem{
     id: string,
     carType: string,
     carImage: string,
-    pricePerDay: DoubleRange,
+    price: number,
     categoryId: string
 }

@@ -25,7 +25,6 @@ export class StoreComponent implements OnInit{
     
     this.categoryService.getAllCategory().subscribe({
       next: (data: CategoryItem[]) => {
-        console.log('Data received');
         this.categoryItemList = data;
       },
       error: () => {

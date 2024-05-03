@@ -30,19 +30,19 @@
                       <th class="product-remove">Remove</th>
                     </tr>
                   </thead>
-                  <tbody>
+                  <tbody *ngFor="let accommodationCartItem of accommodationCartItemList">
                     <tr>
                       <td class="product-thumbnail ">
                         <img
-                          src="../assets/products/bagpack.jpg"
+                          src=""
                           alt="Image"
                           class="img-fluid col-md-6"
                         />
                       </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">Backpack</h2>
+                        <h2 class="h5 text-black">{{ accommodationCartItem.location }}</h2>
                       </td>
-                      <td>GHS 50.00</td>
+                      <td>GHS {{ accommodationCartItem.price }}</td>
                       <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
@@ -50,6 +50,7 @@
                               data-action="remove"
                               class="btn btn-outline-dark js-btn-minus update-cart"
                               type="button"
+                              (click)="decreaseCartItem(accommodationCartItem.id, accommodationCartItem.price)"
                             >
                               &minus;
                             </button>
@@ -57,7 +58,7 @@
                           <input
                             type="text"
                             class="form-control text-center"
-                            value="3"
+                            value="{{ accommodationCartItem.quantity }}"
                             placeholder=""
                             aria-label="Example text with button addon"
                             aria-describedby="button-addon1"
@@ -68,33 +69,36 @@
                               data-action="add"
                               class="btn btn-outline-dark js-btn-plus update-cart"
                               type="button"
+                              (click)="increaseCartItem(accommodationCartItem.id, accommodationCartItem.price)"
                             >
                               &plus;
                             </button>
                           </div>
                         </div>
                       </td>
-                      <td>GHS 150.00</td>
+                      <td>GHS {{accommodationCartItem.totalPrice}}</td>
                       <td>
                         <a
-                          data-action="delete"
                           class="btn btn-dark height-auto btn-sm update-cart"
+                          (click)="removeCartItem(accommodationCartItem.id)"
                           >X</a
                         >
                       </td>
                     </tr>
+                  </tbody>
+                  <tbody *ngFor="let hotelItem of hotelCartItemList">
                     <tr>
-                      <td class="product-thumbnail">
+                      <td class="product-thumbnail ">
                         <img
-                          src="../assets/products/hp_deskjet.jpg"
+                          src=""
                           alt="Image"
                           class="img-fluid col-md-6"
                         />
                       </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">HP deskjet</h2>
+                        <h2 class="h5 text-black">{{ hotelItem.hotelName }}</h2>
                       </td>
-                      <td>GHS 150.00</td>
+                      <td>GHS {{ hotelItem.price }}</td>
                       <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
@@ -102,6 +106,7 @@
                               data-action="remove"
                               class="btn btn-outline-dark js-btn-minus update-cart"
                               type="button"
+                              (click)="decreaseCartItem(hotelItem.id, hotelItem.price)"
                             >
                               &minus;
                             </button>
@@ -109,7 +114,7 @@
                           <input
                             type="text"
                             class="form-control text-center"
-                            value="2"
+                            value="{{ hotelItem.quantity }}"
                             placeholder=""
                             aria-label="Example text with button addon"
                             aria-describedby="button-addon1"
@@ -120,33 +125,36 @@
                               data-action="add"
                               class="btn btn-outline-dark js-btn-plus update-cart"
                               type="button"
+                              (click)="increaseCartItem(hotelItem.id, hotelItem.price)"
                             >
                               &plus;
                             </button>
                           </div>
                         </div>
                       </td>
-                      <td>GHS 300.00</td>
+                      <td>GHS {{hotelItem.totalPrice}}</td>
                       <td>
                         <a
-                          data-action="delete"
                           class="btn btn-dark height-auto btn-sm update-cart"
+                          (click)="removeCartItem(hotelItem.id)"
                           >X</a
                         >
                       </td>
                     </tr>
+                  </tbody>
+                  <tbody *ngFor="let carRental of carRentalCartItemList">
                     <tr>
-                      <td class="product-thumbnail">
+                      <td class="product-thumbnail ">
                         <img
-                          src="../assets/products/led_mouse.jpg"
+                          src=""
                           alt="Image"
-                          class="img- col-md-6"
+                          class="img-fluid col-md-6"
                         />
                       </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">LED mouse</h2>
+                        <h2 class="h5 text-black">{{ carRental.carType }}</h2>
                       </td>
-                      <td>GHS 25.00</td>
+                      <td>GHS {{ carRental.price }}</td>
                       <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
@@ -154,6 +162,7 @@
                               data-action="remove"
                               class="btn btn-outline-dark js-btn-minus update-cart"
                               type="button"
+                              (click)="decreaseCartItem(carRental.id, carRental.price)"
                             >
                               &minus;
                             </button>
@@ -161,7 +170,7 @@
                           <input
                             type="text"
                             class="form-control text-center"
-                            value="1"
+                            value="{{ carRental.quantity }}"
                             placeholder=""
                             aria-label="Example text with button addon"
                             aria-describedby="button-addon1"
@@ -172,17 +181,74 @@
                               data-action="add"
                               class="btn btn-outline-dark js-btn-plus update-cart"
                               type="button"
+                              (click)="increaseCartItem(carRental.id, carRental.price)"
                             >
                               &plus;
                             </button>
                           </div>
                         </div>
                       </td>
-                      <td>GHS 25.00</td>
+                      <td>GHS {{carRental.totalPrice}}</td>
                       <td>
                         <a
-                          data-action="delete"
                           class="btn btn-dark height-auto btn-sm update-cart"
+                          (click)="removeCartItem(carRental.id)"
+                          >X</a
+                        >
+                      </td>
+                    </tr>
+                  </tbody>
+                  <tbody *ngFor="let hotelItem of hotelCartItemList">
+                    <tr>
+                      <td class="product-thumbnail ">
+                        <img
+                          src=""
+                          alt="Image"
+                          class="img-fluid col-md-6"
+                        />
+                      </td>
+                      <td class="product-name">
+                        <h2 class="h5 text-black">{{ hotelItem.hotelName }}</h2>
+                      </td>
+                      <td>GHS {{ hotelItem.price }}</td>
+                      <td>
+                        <div class="input-group mb-3" style="max-width: 120px">
+                          <div class="input-group-prepend">
+                            <button
+                              data-action="remove"
+                              class="btn btn-outline-dark js-btn-minus update-cart"
+                              type="button"
+                              (click)="decreaseCartItem(hotelItem.id, hotelItem.price)"
+                            >
+                              &minus;
+                            </button>
+                          </div>
+                          <input
+                            type="text"
+                            class="form-control text-center"
+                            value="{{ hotelItem.quantity }}"
+                            placeholder=""
+                            aria-label="Example text with button addon"
+                            aria-describedby="button-addon1"
+                            readonly
+                          />
+                          <div class="input-group-append">
+                            <button
+                              data-action="add"
+                              class="btn btn-outline-dark js-btn-plus update-cart"
+                              type="button"
+                              (click)="increaseCartItem(hotelItem.id, hotelItem.price)"
+                            >
+                              &plus;
+                            </button>
+                          </div>
+                        </div>
+                      </td>
+                      <td>GHS {{hotelItem.totalPrice}}</td>
+                      <td>
+                        <a
+                          class="btn btn-dark height-auto btn-sm update-cart"
+                          (click)="removeCartItem(hotelItem.id)"
                           >X</a
                         >
                       </td>
@@ -196,29 +262,11 @@
           <div class="row">
             <div class="col-md-6">
               <div class="row mb-5">
+                
                 <div class="col-md-6">
-                    <a [routerLink]="['/store']" class="btn btn-outline-dark btn-md btn-block js-logo-clone"
+                    <a [routerLink]="['/store/category/accommodation']" class="btn btn-outline-dark btn-md btn-block js-logo-clone"
                       >Continue Shopping</a
                     >
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-md-12">
-                  <label class="text-black h4" for="coupon">Coupon</label>
-                  <p>Enter your coupon code if you have one.</p>
-                </div>
-                <div class="col-md-8 mb-3 mb-md-0">
-                  <input
-                    type="text"
-                    class="form-control py-3"
-                    id="coupon"
-                    placeholder="Coupon Code"
-                  />
-                </div>
-                <div class="col-md-4">
-                  <button class="btn btn-dark btn-md px-4">
-                    Apply Coupon
-                  </button>
                 </div>
               </div>
             </div>
@@ -236,7 +284,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                       <strong class="text-black"
-                        >6</strong
+                        >{{ totalCartItems }}</strong
                       >
                     </div>
                   </div>
@@ -246,7 +294,7 @@
                     </div>
                     <div class="col-md-6 text-right">
                       <strong class="text-black"
-                        >GHS 375.00</strong
+                        >GHS {{ totalCartItemsPrice }}</strong
                       >
                     </div>
                   </div>

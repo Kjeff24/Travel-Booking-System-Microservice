@@ -7,7 +7,7 @@ public record CarRentalRequest(
         @NotEmpty(message = "This field is required")
         String carType,
         @NotNull(message = "This field is required")
-        double pricePerDay,
+        double price,
         @NotEmpty(message = "This field is required")
         String carImage,
         @NotEmpty(message = "This field is required")

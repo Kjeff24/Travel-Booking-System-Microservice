@@ -13,4 +13,10 @@ public interface OrderService {
     ResponseEntity<Integer> findCartItemsQuantity(String userId);
 
     ResponseEntity<List<CartItem>> findCartItems(String userId);
+
+    ResponseEntity<Integer> findCartItemsTotalPrice(String userId);
+
+    ResponseEntity<Void> deleteFromCart(String bookingId, String userId);
+
+    ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request);
 }

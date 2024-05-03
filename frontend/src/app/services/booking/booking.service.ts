@@ -48,6 +48,24 @@ export class BookingService {
     );
   }
 
+  public getCartItems(userId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/order-service/order-items/get-cart-items/${userId}`,
+      { headers, observe: 'response' }
+    );
+  }
+
+  public getCartItemsTotalPrice(userId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/order-service/order-items/get-total-price/${userId}`,
+      { headers, observe: 'response' }
+    );
+  }
+
   public addToCart(data: any): Observable<any> {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -55,6 +73,39 @@ export class BookingService {
       this.gateway_url + '/api/order-service/order-items/add-to-cart',
       data,
       { headers, observe: 'response' }
+    );
+  }
+
+  public removeCartItem(userId: string, bookingId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.delete<any>(
+      this.gateway_url + `/api/order-service/order-items/delete-from-cart?bookingId=${bookingId}&userId=${userId}`,
+      { headers }
+    );
+  }
+
+  public decreaseCartItem(data: any): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.patch<any>(
+      this.gateway_url + '/api/order-service/order-items/decrease-cart-item',
+      data,
+      { headers }
+    );
+  }
+
+  public getProductByBookingOfferId(bookingId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/booking-service/find-by-id/${bookingId}`,
+      {observe: 'response' }
+    );
+  }
+
+  public getCategoryById(categoryId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/category-service/${categoryId}`,
+      {observe: 'response' }
     );
   }
 

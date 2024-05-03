@@ -3,6 +3,6 @@ package com.bexos.cartservice.dto;
 import lombok.Data;
 
 @Data
-public class QuantitySum {
-    private int totalQuantity;
+public class CartTotalPriceSum {
+    private int totalPrice;
 }

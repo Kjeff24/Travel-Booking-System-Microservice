@@ -11,4 +11,6 @@ public interface CartItemRepository extends MongoRepository<CartItem, String> {
     Optional<CartItem> findByBookingIdAndOrderId(String bookingId, String orderId);
 
     List<CartItem> findAllByOrderId(String orderId);
+
+    void deleteByBookingIdAndOrderId(String bookingId, String orderId);
 }

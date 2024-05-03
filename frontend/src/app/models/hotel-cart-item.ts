@@ -1,8 +1,10 @@
-export interface HotelItem{
+export interface HotelCartItem{
     id: string,
     hotelName: string,
     location: string,
     roomType: string,
     price: number,
-    categoryId: string
+    categoryId: string,
+    quantity: string,
+    totalPrice: number
 }

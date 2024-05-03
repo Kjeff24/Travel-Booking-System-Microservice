@@ -5,6 +5,7 @@ import com.bexos.bookingservice.dto.CarRentalRequest;
 import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.dto.HotelRequest;
 import com.bexos.bookingservice.mappers.BookingMapper;
+import com.bexos.bookingservice.models.Booking;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
@@ -20,15 +21,19 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/booking-service")
 @RequiredArgsConstructor
-//@CrossOrigin(origins = "http://localhost:4200")
 public class BookingController {
     private final BookingService bookingService;
-    private final BookingMapper bookingMapper;
 
     @GetMapping("hello")
     public String hello() {
         return "Welcome to accommodation service secured";
     }
+
+    @GetMapping("/find-by-id/{bookingId}")
+    public ResponseEntity<?> findBookingOfferById(@PathVariable String bookingId) {
+        return bookingService.findBookingOfferById(bookingId);
+    }
+
 
     @GetMapping("/accommodation")
     public ResponseEntity<List<Accommodation>> findAllAccommodations() {

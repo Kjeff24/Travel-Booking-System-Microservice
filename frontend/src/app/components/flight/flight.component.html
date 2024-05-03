@@ -28,7 +28,7 @@
           {{ flightItem.departureCity }} | {{ flightItem.destinationCity }}
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(flightItem.id)">
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(flightItem.id, flightItem.price)">
         <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
       </button>
     </div>

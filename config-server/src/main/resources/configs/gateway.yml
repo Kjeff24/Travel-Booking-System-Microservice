@@ -45,8 +45,7 @@ spring:
             #            client-authentication-method: client_secret_basic
             scope: openid, profile
             redirect-uri: http://127.0.0.1:8765/login/oauth2/code/gateway-client
-server:
-  port: 8765
+
 # Generate a unique name for the instance
 eureka:
   instance:

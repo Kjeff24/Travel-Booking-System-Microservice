@@ -3,6 +3,6 @@ export interface AccommodationItem{
     location: string,
     type: string,
     capacity: string,
-    price: DoubleRange,
+    price: number,
     categoryId: string
 }

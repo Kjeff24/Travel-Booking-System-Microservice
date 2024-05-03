@@ -21,9 +21,24 @@ public class OrderController {
         return orderService.addToCart(request);
     }
 
+    @DeleteMapping("/delete-from-cart")
+    public ResponseEntity<Void> deleteFromCart(@RequestParam("bookingId") String bookingId, @RequestParam("userId") String userId) {
+        return orderService.deleteFromCart(bookingId, userId);
+    }
+
+    @PatchMapping("/decrease-cart-item")
+    public ResponseEntity<CartItem> decreaseCartItem(@RequestBody AddToCartRequest request) {
+        return orderService.decreaseCartItem(request);
+    }
+
+
     @GetMapping("/get-order-quantity/{userId}")
     public ResponseEntity<Integer> findCartItemsQuantity(@PathVariable String userId) {
         return orderService.findCartItemsQuantity(userId);
+    }
+    @GetMapping("/get-total-price/{userId}")
+    public ResponseEntity<Integer> findCartItemsTotalPrice(@PathVariable String userId) {
+        return orderService.findCartItemsTotalPrice(userId);
     }
 
     @GetMapping("/get-cart-items/{userId}")
