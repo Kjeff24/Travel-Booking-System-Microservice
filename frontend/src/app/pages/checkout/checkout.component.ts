@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { BookingService } from '../../services/booking/booking.service';
 import { TokenService } from '../../services/token/token.service';
+import { CartService } from '../../services/cart/cart.service';
 
 declare var PaystackPop: any;
 
@@ -13,10 +14,9 @@ declare var PaystackPop: any;
   standalone: true,
   imports: [CommonModule, RouterLink, NavbarComponent, FooterComponent],
   templateUrl: './checkout.component.html',
-  styleUrl: './checkout.component.css'
+  styleUrl: './checkout.component.css',
 })
-export class CheckoutComponent implements OnInit{
-  
+export class CheckoutComponent implements OnInit {
   isLoggedIn: boolean;
   isAdmin: boolean;
   isCustomer: boolean;
@@ -28,12 +28,11 @@ export class CheckoutComponent implements OnInit{
   email: string = '';
   amount: number = 0;
 
-
-
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService
-  ){}
+    private tokenService: TokenService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit(): void {
     this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
@@ -56,6 +55,8 @@ export class CheckoutComponent implements OnInit{
           this.totalCartItems = data.body;
         },
       });
+    } else {
+      this.totalCartItems = this.cartService.getTotalQuantity();
     }
   }
 
@@ -66,6 +67,8 @@ export class CheckoutComponent implements OnInit{
           this.totalCartItemsPrice = data.body;
         },
       });
+    } else {
+      this.totalCartItemsPrice = this.cartService.getTotalPrice();
     }
   }
 
@@ -74,17 +77,16 @@ export class CheckoutComponent implements OnInit{
       key: 'pk_test_085824e3d504411b6e32f41420095f8899ace069', // Replace with your public key
       email: this.email,
       amount: this.amount * 100,
-      ref: '' + Math.floor((Math.random() * 1000000000) + 1),
+      ref: '' + Math.floor(Math.random() * 1000000000 + 1),
       onClose: () => {
         alert('Window closed.');
       },
       callback: (response: any) => {
         let message = 'Payment complete! Reference: ' + response.reference;
         alert(message);
-      }
+      },
     });
 
     handler.openIframe();
   }
-
 }

@@ -4,6 +4,7 @@ import { BookingService } from '../../services/booking/booking.service';
 import { CommonModule } from '@angular/common';
 import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-accommodation',
@@ -23,7 +24,8 @@ export class AccommodationComponent implements OnInit {
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -37,7 +39,6 @@ export class AccommodationComponent implements OnInit {
         console.log(`Error: ${error}`);
       },
     });
-
   }
 
   filterResults(text: string) {
@@ -63,14 +64,18 @@ export class AccommodationComponent implements OnInit {
   }
 
   addToCart(bookingId: string, price: number): void {
-    if(this.isLoggedIn){
-      this.bookingService.addToCart({userId: this.userId, bookingId, price}).subscribe({
-        next: (data:any) => {
-          this.orderItem = data.body;
-          window.location.reload();
-        }
-      })
+    if (this.isLoggedIn) {
+      this.bookingService
+        .addToCart({ userId: this.userId, bookingId, price })
+        .subscribe({
+          next: (data: any) => {
+            this.orderItem = data.body;
+            window.location.reload();
+          },
+        });
+    } else {
+      this.cartService.addToCart(bookingId, price);
+      window.location.reload();
     }
-    console.log("not logged in")
   }
 }

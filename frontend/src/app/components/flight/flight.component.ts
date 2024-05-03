@@ -5,6 +5,7 @@ import { BookingService } from '../../services/booking/booking.service';
 import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
 import { producerNotifyConsumers } from '@angular/core/primitives/signals';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-flight',
@@ -25,7 +26,8 @@ export class FlightComponent {
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cartService: CartService
   ){}
 
   ngOnInit(): void {
@@ -69,6 +71,9 @@ export class FlightComponent {
           window.location.reload();
         }
       })
+    }else {
+      this.cartService.addToCart(bookingId, price);
+      window.location.reload();
     }
   }
 

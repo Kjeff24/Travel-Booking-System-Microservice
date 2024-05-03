@@ -4,6 +4,7 @@ import { BookingService } from '../../services/booking/booking.service';
 import { HotelItem } from '../../models/hotel-item';
 import { OrderItem } from '../../models/order-item';
 import { TokenService } from '../../services/token/token.service';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-hotel',
@@ -23,7 +24,8 @@ export class HotelComponent implements OnInit{
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cartService: CartService
   ){}
 
   ngOnInit(): void {
@@ -68,6 +70,9 @@ export class HotelComponent implements OnInit{
           window.location.reload();
         }
       })
+    }else {
+      this.cartService.addToCart(bookingId, price);
+      window.location.reload();
     }
   }
 

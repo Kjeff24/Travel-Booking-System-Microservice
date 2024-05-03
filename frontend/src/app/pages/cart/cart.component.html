@@ -198,7 +198,7 @@
                       </td>
                     </tr>
                   </tbody>
-                  <tbody *ngFor="let hotelItem of hotelCartItemList">
+                  <tbody *ngFor="let flightItem of flightCartItemList">
                     <tr>
                       <td class="product-thumbnail ">
                         <img
@@ -208,9 +208,9 @@
                         />
                       </td>
                       <td class="product-name">
-                        <h2 class="h5 text-black">{{ hotelItem.hotelName }}</h2>
+                        <h2 class="h5 text-black">{{ flightItem.departureCity }} | {{ flightItem.destinationCity }}</h2>
                       </td>
-                      <td>GHS {{ hotelItem.price }}</td>
+                      <td>GHS {{ flightItem.price }}</td>
                       <td>
                         <div class="input-group mb-3" style="max-width: 120px">
                           <div class="input-group-prepend">
@@ -218,7 +218,7 @@
                               data-action="remove"
                               class="btn btn-outline-dark js-btn-minus update-cart"
                               type="button"
-                              (click)="decreaseCartItem(hotelItem.id, hotelItem.price)"
+                              (click)="decreaseCartItem(flightItem.id, flightItem.price)"
                             >
                               &minus;
                             </button>
@@ -226,7 +226,7 @@
                           <input
                             type="text"
                             class="form-control text-center"
-                            value="{{ hotelItem.quantity }}"
+                            value="{{ flightItem.quantity }}"
                             placeholder=""
                             aria-label="Example text with button addon"
                             aria-describedby="button-addon1"
@@ -237,18 +237,18 @@
                               data-action="add"
                               class="btn btn-outline-dark js-btn-plus update-cart"
                               type="button"
-                              (click)="increaseCartItem(hotelItem.id, hotelItem.price)"
+                              (click)="increaseCartItem(flightItem.id, flightItem.price)"
                             >
                               &plus;
                             </button>
                           </div>
                         </div>
                       </td>
-                      <td>GHS {{hotelItem.totalPrice}}</td>
+                      <td>GHS {{flightItem.totalPrice}}</td>
                       <td>
                         <a
                           class="btn btn-dark height-auto btn-sm update-cart"
-                          (click)="removeCartItem(hotelItem.id)"
+                          (click)="removeCartItem(flightItem.id)"
                           >X</a
                         >
                       </td>

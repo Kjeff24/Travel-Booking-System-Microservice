@@ -7,6 +7,7 @@ import { TokenService } from '../../services/token/token.service';
 import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
 import { BookingService } from '../../services/booking/booking.service';
+import { CartService } from '../../services/cart/cart.service';
 
 const CHARACTERS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -42,7 +43,8 @@ export class NavbarComponent implements OnInit {
 
   constructor(
     private tokenService: TokenService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -86,6 +88,8 @@ export class NavbarComponent implements OnInit {
           this.totalCartsItem = data.body;
         },
       });
+    } else {
+      this.totalCartsItem = this.cartService.getTotalQuantity();
     }
   }
 

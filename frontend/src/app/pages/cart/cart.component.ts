@@ -10,6 +10,7 @@ import { AccommodationCartItem } from '../../models/accommodation-cart-item';
 import { FlightCartItem } from '../../models/flight-cart-item';
 import { CarRentalCartItem } from '../../models/car-rental-cart-item';
 import { HotelCartItem } from '../../models/hotel-cart-item';
+import { CartService } from '../../services/cart/cart.service';
 
 @Component({
   selector: 'app-cart',
@@ -30,24 +31,28 @@ export class CartComponent implements OnInit {
   totalCartItems: number;
   totalCartItemsPrice: number;
 
-  
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService
+    private tokenService: TokenService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
     this.getLogged();
     this.getCartsTotalQuantity();
     this.getCartsTotalPrice();
-    this.bookingService.getCartItems(this.userId).subscribe({
-      next: (data: any) => {
-        this.filterCartItems(data.body);
-      },
-      error: (error: string) => {
-        console.log(`Error: ${error}`);
-      },
-    });
+    if (this.isLoggedIn) {
+      this.bookingService.getCartItems(this.userId).subscribe({
+        next: (data: any) => {
+          this.filterCartItems(data.body);
+        },
+        error: (error: string) => {
+          console.log(`Error: ${error}`);
+        },
+      });
+    } else {
+      this.filterCartItems(this.cartService.getCartItems())
+    }
   }
 
   getLogged(): void {
@@ -128,6 +133,8 @@ export class CartComponent implements OnInit {
           this.totalCartItems = data.body;
         },
       });
+    } else {
+      this.totalCartItems = this.cartService.getTotalQuantity();
     }
   }
 
@@ -138,6 +145,8 @@ export class CartComponent implements OnInit {
           this.totalCartItemsPrice = data.body;
         },
       });
+    } else {
+      this.totalCartItemsPrice = this.cartService.getTotalPrice();
     }
   }
 
@@ -174,8 +183,4 @@ export class CartComponent implements OnInit {
       });
     }
   }
-
-
-  
-
 }
