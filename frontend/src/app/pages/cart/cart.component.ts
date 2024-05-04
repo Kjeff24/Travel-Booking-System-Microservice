@@ -11,6 +11,7 @@ import { FlightCartItem } from '../../models/flight-cart-item';
 import { CarRentalCartItem } from '../../models/car-rental-cart-item';
 import { HotelCartItem } from '../../models/hotel-cart-item';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../../components/userstate/userstate.component';
 
 @Component({
   selector: 'app-cart',
@@ -19,29 +20,28 @@ import { CartService } from '../../services/cart/cart.service';
   templateUrl: './cart.component.html',
   styleUrl: './cart.component.css',
 })
-export class CartComponent implements OnInit {
+export class CartComponent extends UserstateComponent {
   accommodationCartItemList: AccommodationCartItem[] = [];
   flightCartItemList: FlightCartItem[] = [];
   carRentalCartItemList: CarRentalCartItem[] = [];
   hotelCartItemList: HotelCartItem[] = [];
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
   totalCartItems: number;
   totalCartItemsPrice: number;
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService,
-    private cartService: CartService
-  ) {}
+    private cartService: CartService,
+    public override tokenService: TokenService
+  ) {
+    super(tokenService);
+  }
 
   ngOnInit(): void {
     this.getLogged();
     this.getCartsTotalQuantity();
     this.getCartsTotalPrice();
     if (this.isLoggedIn) {
+      console.log('hey');
       this.bookingService.getCartItems(this.userId).subscribe({
         next: (data: any) => {
           this.filterCartItems(data.body);
@@ -51,15 +51,8 @@ export class CartComponent implements OnInit {
         },
       });
     } else {
-      this.filterCartItems(this.cartService.getCartItems())
+      this.filterCartItems(this.cartService.getCartItems());
     }
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   filterCartItems(cartItems: any[]): void {
@@ -159,6 +152,9 @@ export class CartComponent implements OnInit {
             window.location.reload();
           },
         });
+    } else {
+      this.cartService.addToCart(bookingId, price);
+      window.location.reload();
     }
   }
 
@@ -171,6 +167,9 @@ export class CartComponent implements OnInit {
             window.location.reload();
           },
         });
+    }else {
+      this.cartService.decreaseCartItem(bookingId, price);
+      window.location.reload();
     }
   }
 
@@ -181,6 +180,9 @@ export class CartComponent implements OnInit {
           window.location.reload();
         },
       });
+    }else {
+      this.cartService.deleteCartItem(bookingId);
+      window.location.reload();
     }
   }
 }

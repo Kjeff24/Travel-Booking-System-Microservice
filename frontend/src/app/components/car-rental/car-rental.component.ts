@@ -5,6 +5,7 @@ import { BookingService } from '../../services/booking/booking.service';
 import { OrderItem } from '../../models/order-item';
 import { TokenService } from '../../services/token/token.service';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../userstate/userstate.component';
 
 @Component({
   selector: 'app-car-rental',
@@ -13,21 +14,19 @@ import { CartService } from '../../services/cart/cart.service';
   templateUrl: './car-rental.component.html',
   styleUrl: './car-rental.component.css'
 })
-export class CarRentalComponent implements  OnInit {
+export class CarRentalComponent  extends UserstateComponent {
 
   carRentalList!: CarRentalItem[];
   filteredCarRentalList!: CarRentalItem[];
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
   orderItem: OrderItem;
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService,
+    public override tokenService: TokenService,
     private cartService: CartService
-  ){}
+  ){
+    super(tokenService)
+  }
 
   ngOnInit(): void {
     this.getLogged();
@@ -52,13 +51,6 @@ export class CarRentalComponent implements  OnInit {
     this.filteredCarRentalList = this.carRentalList.filter(
     item => item?.carType.toLowerCase().includes(text)
     );
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   addToCart(bookingId: string, price: number): void {

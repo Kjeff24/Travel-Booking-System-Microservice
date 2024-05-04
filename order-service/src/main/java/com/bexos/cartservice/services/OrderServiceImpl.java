@@ -1,5 +1,6 @@
 package com.bexos.cartservice.services;
 
+import com.bexos.cartservice.dto.AddAllToCartRequest;
 import com.bexos.cartservice.dto.AddToCartRequest;
 import com.bexos.cartservice.feign.BookingClient;
 import com.bexos.cartservice.mappers.OrderMapper;
@@ -13,6 +14,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -43,16 +45,35 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
-//    public ResponseEntity<Void> removeFromCart(AddToCartRequest request) {
-//        String userId = request.userId();
-//        String bookingId = request.bookingId();
-//        Optional<Order> existingOrderOptional = orderRepository.findByUserId(userId);
-//        if (existingOrderOptional.isPresent()) {
-//            Order order = existingOrderOptional.get();
-//            cartItemRepository.deleteByBookingIdAndOrderId(bookingId, order.getId());
-//        }
-//        return null;
-//    }
+    public ResponseEntity<List<CartItem>> addAllCartItems(List<AddAllToCartRequest> request, String userId) {
+
+        Optional<Order> existingOrderOptional = orderRepository.findByUserId(userId);
+        Order order = existingOrderOptional.orElseGet(() -> orderRepository.save(Order.builder().userId(userId).build()));
+
+        List<CartItem> updatedCartItems = new ArrayList<>();
+        for (AddAllToCartRequest cartItem : request) {
+            String bookingId = cartItem.bookingId();
+
+            Optional<CartItem> existingCartItemOptional = cartItemRepository.findByBookingIdAndOrderId(bookingId, order.getId());
+            if (existingCartItemOptional.isPresent()) {
+                CartItem existingCartItem = existingCartItemOptional.get();
+                existingCartItem.setQuantity(existingCartItem.getQuantity() + cartItem.quantity());
+                existingCartItem.setTotalPrice(existingCartItem.getTotalPrice() + cartItem.totalPrice());
+                updatedCartItems.add(cartItemRepository.save(existingCartItem));
+            } else {
+                CartItem newCartItem = CartItem.builder()
+                        .bookingId(bookingId)
+                        .orderId(order.getId())
+                        .quantity(cartItem.quantity())
+                        .totalPrice(cartItem.totalPrice())
+                        .build();
+                updatedCartItems.add(cartItemRepository.save(newCartItem));
+            }
+        }
+
+        return ResponseEntity.ok(updatedCartItems);
+    }
+
 
     public ResponseEntity<Void> deleteFromCart(String bookingId, String userId) {
         orderRepository.findByUserId(userId).ifPresent(order ->

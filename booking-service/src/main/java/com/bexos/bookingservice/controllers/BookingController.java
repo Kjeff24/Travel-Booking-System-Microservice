@@ -74,4 +74,9 @@ public class BookingController {
     public ResponseEntity<?> createCarRentalOffer(@Valid @RequestBody CarRentalRequest carRentalRequest) {
         return bookingService.createCarRentalOffer(carRentalRequest);
     }
+
+    @GetMapping("/get-product-size")
+    public ResponseEntity<?> getProductSize() {
+        return bookingService.findNumberOfProduct();
+    }
 }

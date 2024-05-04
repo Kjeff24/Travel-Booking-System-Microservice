@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import CryptoJS from 'crypto-js';
 import { BookingService } from '../../services/booking/booking.service';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../userstate/userstate.component';
+import { Token } from '@angular/compiler';
 
 const CHARACTERS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -19,7 +21,7 @@ const CHARACTERS =
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent  {
   signup_uri = environment.auth_server_uri + '/signup';
   authorize_uri = environment.auth_server_uri + '/oauth2/authorize?';
   logout_uri = environment.auth_server_uri + '/logout';
@@ -42,10 +44,11 @@ export class NavbarComponent implements OnInit {
   loginObj: Login;
 
   constructor(
-    private tokenService: TokenService,
     private bookingService: BookingService,
-    private cartService: CartService
-  ) {}
+    private cartService: CartService,
+    private tokenService: TokenService
+  ) {
+  }
 
   ngOnInit(): void {
     this.getLogged();

@@ -1,5 +1,6 @@
 package com.bexos.cartservice.services;
 
+import com.bexos.cartservice.dto.AddAllToCartRequest;
 import com.bexos.cartservice.dto.AddToCartRequest;
 import com.bexos.cartservice.models.CartItem;
 import org.springframework.http.ResponseEntity;
@@ -19,4 +20,6 @@ public interface OrderService {
     ResponseEntity<Void> deleteFromCart(String bookingId, String userId);
 
     ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request);
+
+    ResponseEntity<List<CartItem>> addAllCartItems(List<AddAllToCartRequest> request, String userId);
 }

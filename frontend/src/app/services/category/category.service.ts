@@ -12,6 +12,6 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) { }
 
   public getAllCategory(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/category-service/all')
+    return this.httpClient.get<any>(this.gateway_url + '/api/category-service/all', {observe: 'response'})
   }
 }

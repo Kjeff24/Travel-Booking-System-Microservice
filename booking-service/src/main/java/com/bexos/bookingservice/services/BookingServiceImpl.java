@@ -6,7 +6,6 @@ import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.dto.HotelRequest;
 import com.bexos.bookingservice.feign.CategoryClient;
 import com.bexos.bookingservice.mappers.BookingMapper;
-import com.bexos.bookingservice.models.Booking;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -102,5 +100,10 @@ public class BookingServiceImpl implements BookingService {
 
     public ResponseEntity<List<CarRental>> findAllCarRentals() {
         return ResponseEntity.ok(carRentalRepository.findAll());
+    }
+
+    public ResponseEntity<Long> findNumberOfProduct(){
+        return ResponseEntity.ok(accommodationRepository.count() + flightRepository.count() + carRentalRepository.count() + hotelRepository.count());
+
     }
 }

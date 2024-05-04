@@ -31,4 +31,6 @@ public interface BookingService {
     ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest);
 
     ResponseEntity<?> findBookingOfferById(String bookingId);
+
+    ResponseEntity<?> findNumberOfProduct();
 }

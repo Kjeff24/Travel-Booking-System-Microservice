@@ -39,6 +39,12 @@ export class BookingService {
     );
   }
 
+  public getNumberofProducts(): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/booking-service/get-product-size'
+    );
+  }
+
   public getCartsTotalQuantity(userId: string): Observable<any> {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
@@ -71,6 +77,16 @@ export class BookingService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
       this.gateway_url + '/api/order-service/order-items/add-to-cart',
+      data,
+      { headers, observe: 'response' }
+    );
+  }
+
+  public addAllCartItems(data: any, userId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.post<any>(
+      this.gateway_url + `/api/order-service/order-items/add-all-to-cart/${userId}`,
       data,
       { headers, observe: 'response' }
     );

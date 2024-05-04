@@ -17,10 +17,4 @@ public class OrderServiceApplication {
 		SpringApplication.run(OrderServiceApplication.class, args);
 	}
 
-	@Bean
-	public WebClient webClient() {
-		return WebClient.builder()
-				.filter(new ServletBearerExchangeFilterFunction())
-				.build();
-	}
 }

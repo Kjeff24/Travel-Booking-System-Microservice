@@ -3,6 +3,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../services/auth/auth.service';
 import { TokenService } from '../../services/token/token.service';
 import { NavbarComponent } from '../navbar/navbar.component';
+import { CartService } from '../../services/cart/cart.service';
+import { BookingService } from '../../services/booking/booking.service';
 
 @Component({
   selector: 'app-authorized',
@@ -10,13 +12,19 @@ import { NavbarComponent } from '../navbar/navbar.component';
   styleUrls: ['./authorized.component.css'],
 })
 export class AuthorizedComponent implements OnInit {
+  isLoggedIn: boolean;
+  isAdmin: boolean;
+  isCustomer: boolean;
+  userId: string;
   code = '';
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private authService: AuthService,
     private tokenService: TokenService,
-    private router: Router
+    private router: Router,
+    private cartService: CartService,
+    private bookingService: BookingService
   ) {}
 
   ngOnInit(): void {
@@ -28,6 +36,13 @@ export class AuthorizedComponent implements OnInit {
     });
   }
 
+  getLogged(): void {
+    this.isLoggedIn = this.tokenService.isLoggedIn();
+    this.isAdmin = this.tokenService.isAdmin();
+    this.isCustomer = this.tokenService.isCustomer();
+    this.userId = this.tokenService.getUserId();
+  }
+
   getToken(code: string, code_verifier: string): void {
     this.authService.getToken(code, code_verifier).subscribe({
       next: (data) => {
@@ -35,6 +50,27 @@ export class AuthorizedComponent implements OnInit {
           data['access_token'],
           data['refresh_token']
         );
+
+        this.getLogged();
+
+        const cartItems = this.cartService.getCartItems();
+        if (cartItems.length > 0) {
+          this.bookingService.addAllCartItems(cartItems, this.userId).subscribe({
+            next: () => {
+              this.cartService.clearCart();
+              this.router.navigate(['']);
+            },
+            error: (error) => {
+              console.error('Error sending cart items to backend:', error);
+              this.cartService.clearCart();
+              this.router.navigate(['']);
+              window.location.reload();
+            },
+          });
+        } else {
+          this.router.navigate(['']);
+        }
+
         this.router.navigate(['']);
       },
       error: (err) => {

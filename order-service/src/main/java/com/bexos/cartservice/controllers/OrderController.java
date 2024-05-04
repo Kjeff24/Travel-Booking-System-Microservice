@@ -1,5 +1,6 @@
 package com.bexos.cartservice.controllers;
 
+import com.bexos.cartservice.dto.AddAllToCartRequest;
 import com.bexos.cartservice.dto.AddToCartRequest;
 import com.bexos.cartservice.models.CartItem;
 import com.bexos.cartservice.services.OrderService;
@@ -19,6 +20,11 @@ public class OrderController {
     @PostMapping("/add-to-cart")
     public ResponseEntity<CartItem> addToCart(@RequestBody AddToCartRequest request) {
         return orderService.addToCart(request);
+    }
+    @PostMapping("/add-all-to-cart/{userId}")
+    public ResponseEntity<List<CartItem>> addAllCartItems(@RequestBody List<AddAllToCartRequest> request, @PathVariable String userId) {
+        System.out.println(request.toString());
+        return orderService.addAllCartItems(request, userId);
     }
 
     @DeleteMapping("/delete-from-cart")

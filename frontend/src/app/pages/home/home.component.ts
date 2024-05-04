@@ -42,9 +42,8 @@ export class HomeComponent implements OnInit {
       }})
 
     this.categoryService.getAllCategory().subscribe({
-      next: (data: CategoryItem[]) => {
-        console.log('Data received');
-        this.categoryItemList = data;
+      next: (data: any) => {
+        this.categoryItemList = data.body;
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);

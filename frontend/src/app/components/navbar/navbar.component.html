@@ -47,6 +47,10 @@
               true}">Signup</a>
           </li>
           <li class="nav-item">
+            <a class="nav-link click-pointer" *ngIf="isAdmin && isLoggedIn" [routerLink]="['/dashboard']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
+              true}">Dashboard</a>
+          </li>
+          <li class="nav-item">
             <a class="nav-link click-pointer" *ngIf="isLoggedIn" (click)="onLogout()">Log out</a>
           </li>
         </ul>

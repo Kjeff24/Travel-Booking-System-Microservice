@@ -12,6 +12,7 @@ import { CarRentalComponent } from './components/car-rental/car-rental.component
 import { FlightComponent } from './components/flight/flight.component';
 import { AuthorizedComponent } from './components/authorized/authorized.component';
 import { LogoutComponent } from './components/logout/logout.component';
+import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 export const routes: Routes = [
   {
@@ -28,6 +29,12 @@ export const routes: Routes = [
     path: 'logout',
     component: LogoutComponent,
     title: 'ExcursionEase | Logout'
+
+  },
+  {
+    path: 'dashboard',
+    component: DashboardComponent,
+    title: 'ExcursionEase | Dashboard'
 
   },
   {

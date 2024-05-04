@@ -24,8 +24,8 @@ export class StoreComponent implements OnInit{
   ngOnInit(): void {
     
     this.categoryService.getAllCategory().subscribe({
-      next: (data: CategoryItem[]) => {
-        this.categoryItemList = data;
+      next: (data: any) => {
+        this.categoryItemList = data.body;
       },
       error: () => {
         console.log( "Error");

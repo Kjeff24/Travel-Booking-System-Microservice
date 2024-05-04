@@ -33,11 +33,7 @@
                   <tbody *ngFor="let accommodationCartItem of accommodationCartItemList">
                     <tr>
                       <td class="product-thumbnail ">
-                        <img
-                          src=""
-                          alt="Image"
-                          class="img-fluid col-md-6"
-                        />
+                        
                       </td>
                       <td class="product-name">
                         <h2 class="h5 text-black">{{ accommodationCartItem.location }}</h2>
@@ -89,11 +85,7 @@
                   <tbody *ngFor="let hotelItem of hotelCartItemList">
                     <tr>
                       <td class="product-thumbnail ">
-                        <img
-                          src=""
-                          alt="Image"
-                          class="img-fluid col-md-6"
-                        />
+                        
                       </td>
                       <td class="product-name">
                         <h2 class="h5 text-black">{{ hotelItem.hotelName }}</h2>
@@ -146,8 +138,8 @@
                     <tr>
                       <td class="product-thumbnail ">
                         <img
-                          src=""
-                          alt="Image"
+                          src="{{ carRental.carImage }}"
+                          alt="car-rental"
                           class="img-fluid col-md-6"
                         />
                       </td>
@@ -201,11 +193,7 @@
                   <tbody *ngFor="let flightItem of flightCartItemList">
                     <tr>
                       <td class="product-thumbnail ">
-                        <img
-                          src=""
-                          alt="Image"
-                          class="img-fluid col-md-6"
-                        />
+                        
                       </td>
                       <td class="product-name">
                         <h2 class="h5 text-black">{{ flightItem.departureCity }} | {{ flightItem.destinationCity }}</h2>

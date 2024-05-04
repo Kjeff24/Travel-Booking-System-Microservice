@@ -58,7 +58,7 @@ export class TokenService {
 
   getUserId() : string {
     if (!this.isLoggedIn()) {
-      return null; // or handle appropriately if not logged in
+      return null; 
     }
     const token = this.getAccessToken();
     const payload = token.split(".")[1];

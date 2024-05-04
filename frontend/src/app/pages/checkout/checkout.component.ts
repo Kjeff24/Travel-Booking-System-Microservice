@@ -6,6 +6,7 @@ import { RouterLink } from '@angular/router';
 import { BookingService } from '../../services/booking/booking.service';
 import { TokenService } from '../../services/token/token.service';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../../components/userstate/userstate.component';
 
 declare var PaystackPop: any;
 
@@ -16,11 +17,7 @@ declare var PaystackPop: any;
   templateUrl: './checkout.component.html',
   styleUrl: './checkout.component.css',
 })
-export class CheckoutComponent implements OnInit {
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
+export class CheckoutComponent  extends UserstateComponent {
   totalCartItems: number;
   totalCartItemsPrice: number;
   reference: string;
@@ -30,22 +27,17 @@ export class CheckoutComponent implements OnInit {
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService,
+    public override tokenService: TokenService,
     private cartService: CartService
-  ) {}
+  ) {
+    super(tokenService)
+  }
 
   ngOnInit(): void {
     this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
     this.getLogged();
     this.getCartsTotalQuantity();
     this.getCartsTotalPrice();
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   getCartsTotalQuantity(): void {

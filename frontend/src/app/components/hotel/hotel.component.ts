@@ -5,6 +5,7 @@ import { HotelItem } from '../../models/hotel-item';
 import { OrderItem } from '../../models/order-item';
 import { TokenService } from '../../services/token/token.service';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../userstate/userstate.component';
 
 @Component({
   selector: 'app-hotel',
@@ -13,20 +14,18 @@ import { CartService } from '../../services/cart/cart.service';
   templateUrl: './hotel.component.html',
   styleUrl: './hotel.component.css'
 })
-export class HotelComponent implements OnInit{
+export class HotelComponent extends UserstateComponent{
   hotelList!: HotelItem[];
   filteredHotelList!: HotelItem[];
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
   orderItem: OrderItem;
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService,
+    public override tokenService: TokenService,
     private cartService: CartService
-  ){}
+  ){
+    super(tokenService)
+  }
 
   ngOnInit(): void {
     this.getLogged();
@@ -39,13 +38,6 @@ export class HotelComponent implements OnInit{
         console.log(`Error: ${error}`);
       },
     });
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   filterResults(text: string) {

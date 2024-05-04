@@ -6,6 +6,7 @@ import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
 import { producerNotifyConsumers } from '@angular/core/primitives/signals';
 import { CartService } from '../../services/cart/cart.service';
+import { UserstateComponent } from '../userstate/userstate.component';
 
 @Component({
   selector: 'app-flight',
@@ -14,21 +15,19 @@ import { CartService } from '../../services/cart/cart.service';
   templateUrl: './flight.component.html',
   styleUrl: './flight.component.css'
 })
-export class FlightComponent {
+export class FlightComponent  extends UserstateComponent{
 
   flightList!: FlightItem[];
   filteredFlightList!: FlightItem[];
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
   orderItem: OrderItem;
 
   constructor(
     private bookingService: BookingService,
-    private tokenService: TokenService,
+    public override tokenService: TokenService,
     private cartService: CartService
-  ){}
+  ){
+    super(tokenService)
+  }
 
   ngOnInit(): void {
     this.getLogged();
@@ -54,13 +53,6 @@ export class FlightComponent {
     item => item?.departureCity.toLowerCase().includes(text) ||
     item?.destinationCity.toLowerCase().includes(text)
     );
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   addToCart(bookingId: string, price: number): void {
