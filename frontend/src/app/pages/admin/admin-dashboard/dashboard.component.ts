@@ -1,12 +1,14 @@
 import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { CategoryService } from '../../services/category/category.service';
-import { BookingService } from '../../services/booking/booking.service';
+import { CategoryService } from '../../../services/category/category.service';
+import { BookingService } from '../../../services/booking/booking.service';
+import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
+import { CreateUpdateAccommodationComponent } from '../create-update-accommodation/create-update-accommodation.component';
+import { RouterOutlet } from '@angular/router';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [NavbarComponent],
+  imports: [AdminNavbarComponent, RouterOutlet],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })

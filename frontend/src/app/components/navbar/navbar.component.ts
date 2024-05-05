@@ -21,15 +21,11 @@ const CHARACTERS =
   templateUrl: './navbar.component.html',
   styleUrl: './navbar.component.css',
 })
-export class NavbarComponent  {
+export class NavbarComponent  extends UserstateComponent {
   signup_uri = environment.auth_server_uri + '/signup';
   authorize_uri = environment.auth_server_uri + '/oauth2/authorize?';
   logout_uri = environment.auth_server_uri + '/logout';
   change_password_uri = environment.auth_server_uri + '/change-password';
-  isLoggedIn: boolean;
-  isAdmin: boolean;
-  isCustomer: boolean;
-  userId: string;
   totalCartsItem: number;
 
   params: any = {
@@ -46,8 +42,9 @@ export class NavbarComponent  {
   constructor(
     private bookingService: BookingService,
     private cartService: CartService,
-    private tokenService: TokenService
+    public override tokenService: TokenService
   ) {
+    super(tokenService)
   }
 
   ngOnInit(): void {
@@ -75,13 +72,6 @@ export class NavbarComponent  {
 
   onChangePassword(): void {
     location.href = this.change_password_uri + '/' + this.userId;
-  }
-
-  getLogged(): void {
-    this.isLoggedIn = this.tokenService.isLoggedIn();
-    this.isAdmin = this.tokenService.isAdmin();
-    this.isCustomer = this.tokenService.isCustomer();
-    this.userId = this.tokenService.getUserId();
   }
 
   getCartsTotalQuantity(): void {

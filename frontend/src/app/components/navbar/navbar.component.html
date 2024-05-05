@@ -34,12 +34,6 @@
             >
           </li>
           <li class="nav-item">
-            <a class="nav-link" aria-current="page" [routerLink]="['/contact']" routerLinkActive="active" [routerLinkActiveOptions]="{exact:
-              true}"
-              >Contact</a
-            >
-          </li>
-          <li class="nav-item">
             <a class="nav-link click-pointer" *ngIf="!isLoggedIn"  (click)="onLogin()">Login</a>
           </li>
           <li class="nav-item">
