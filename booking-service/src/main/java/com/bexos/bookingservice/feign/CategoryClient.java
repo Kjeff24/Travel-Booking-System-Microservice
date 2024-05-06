@@ -10,4 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 public interface CategoryClient {
     @GetMapping("/api/category-service/exists-by-id/{id}")
     boolean existsCategoryById(@PathVariable String id);
+
+    @GetMapping("/{id}")
+    public ResponseEntity<?> findCategoryById(@PathVariable String id);
 }

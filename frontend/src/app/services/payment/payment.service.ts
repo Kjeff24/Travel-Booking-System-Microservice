@@ -1,0 +1,33 @@
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+import { TokenService } from '../token/token.service';
+import { environment } from '../../../environments/environment';
+import { Observable } from 'rxjs';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class PaymentService {
+  gateway_url = environment.gateway_url;
+
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
+
+  public getAllPayments(): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/payment-service/`,
+      { headers, observe: 'response' }
+    );
+  }
+
+  public makePayment(userId: string, data: any): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.post<any>(
+      this.gateway_url + `/api/payment-service/${userId}`,
+      data,
+      { headers, observe: 'response' }
+    );
+  }
+}

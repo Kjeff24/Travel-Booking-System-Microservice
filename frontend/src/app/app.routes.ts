@@ -93,6 +93,27 @@ export const routes: Routes = [
         component: CreateUpdateHotelComponent,
         title: 'ExcursionEase Admin | Update-Hotel',
       },
+      
+      {
+        path: 'category/accommodation',
+        component: AccommodationComponent,
+        title: 'ExcursionEase | Accommodation',
+      },
+      {
+        path: 'category/hotel',
+        component: HotelComponent,
+        title: 'ExcursionEase | Hotel',
+      },
+      {
+        path: 'category/car-rental',
+        component: CarRentalComponent,
+        title: 'ExcursionEase | Car Rental',
+      },
+      {
+        path: 'category/flight',
+        component: FlightComponent,
+        title: 'ExcursionEase | Flight',
+      },
     ],
   },
   {

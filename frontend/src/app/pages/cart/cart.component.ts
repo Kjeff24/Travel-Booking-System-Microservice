@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { FooterComponent } from '../../components/footer/footer.component';
-import { RouterLink } from '@angular/router';
-import { BookingService } from '../../services/booking/booking.service';
-import { TokenService } from '../../services/token/token.service';
-import { forkJoin, map } from 'rxjs';
 import { CommonModule } from '@angular/common';
-import { AccommodationCartItem } from '../../models/accommodation-cart-item';
-import { FlightCartItem } from '../../models/flight-cart-item';
-import { CarRentalCartItem } from '../../models/car-rental-cart-item';
-import { HotelCartItem } from '../../models/hotel-cart-item';
-import { CartService } from '../../services/cart/cart.service';
+import { Component } from '@angular/core';
+import { RouterLink } from '@angular/router';
+import { forkJoin, map } from 'rxjs';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserstateComponent } from '../../components/userstate/userstate.component';
+import { AccommodationCartItem } from '../../models/accommodation-cart-item';
+import { CarRentalCartItem } from '../../models/car-rental-cart-item';
+import { FlightCartItem } from '../../models/flight-cart-item';
+import { HotelCartItem } from '../../models/hotel-cart-item';
+import { BookingService } from '../../services/booking/booking.service';
+import { CartService } from '../../services/cart/cart.service';
+import { CategoryService } from '../../services/category/category.service';
+import { TokenService } from '../../services/token/token.service';
+import { OrderService } from '../../services/order/order.service';
 
 @Component({
   selector: 'app-cart',
@@ -30,6 +32,8 @@ export class CartComponent extends UserstateComponent {
 
   constructor(
     private bookingService: BookingService,
+    private categoryService: CategoryService,
+    private orderService: OrderService,
     private cartService: CartService,
     public override tokenService: TokenService
   ) {
@@ -41,8 +45,7 @@ export class CartComponent extends UserstateComponent {
     this.getCartsTotalQuantity();
     this.getCartsTotalPrice();
     if (this.isLoggedIn) {
-      console.log('hey');
-      this.bookingService.getCartItems(this.userId).subscribe({
+      this.orderService.getCartItems(this.userId).subscribe({
         next: (data: any) => {
           this.filterCartItems(data.body);
         },
@@ -79,7 +82,7 @@ export class CartComponent extends UserstateComponent {
   }
 
   processItemByCategory(item: any, quantity: number): void {
-    this.bookingService
+    this.categoryService
       .getCategoryById(item.categoryId)
       .subscribe((categoryResponse: any) => {
         const category = categoryResponse.body;
@@ -104,7 +107,6 @@ export class CartComponent extends UserstateComponent {
               quantity: quantity,
               totalPrice: item.price * quantity,
             });
-            console.log(this.carRentalCartItemList);
             break;
           case 'HOT':
             this.hotelCartItemList.push({
@@ -121,7 +123,7 @@ export class CartComponent extends UserstateComponent {
 
   getCartsTotalQuantity(): void {
     if (this.isLoggedIn) {
-      this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
+      this.orderService.getCartsTotalQuantity(this.userId).subscribe({
         next: (data: any) => {
           this.totalCartItems = data.body;
         },
@@ -133,7 +135,7 @@ export class CartComponent extends UserstateComponent {
 
   getCartsTotalPrice(): void {
     if (this.isLoggedIn) {
-      this.bookingService.getCartItemsTotalPrice(this.userId).subscribe({
+      this.orderService.getCartItemsTotalPrice(this.userId).subscribe({
         next: (data: any) => {
           this.totalCartItemsPrice = data.body;
         },
@@ -145,7 +147,7 @@ export class CartComponent extends UserstateComponent {
 
   increaseCartItem(bookingId: string, price: number): void {
     if (this.isLoggedIn) {
-      this.bookingService
+      this.orderService
         .addToCart({ userId: this.userId, bookingId, price })
         .subscribe({
           next: () => {
@@ -160,7 +162,7 @@ export class CartComponent extends UserstateComponent {
 
   decreaseCartItem(bookingId: string, price: number): void {
     if (this.isLoggedIn) {
-      this.bookingService
+      this.orderService
         .decreaseCartItem({ userId: this.userId, bookingId, price })
         .subscribe({
           next: () => {
@@ -175,7 +177,7 @@ export class CartComponent extends UserstateComponent {
 
   removeCartItem(bookingId: string): void {
     if (this.isLoggedIn) {
-      this.bookingService.removeCartItem(this.userId, bookingId).subscribe({
+      this.orderService.removeCartItem(this.userId, bookingId).subscribe({
         next: () => {
           window.location.reload();
         },

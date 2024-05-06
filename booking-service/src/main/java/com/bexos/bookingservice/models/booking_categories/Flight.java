@@ -16,8 +16,7 @@ import java.time.LocalDateTime;
 public class Flight extends Booking {
     private String departureCity;
     private String destinationCity;
-    @Builder.Default
-    private LocalDateTime date = LocalDateTime.now();
+    private String date;
     private double price;
     private String categoryId;
 }

@@ -38,6 +38,7 @@ public class BookingMapper {
                 .departureCity(flightRequest.departureCity())
                 .destinationCity(flightRequest.destinationCity())
                 .price(flightRequest.price())
+                .date(flightRequest.date())
                 .categoryId(flightRequest.categoryId())
                 .build();
     }

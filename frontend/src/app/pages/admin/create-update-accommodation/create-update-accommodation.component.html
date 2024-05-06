@@ -1,7 +1,15 @@
 <form>
   <div class="p-2 m-3 p-lg-5 border bg-dark text-white">
-    <h5 class="text-center" *ngIf="isUpdate">Update Accommodation</h5>
-      <h5 class="text-center" *ngIf="!isUpdate">Create Accommodation</h5>
+    <h5 class="text-center">{{ isUpdate ? 'Update' : 'Create' }} Accommodation</h5>
+    <div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
+      <strong>Great</strong> {{successMessage}}
+      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+    <div *ngIf="error" class="alert alert-danger d-flex align-items-center flex-column" role="alert">
+      <span *ngFor="let error of errorMessages">
+        {{error}}
+      </span>
+    </div>
     <div class="form-group row d-flex justify-content-center">
       <div class="col-md-8">
         <label for="location" class="text-black"
@@ -11,7 +19,9 @@
           type="text"
           class="form-control"
           id="location"
+          [(ngModel)]="accommodationItem.location"
           name="location"
+          value="{{ isUpdate && accommodationItem  ? accommodationItem.location : '' }}"
           required
         />
       </div>
@@ -25,7 +35,9 @@
           type="text"
           class="form-control"
           id="type"
+          [(ngModel)]="accommodationItem.type"
           name="type"
+          value="{{ isUpdate && accommodationItem  ? accommodationItem.type : '' }}"
           required
         />
       </div>
@@ -39,7 +51,9 @@
           type="number"
           class="form-control"
           id="capacity"
+          [(ngModel)]="accommodationItem.capacity"
           name="capacity"
+          value="{{ isUpdate && accommodationItem  ? accommodationItem.capacity : '' }}"
           required
         />
       </div>
@@ -53,31 +67,38 @@
           type="number"
           class="form-control"
           id="price"
+          [(ngModel)]="accommodationItem.price"
           name="price"
+          value="{{ isUpdate && accommodationItem  ? accommodationItem.price : '' }}"
           required
         />
       </div>
     </div>
+    
     <div class="form-group row d-flex justify-content-center mt-2">
       <div class="col-md-8">
         <label for="category" class="text-black"
           >Category <span class="text-danger">*</span></label
         >
         <select
-          class="form-select"
-          id="floatingSelect"
-          aria-label="Floating label select example"
-          required
-        >
-          <option selected disabled value="">Choose...</option>
-          <option value="category.id">Accommodation</option>
-        </select>
+        class="form-select"
+        id="floatingSelect"
+        aria-label="Floating label select example"
+        required
+        [(ngModel)]="accommodationItem.categoryId"
+        name="category"
+      >
+        <option 
+        value="{{ isUpdate && categoryItemUpdate  ? categoryItemUpdate.id : '' }}" selected>{{isUpdate && categoryItemUpdate ? categoryItemUpdate.name : 'Choose...'}}</option>
+        <option *ngFor="let categoryItem of categoryItemList" [value]="categoryItem.id">
+          {{ categoryItem.name }}
+        </option>
+      </select>
       </div>
     </div>
     <div class="form-group">
       <div class="d-flex justify-content-center p-3">
-        <button type="submit" class="btn btn-secondary" *ngIf="isUpdate">Update</button>
-        <button type="submit" class="btn btn-secondary" *ngIf="!isUpdate">Create</button>
+        <button type="submit" class="btn btn-secondary" (click)="handleSubmit()">{{ isUpdate ? 'Update' : 'Create' }}</button>
       </div>
     </div>
   </div>

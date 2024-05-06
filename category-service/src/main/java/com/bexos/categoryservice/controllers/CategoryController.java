@@ -39,6 +39,7 @@ public class CategoryController {
         }
     }
 
+
     @GetMapping("/{id}")
     public ResponseEntity<?> findCategoryById(@PathVariable String id) {
         return categoryService.findCategoryById(id);
@@ -47,7 +48,7 @@ public class CategoryController {
     @PostMapping("/create")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
         try {
-            CategoryCode newCode = CategoryCode.valueOf(categoryRequest.code().toUpperCase());
+            System.out.println("Creating new category: " + categoryRequest);
             return categoryService.createCategory(categoryRequest);
         } catch (IllegalArgumentException e) {
             return new ResponseEntity<>("Invalid category code: " + categoryRequest.code() + ". It should be either ACC, FLI, CAR, or HOT", HttpStatus.BAD_REQUEST);
@@ -57,5 +58,10 @@ public class CategoryController {
     @GetMapping("/exists-by-id/{id}")
     public boolean existsCategoryById(@PathVariable String id) {
         return categoryService.existCategoryById(id);
+    }
+
+    @PutMapping("/update/{categoryId}")
+    public ResponseEntity<?> updateCategory(@PathVariable String categoryId, @RequestBody CategoryRequest request) {
+        return categoryService.updateCategory(categoryId, request);
     }
 }

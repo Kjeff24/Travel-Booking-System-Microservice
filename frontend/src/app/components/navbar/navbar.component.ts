@@ -10,6 +10,7 @@ import { BookingService } from '../../services/booking/booking.service';
 import { CartService } from '../../services/cart/cart.service';
 import { UserstateComponent } from '../userstate/userstate.component';
 import { Token } from '@angular/compiler';
+import { OrderService } from '../../services/order/order.service';
 
 const CHARACTERS =
   'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
@@ -41,6 +42,7 @@ export class NavbarComponent  extends UserstateComponent {
 
   constructor(
     private bookingService: BookingService,
+    private orderService: OrderService,
     private cartService: CartService,
     public override tokenService: TokenService
   ) {
@@ -76,7 +78,7 @@ export class NavbarComponent  extends UserstateComponent {
 
   getCartsTotalQuantity(): void {
     if (this.isLoggedIn) {
-      this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
+      this.orderService.getCartsTotalQuantity(this.userId).subscribe({
         next: (data: any) => {
           this.totalCartsItem = data.body;
         },

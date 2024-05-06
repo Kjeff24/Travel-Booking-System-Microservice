@@ -1,16 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AccommodationItem } from '../../models/accommodation-item';
 import { BookingService } from '../../services/booking/booking.service';
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
 import { CartService } from '../../services/cart/cart.service';
 import { UserstateComponent } from '../userstate/userstate.component';
+import { RouterLink } from '@angular/router';
+import { AccommodationService } from '../../services/accommodation/accommodation.service';
+import { OrderService } from '../../services/order/order.service';
 
 @Component({
   selector: 'app-accommodation',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './accommodation.component.html',
   styleUrl: './accommodation.component.css',
 })
@@ -18,20 +21,27 @@ export class AccommodationComponent extends UserstateComponent {
   accommodationList!: AccommodationItem[];
   filteredAccommodationList!: AccommodationItem[];
   orderItem: OrderItem;
+  isUpdate: boolean = false;
 
   constructor(
-    private bookingService: BookingService,
+    private orderService: OrderService,
+    private accommodationService: AccommodationService,
     public override tokenService: TokenService,
-    private cartService: CartService
+    private cartService: CartService,
+    private location: Location
   ) {
     super(tokenService)
   }
 
   ngOnInit(): void {
     this.getLogged();
-    this.bookingService.getAllAccommodations().subscribe({
-      next: (data: AccommodationItem[]) => {
-        this.accommodationList = data;
+    const currentUrl = this.location.path();
+    if (currentUrl.includes('dashboard')) {
+      this.isUpdate = true;
+    }
+    this.accommodationService.getAllAccommodations().subscribe({
+      next: (response) => {
+        this.accommodationList = response.body;
         this.filteredAccommodationList = this.accommodationList;
       },
       error: (error: string) => {
@@ -58,7 +68,7 @@ export class AccommodationComponent extends UserstateComponent {
 
   addToCart(bookingId: string, price: number): void {
     if (this.isLoggedIn) {
-      this.bookingService
+      this.orderService
         .addToCart({ userId: this.userId, bookingId, price })
         .subscribe({
           next: (data: any) => {

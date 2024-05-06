@@ -6,13 +6,15 @@ import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 public record FlightRequest(
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Departure City field is required")
         String departureCity,
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Destination City field is required")
         String destinationCity,
-        @NotNull(message = "This field is required")
+        @NotNull(message = "Price field is required")
         double price,
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Date field is required")
+        String date,
+        @NotEmpty(message = "Category field is required")
         String categoryId
 ) {
 }

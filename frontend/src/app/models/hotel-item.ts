@@ -1,8 +1,11 @@
-export interface HotelItem{
-    id: string,
-    hotelName: string,
-    location: string,
-    roomType: string,
-    price: number,
-    categoryId: string
-}
+export class HotelItem {
+    id: string = '';
+    hotelName: string = '';
+    location: string = '';
+    roomType: string = '';
+    price: number = 0;
+    categoryId: string = '';
+  
+    constructor() {}
+  }
+  

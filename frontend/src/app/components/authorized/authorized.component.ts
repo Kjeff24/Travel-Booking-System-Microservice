@@ -5,6 +5,7 @@ import { TokenService } from '../../services/token/token.service';
 import { NavbarComponent } from '../navbar/navbar.component';
 import { CartService } from '../../services/cart/cart.service';
 import { BookingService } from '../../services/booking/booking.service';
+import { OrderService } from '../../services/order/order.service';
 
 @Component({
   selector: 'app-authorized',
@@ -20,6 +21,7 @@ export class AuthorizedComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private orderService: OrderService,
     private authService: AuthService,
     private tokenService: TokenService,
     private router: Router,
@@ -55,7 +57,7 @@ export class AuthorizedComponent implements OnInit {
 
         const cartItems = this.cartService.getCartItems();
         if (cartItems.length > 0) {
-          this.bookingService.addAllCartItems(cartItems, this.userId).subscribe({
+          this.orderService.addAllCartItems(cartItems, this.userId).subscribe({
             next: () => {
               this.cartService.clearCart();
               this.router.navigate(['']);

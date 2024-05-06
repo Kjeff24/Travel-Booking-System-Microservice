@@ -55,4 +55,19 @@ public class CategoryServiceImpl implements CategoryService {
     public boolean existCategoryById(String id) {
         return categoryRepository.existsById(String.valueOf(id));
     }
+
+    public ResponseEntity<?> updateCategory(String categoryId, CategoryRequest request) {
+        Optional<Category> category = categoryRepository.findById(categoryId);
+        if (category.isPresent()) {
+            Category categoryToUpdate = category.get();
+            categoryToUpdate.setCode(CategoryCode.valueOf(request.code()));
+            categoryToUpdate.setIcon(request.icon());
+            categoryToUpdate.setName(request.name());
+            categoryToUpdate.setDescription(request.description());
+            return ResponseEntity.ok(categoryRepository.save(categoryToUpdate));
+        }
+        return ResponseEntity.badRequest().body("Category does not exist");
+    }
+
+
 }

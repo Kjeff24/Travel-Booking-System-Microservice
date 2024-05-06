@@ -20,4 +20,6 @@ public interface CategoryService {
     ResponseEntity<List<Category>> findCategoryByCode(CategoryCode code);
 
     boolean existCategoryById(String id);
+
+    ResponseEntity<?> updateCategory(String bookingId, CategoryRequest request);
 }

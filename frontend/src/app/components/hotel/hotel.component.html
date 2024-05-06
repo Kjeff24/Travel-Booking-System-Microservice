@@ -28,9 +28,9 @@
           Location: <span>{{ hotelItem.location }}</span> | room Type: <span>{{ hotelItem.roomType }}</span>
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(hotelItem.id, hotelItem.price)">
-        <span class="glyphicon glyphicon-shopping-cart"></span> Add to Cart
-      </button>
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(hotelItem.id, hotelItem.price)" *ngIf="!isUpdate">Add to Cart</button>
+      
+      <button class="btn btn-outline-dark mt-auto text-nowrap" [routerLink]="['/dashboard/update-hotel/', hotelItem.id]"  *ngIf="isUpdate">Update </button>
     </div>
   </div>
 </div>

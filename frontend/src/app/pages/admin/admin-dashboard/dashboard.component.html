@@ -13,6 +13,25 @@
             </div>
         </div>
     </div>
+    <div class="d-flex justify-content-center">
+        <button
+          type="button"
+          class="btn dropdown-toggle"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          Categories
+        </button>
+        <ul class="dropdown-menu"
+        >
+          <li 
+          *ngFor="let categoryItem of categoryItemList">
+            <a [routerLink]="getRouterLink(categoryItem.code)" class="dropdown-item"
+              >{{ categoryItem.name }}</a
+            >
+          </li>
+        </ul>
+      </div>
     <router-outlet></router-outlet>
 
 </div>

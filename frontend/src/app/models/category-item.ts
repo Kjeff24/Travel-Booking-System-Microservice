@@ -1,7 +1,9 @@
-export interface CategoryItem{
-    id: string,
-    name: string,
-    description: string,
-    code: string,
-    icon: string,
+export class CategoryItem{
+    id: '';
+    name: '';
+    description: '';
+    code: '';
+    icon: '';
+
+    constructor(){}
 }

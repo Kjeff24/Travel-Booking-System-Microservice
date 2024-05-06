@@ -1,25 +1,27 @@
 import { Component, OnInit } from '@angular/core';
 import { CategoryService } from '../../../services/category/category.service';
-import { BookingService } from '../../../services/booking/booking.service';
 import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
-import { CreateUpdateAccommodationComponent } from '../create-update-accommodation/create-update-accommodation.component';
-import { RouterOutlet } from '@angular/router';
+import { RouterLink, RouterOutlet } from '@angular/router';
+import { CategoryItem } from '../../../models/category-item';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-dashboard',
   standalone: true,
-  imports: [AdminNavbarComponent, RouterOutlet],
+  imports: [AdminNavbarComponent, RouterOutlet, CommonModule, RouterLink],
   templateUrl: './dashboard.component.html',
   styleUrl: './dashboard.component.css',
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent {
   categorySize: number;
+  categoryItemList!: CategoryItem[];
+  
   constructor(
-    private categoryService: CategoryService,
-    private bookingService: BookingService
+    private categoryService: CategoryService
   ) {}
 
   ngOnInit(): void {
+
     this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {
         this.categorySize = data.body.length;
@@ -29,6 +31,15 @@ export class DashboardComponent implements OnInit {
       },
     });
 
+    this.categoryService.getAllCategory().subscribe({
+      next: (data: any) => {
+        this.categoryItemList = data.body;
+      },
+      error: () => {
+        console.log( "Error");
+      }
+    })
+
     // this.bookingService.getNumberofProducts().subscribe({
     //   next: (data: any) => {
     //     console.log(data.body);
@@ -37,5 +48,20 @@ export class DashboardComponent implements OnInit {
     //     console.log(`Error: ${error}`);
     //   },
     // });
+  }
+
+  getRouterLink(code: string): any[] {
+    switch (code) {
+      case 'ACC':
+        return ['/dashboard/category/accommodation'];
+      case 'HOT':
+        return ['/dashboard/category/hotel'];
+      case 'CAR':
+        return ['/dashboard/category/car-rental'];
+      case 'FLI':
+        return ['/dashboard/category/flight'];
+      default:
+        return ['']; 
+    }
   }
 }

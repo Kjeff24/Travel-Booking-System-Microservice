@@ -14,7 +14,7 @@ export class CategoryCardComponent {
   @Input() categoryItem!: CategoryItem;
 
   getRouterLink(): any[] {
-    switch (this.categoryItem.code) {
+    switch (this.categoryItem.code.toString()) {
       case 'ACC':
         return ['/store/category/accommodation'];
       case 'HOT':

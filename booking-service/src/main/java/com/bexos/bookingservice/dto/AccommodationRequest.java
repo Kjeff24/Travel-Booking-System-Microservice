@@ -4,15 +4,15 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public record AccommodationRequest(
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Location field is required")
         String location,
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Type field is required")
         String type,
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Capacity field is required")
         String capacity,
-        @NotNull(message = "This field is required")
+        @NotNull(message = "Price field is required")
         double price,
-        @NotEmpty(message = "This field is required")
+        @NotEmpty(message = "Category field is required")
         String categoryId
 ) {
 }

@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import { NavbarComponent } from '../../components/navbar/navbar.component';
-import { FooterComponent } from '../../components/footer/footer.component';
 import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { BookingService } from '../../services/booking/booking.service';
-import { TokenService } from '../../services/token/token.service';
-import { CartService } from '../../services/cart/cart.service';
+import { FooterComponent } from '../../components/footer/footer.component';
+import { NavbarComponent } from '../../components/navbar/navbar.component';
 import { UserstateComponent } from '../../components/userstate/userstate.component';
+import { CartService } from '../../services/cart/cart.service';
+import { OrderService } from '../../services/order/order.service';
+import { TokenService } from '../../services/token/token.service';
+import { PaymentService } from '../../services/payment/payment.service';
+import { PaymentItem } from '../../models/payment-item';
 
 declare var PaystackPop: any;
 
@@ -20,29 +22,32 @@ declare var PaystackPop: any;
 export class CheckoutComponent  extends UserstateComponent {
   totalCartItems: number;
   totalCartItemsPrice: number;
-  reference: string;
   title: string;
   email: string = '';
   amount: number = 0;
+  handler:any = null;
+  paymentItem: PaymentItem = new PaymentItem();
 
   constructor(
-    private bookingService: BookingService,
+    private orderService: OrderService,
     public override tokenService: TokenService,
-    private cartService: CartService
+    private cartService: CartService,
+    private paymentService: PaymentService
   ) {
     super(tokenService)
+    this.paymentItem = new PaymentItem();
   }
 
   ngOnInit(): void {
-    this.reference = `ref-${Math.ceil(Math.random() * 10e13)}`;
     this.getLogged();
     this.getCartsTotalQuantity();
     this.getCartsTotalPrice();
+    this.loadStripe();
   }
 
   getCartsTotalQuantity(): void {
     if (this.isLoggedIn) {
-      this.bookingService.getCartsTotalQuantity(this.userId).subscribe({
+      this.orderService.getCartsTotalQuantity(this.userId).subscribe({
         next: (data: any) => {
           this.totalCartItems = data.body;
         },
@@ -54,7 +59,7 @@ export class CheckoutComponent  extends UserstateComponent {
 
   getCartsTotalPrice(): void {
     if (this.isLoggedIn) {
-      this.bookingService.getCartItemsTotalPrice(this.userId).subscribe({
+      this.orderService.getCartItemsTotalPrice(this.userId).subscribe({
         next: (data: any) => {
           this.totalCartItemsPrice = data.body;
         },
@@ -64,21 +69,53 @@ export class CheckoutComponent  extends UserstateComponent {
     }
   }
 
-  payWithPaystack() {
-    let handler = PaystackPop.setup({
-      key: 'pk_test_085824e3d504411b6e32f41420095f8899ace069', // Replace with your public key
-      email: this.email,
-      amount: this.amount * 100,
-      ref: '' + Math.floor(Math.random() * 1000000000 + 1),
-      onClose: () => {
-        alert('Window closed.');
-      },
-      callback: (response: any) => {
-        let message = 'Payment complete! Reference: ' + response.reference;
-        alert(message);
-      },
-    });
+ checkout(): void{
+  this.pay();
+  // this.paymentService.makePayment(this.userId, {}).subscribe({
+  //   next: (data: any) => {
+  //     this.totalCartItems = data.body;
+  //   },
+  // });
+ }
 
-    handler.openIframe();
+  pay() {    
+ 
+    var handler = (<any>window).StripeCheckout.configure({
+      key: 'pk_test_51PDAy7P1Hc5vPjyRwbcj3e25f9I9TfILnpcJWhUY9vqCZLxwzCnfdPZvuqu4bzoMfKFuizFIUi61aNPDIq75Nkto00q9ry7lOl',
+      locale: 'auto',
+      token: function (token: any) {
+        console.log(token['card'].name)
+        alert('Payment Successful');
+      }
+    });
+ 
+    handler.open({
+      name: 'Travel Booking System',
+      description: 'Pay for your items',
+      amount: this.totalCartItemsPrice * 100
+    });
+ 
+  }
+ 
+  loadStripe() {
+     
+    if(!window.document.getElementById('stripe-script')) {
+      var s = window.document.createElement("script");
+      s.id = "stripe-script";
+      s.type = "text/javascript";
+      s.src = "https://checkout.stripe.com/checkout.js";
+      s.onload = () => {
+        this.handler = (<any>window).StripeCheckout.configure({
+          key: 'pk_test_51PDAy7P1Hc5vPjyRwbcj3e25f9I9TfILnpcJWhUY9vqCZLxwzCnfdPZvuqu4bzoMfKFuizFIUi61aNPDIq75Nkto00q9ry7lOl',
+          locale: 'auto',
+          token: function (token: any) {
+            console.log(token)
+            alert('Payment Success!!');
+          }
+        });
+      }
+       
+      window.document.body.appendChild(s);
+    }
   }
 }
