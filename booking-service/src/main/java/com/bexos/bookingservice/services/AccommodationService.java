@@ -16,4 +16,6 @@ public interface AccommodationService {
     ResponseEntity<?> updateAccommodation(String bookingId, AccommodationRequest accommodationRequest);
 
     ResponseEntity<?> findCategoryByBookingId(String bookingId);
+
+    ResponseEntity<?> findAllAccommodationsByCategory(String categoryId);
 }

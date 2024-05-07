@@ -1,0 +1,23 @@
+<h3 class="text-center pt-2">Categories</h3>
+  <!-- Categories card  -->
+  <!-- <h1>{{categoryItemList}}</h1> -->
+  <div class="row p-2" id="categories">
+    <div
+    *ngFor="let categoryItem of categoryItemList"
+      class="col-md-4 col-lg-3 col-sm-12"
+    >
+    <div class="card">
+        <img
+          class="card-img-top"
+          src="{{ categoryItem.icon }}"
+          alt="Card image cap"
+        />
+        <div class="card-body">
+          <h4>{{ categoryItem.name }}</h4>
+          <div class="text-center">
+              <a class="btn btn-outline-dark" [routerLink]="['/dashboard/update-category/', categoryItem.id]">Update</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

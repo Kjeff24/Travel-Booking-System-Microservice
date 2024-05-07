@@ -5,5 +5,5 @@ import org.springframework.http.ResponseEntity;
 public interface BookingService {
     ResponseEntity<?> findBookingOfferById(String bookingId);
 
-    ResponseEntity<?> findNumberOfProduct();
+    ResponseEntity<?> findNumberOfProducts();
 }

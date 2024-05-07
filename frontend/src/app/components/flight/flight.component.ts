@@ -1,7 +1,7 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { producerNotifyConsumers } from '@angular/core/primitives/signals';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { FlightItem } from '../../models/flight-item';
 import { OrderItem } from '../../models/order-item';
 import { BookingService } from '../../services/booking/booking.service';
@@ -19,12 +19,15 @@ import { UserstateComponent } from '../userstate/userstate.component';
   styleUrl: './flight.component.css'
 })
 export class FlightComponent  extends UserstateComponent{
-  isUpdate: boolean = false;
   flightList!: FlightItem[];
   filteredFlightList!: FlightItem[];
   orderItem: OrderItem;
+  isDashboardPage: boolean = false;
+  categoryId: string;
+  categoryName: string;
 
   constructor(
+    private route: ActivatedRoute,
     private flightService: FlightService,
     private orderService: OrderService,
     public override tokenService: TokenService,
@@ -36,11 +39,16 @@ export class FlightComponent  extends UserstateComponent{
 
   ngOnInit(): void {
     this.getLogged();
-    const currentUrl = this.location.path();
-    if (currentUrl.includes('dashboard')) {
-      this.isUpdate = true;
-    }
-    this.flightService.getAllFlight().subscribe({
+    this.route.params.subscribe((params) => {
+      this.categoryId = params['id'];
+      this.categoryName = params['name'];
+      this.isDashboardPage = this.location.path().includes('dashboard');
+      this.getFlights();
+    });
+  }
+
+  getFlights(): void {
+    this.flightService.getAllFlightsByCategoryId(this.categoryId).subscribe({
       next: (response) => {
         this.flightList = response.body;
         this.filteredFlightList = this.flightList;

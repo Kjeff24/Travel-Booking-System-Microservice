@@ -11,6 +11,8 @@ import { CategoryItem } from '../../models/category-item';
 import { CommonModule } from '@angular/common';
 import { CategoryService } from '../../services/category/category.service';
 import { MiniAboutComponent } from '../../components/mini-about/mini-about.component';
+import { TokenService } from '../../services/token/token.service';
+import { UserstateComponent } from '../../components/userstate/userstate.component';
 
 @Component({
   selector: 'app-home',
@@ -26,20 +28,17 @@ import { MiniAboutComponent } from '../../components/mini-about/mini-about.compo
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',
 })
-export class HomeComponent implements OnInit {
-  @ViewChild('navbar') navbar: NavbarComponent;
+export class HomeComponent{
 
   categoryItemList!: CategoryItem[];
   constructor(
     private categoryService: CategoryService, 
-    private router: Router
+    private tokenService: TokenService,
   ) {}
 
   ngOnInit(): void {
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        this.navbar.getLogged();
-      }})
+    
+    this.tokenService.getTokenExpiration();
 
     this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {

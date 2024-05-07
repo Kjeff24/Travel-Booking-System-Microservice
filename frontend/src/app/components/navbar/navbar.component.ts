@@ -41,7 +41,6 @@ export class NavbarComponent  extends UserstateComponent {
   loginObj: Login;
 
   constructor(
-    private bookingService: BookingService,
     private orderService: OrderService,
     private cartService: CartService,
     public override tokenService: TokenService
@@ -55,7 +54,13 @@ export class NavbarComponent  extends UserstateComponent {
   }
 
   onSignUp(): void {
-    location.href = this.signup_uri;
+    const code_verifier = this.generateCodeVerifier();
+    this.tokenService.setCodeVerifier(code_verifier);
+    this.params.code_challenge = this.generateCodeChallenge(code_verifier);
+    const httpParams = new HttpParams({ fromObject: this.params });
+    const codeUrl = this.authorize_uri + httpParams.toString();
+    location.href = codeUrl;
+    // location.href = this.signup_uri;
   }
 
   onLogin(): void {

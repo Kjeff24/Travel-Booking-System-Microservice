@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface CategoryService {
     ResponseEntity<List<Category>> findAllCategories();
 
-    ResponseEntity<Category> createCategory(CategoryRequest categoryRequest);
+    ResponseEntity<?> createCategory(CategoryRequest categoryRequest);
 
     ResponseEntity<?> findCategoryById(String id);
 

@@ -90,4 +90,17 @@ export class TokenService {
   deleteVerifier(): void {
     localStorage.removeItem(CODE_VERIFIER);
   }
+
+  getTokenExpiration() : number {
+    if (!this.isLoggedIn()) {
+      return null; 
+    }
+    const token = this.getAccessToken();
+    const payload = token.split(".")[1];
+    const decodedPayload = atob(payload);
+    const values = JSON.parse(decodedPayload);
+    return values.exp;
+  }
+
+  
 }

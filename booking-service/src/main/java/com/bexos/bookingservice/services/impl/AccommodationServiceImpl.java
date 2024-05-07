@@ -53,6 +53,11 @@ public class AccommodationServiceImpl implements AccommodationService {
         return accommodation.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
     }
 
+    public ResponseEntity<?> findAllAccommodationsByCategory(String categoryId) {
+        Optional<List<Accommodation>> accommodations = accommodationRepository.findAllByCategoryId(categoryId);
+        return accommodations.map(ResponseEntity::ok).orElse(null);
+    }
+
     public ResponseEntity<List<Accommodation>> findAllAccommodations() {
         return ResponseEntity.ok(accommodationRepository.findAll());
     }

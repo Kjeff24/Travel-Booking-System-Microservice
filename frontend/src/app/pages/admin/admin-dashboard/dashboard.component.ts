@@ -4,6 +4,7 @@ import { AdminNavbarComponent } from '../admin-navbar/admin-navbar.component';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryItem } from '../../../models/category-item';
 import { CommonModule } from '@angular/common';
+import { BookingService } from '../../../services/booking/booking.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -14,52 +15,53 @@ import { CommonModule } from '@angular/common';
 })
 export class DashboardComponent {
   categorySize: number;
+  totalProducts: number;
   categoryItemList!: CategoryItem[];
   
   constructor(
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private bookingService: BookingService
   ) {}
 
   ngOnInit(): void {
+    this.getCategories();
+    this.getNumberofProducts();
+    
+  }
 
-    this.categoryService.getAllCategory().subscribe({
+  getNumberofProducts(): void {
+    this.bookingService.getNumberofProducts().subscribe({
       next: (data: any) => {
-        this.categorySize = data.body.length;
-      },
-      error: (error: string) => {
-        console.log(`Error: ${error}`);
-      },
-    });
-
-    this.categoryService.getAllCategory().subscribe({
-      next: (data: any) => {
-        this.categoryItemList = data.body;
+        this.totalProducts = data.body
       },
       error: () => {
         console.log( "Error");
       }
     })
-
-    // this.bookingService.getNumberofProducts().subscribe({
-    //   next: (data: any) => {
-    //     console.log(data.body);
-    //   },
-    //   error: (error: string) => {
-    //     console.log(`Error: ${error}`);
-    //   },
-    // });
   }
 
-  getRouterLink(code: string): any[] {
+  getCategories(): void {
+    this.categoryService.getAllCategory().subscribe({
+      next: (data: any) => {
+        this.categoryItemList = data.body;
+        this.categorySize = data.body.length;
+      },
+      error: () => {
+        console.log( "Error");
+      }
+    })
+  }
+
+  getRouterLink(code: string, categoryName: string, categoryId: string): any[] {
     switch (code) {
       case 'ACC':
-        return ['/dashboard/category/accommodation'];
+        return ['/dashboard/category/accommodation', categoryName, categoryId];
       case 'HOT':
-        return ['/dashboard/category/hotel'];
+        return ['/dashboard/category/hotel', categoryName, categoryId];
       case 'CAR':
-        return ['/dashboard/category/car-rental'];
+        return ['/dashboard/category/car-rental', categoryName, categoryId];
       case 'FLI':
-        return ['/dashboard/category/flight'];
+        return ['/dashboard/category/flight', categoryName, categoryId];
       default:
         return ['']; 
     }

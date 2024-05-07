@@ -47,12 +47,9 @@ public class CategoryController {
 
     @PostMapping("/create")
     public ResponseEntity<?> createCategory(@Valid @RequestBody CategoryRequest categoryRequest) {
-        try {
             System.out.println("Creating new category: " + categoryRequest);
             return categoryService.createCategory(categoryRequest);
-        } catch (IllegalArgumentException e) {
-            return new ResponseEntity<>("Invalid category code: " + categoryRequest.code() + ". It should be either ACC, FLI, CAR, or HOT", HttpStatus.BAD_REQUEST);
-        }
+
     }
 
     @GetMapping("/exists-by-id/{id}")

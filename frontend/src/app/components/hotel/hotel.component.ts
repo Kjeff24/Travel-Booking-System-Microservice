@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { HotelItem } from '../../models/hotel-item';
 import { OrderItem } from '../../models/order-item';
 import { BookingService } from '../../services/booking/booking.service';
@@ -18,12 +18,15 @@ import { UserstateComponent } from '../userstate/userstate.component';
   styleUrl: './hotel.component.css'
 })
 export class HotelComponent extends UserstateComponent{
-  isUpdate: boolean = false;
   hotelList!: HotelItem[];
   filteredHotelList!: HotelItem[];
   orderItem: OrderItem;
+  isDashboardPage: boolean = false;
+  categoryId: string;
+  categoryName: string;
 
   constructor(
+    private route: ActivatedRoute,
     private hotelService: HotelService,
     private orderService: OrderService,
     public override tokenService: TokenService,
@@ -35,11 +38,17 @@ export class HotelComponent extends UserstateComponent{
 
   ngOnInit(): void {
     this.getLogged();
-    const currentUrl = this.location.path();
-    if (currentUrl.includes('dashboard')) {
-      this.isUpdate = true;
-    }
-    this.hotelService.getAllHotel().subscribe({
+    this.route.params.subscribe((params) => {
+      this.categoryId = params['id'];
+      this.categoryName = params['name'];
+      this.isDashboardPage = this.location.path().includes('dashboard');
+      this.getHotels();
+    });
+    
+  }
+
+  getHotels(): void {
+    this.hotelService.getAllHotelsByCategoryId(this.categoryId).subscribe({
       next: (response) => {
         this.hotelList = response.body;
         this.filteredHotelList = this.hotelList;

@@ -19,6 +19,13 @@ export class FlightService {
     );
   }
 
+  public getAllFlightsByCategoryId(categoryId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/booking-service/flight/category/${categoryId}`,
+      {observe: 'response'}
+    );
+  }
+
   public getFlightById(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(
       this.gateway_url + `/api/booking-service/flight/${bookingId}`,

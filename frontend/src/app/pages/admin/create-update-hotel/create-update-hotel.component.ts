@@ -5,11 +5,12 @@ import { CategoryItem } from '../../../models/category-item';
 import { HotelItem } from '../../../models/hotel-item';
 import { CategoryService } from '../../../services/category/category.service';
 import { HotelService } from '../../../services/hotel/hotel.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-hotel',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './create-update-hotel.component.html',
   styleUrl: './create-update-hotel.component.css'
 })

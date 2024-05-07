@@ -16,4 +16,6 @@ public interface CarRentalService {
     ResponseEntity<?> updateCarRental(String bookingId, CarRentalRequest request);
 
     ResponseEntity<?> findCategoryByBookingId(String bookingId);
+
+    ResponseEntity<?> findAllCarRentalsByCategory(String categoryId);
 }

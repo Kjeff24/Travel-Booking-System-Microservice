@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../environments/environment';
@@ -15,13 +15,13 @@ export class BookingService {
     private tokenService: TokenService
   ) {}
   public getNumberofProducts(): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
       this.gateway_url + '/api/booking-service/number-of-products',
-      {observe: 'response'}
+      {headers, observe: 'response'}
     );
   }
-
-  
 
   public getProductByBookingOfferId(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(

@@ -1,15 +1,16 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { FormBuilder, FormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { AccommodationItem } from '../../../models/accommodation-item';
 import { AccommodationService } from '../../../services/accommodation/accommodation.service';
 import { CategoryService } from '../../../services/category/category.service';
 import { CategoryItem } from '../../../models/category-item';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-accommodation',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './create-update-accommodation.component.html',
   styleUrl: './create-update-accommodation.component.css',
 })

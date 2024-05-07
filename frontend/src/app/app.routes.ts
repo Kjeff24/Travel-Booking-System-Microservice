@@ -19,6 +19,7 @@ import { CreateUpdateFlightComponent } from './pages/admin/create-update-flight/
 import { CreateUpdateHotelComponent } from './pages/admin/create-update-hotel/create-update-hotel.component';
 import { adminGuard } from './guards/admin/admin.guard';
 import { loginGuard } from './guards/login/login.guard';
+import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
 
 export const routes: Routes = [
   {
@@ -42,6 +43,11 @@ export const routes: Routes = [
     title: 'ExcursionEase Admin | Dashboard',
     canActivate: [adminGuard],
     children: [
+      {
+        path: '',
+        component: AdminHomeComponent,
+        title: 'ExcursionEase Admin | Home',
+      },
       {
         path: 'create-category',
         component: CreateUpdateCategoryComponent,
@@ -95,22 +101,22 @@ export const routes: Routes = [
       },
       
       {
-        path: 'category/accommodation',
+        path: 'category/accommodation/:name/:id',
         component: AccommodationComponent,
         title: 'ExcursionEase | Accommodation',
       },
       {
-        path: 'category/hotel',
+        path: 'category/hotel/:name/:id',
         component: HotelComponent,
         title: 'ExcursionEase | Hotel',
       },
       {
-        path: 'category/car-rental',
+        path: 'category/car-rental/:name/:id',
         component: CarRentalComponent,
         title: 'ExcursionEase | Car Rental',
       },
       {
-        path: 'category/flight',
+        path: 'category/flight/:name/:id',
         component: FlightComponent,
         title: 'ExcursionEase | Flight',
       },
@@ -122,22 +128,22 @@ export const routes: Routes = [
     title: 'ExcursionEase | Store',
     children: [
       {
-        path: 'category/accommodation',
+        path: 'category/accommodation/:name/:id',
         component: AccommodationComponent,
         title: 'ExcursionEase | Accommodation',
       },
       {
-        path: 'category/hotel',
+        path: 'category/hotel/:name/:id',
         component: HotelComponent,
         title: 'ExcursionEase | Hotel',
       },
       {
-        path: 'category/car-rental',
+        path: 'category/car-rental/:name/:id',
         component: CarRentalComponent,
         title: 'ExcursionEase | Car Rental',
       },
       {
-        path: 'category/flight',
+        path: 'category/flight/:name/:id',
         component: FlightComponent,
         title: 'ExcursionEase | Flight',
       },

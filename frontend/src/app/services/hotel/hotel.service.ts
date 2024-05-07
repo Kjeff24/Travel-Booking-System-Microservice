@@ -19,6 +19,13 @@ export class HotelService {
     );
   }
 
+  public getAllHotelsByCategoryId(categoryId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/booking-service/hotel/category/${categoryId}`,
+      {observe: 'response'}
+    );
+  }
+
   public getHotelById(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(
       this.gateway_url + `/api/booking-service/hotel/${bookingId}`,

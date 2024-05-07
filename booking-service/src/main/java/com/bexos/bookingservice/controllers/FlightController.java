@@ -23,6 +23,16 @@ public class FlightController {
         return flightService.findAllFlights();
     }
 
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<Flight> findFlightById(@PathVariable String bookingId) {
+        return flightService.findFlightById(bookingId);
+    }
+
+    @GetMapping("category/{categoryId}")
+    public ResponseEntity<?> findAllFlightsByCategory(@PathVariable String categoryId) {
+        return flightService.findAllFlightsByCategory(categoryId);
+    }
+
     @GetMapping("/find-category-by-booking-id/{bookingId}")
     public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
         return flightService.findCategoryByBookingId(bookingId);
@@ -31,11 +41,6 @@ public class FlightController {
     @PostMapping
     public ResponseEntity<?> createFlightOffer(@Valid @RequestBody FlightRequest flightRequest) {
         return flightService.createFlightOffer(flightRequest);
-    }
-
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<Flight> findFlightById(@PathVariable String bookingId) {
-        return flightService.findFlightById(bookingId);
     }
 
     @PutMapping("/update/{bookingId}")

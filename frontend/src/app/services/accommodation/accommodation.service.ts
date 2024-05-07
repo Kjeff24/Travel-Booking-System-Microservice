@@ -19,6 +19,13 @@ export class AccommodationService {
     );
   }
 
+  public getAllAccommodationsByCategoryId(categoryId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/booking-service/accommodation/category/${categoryId}`,
+      {observe: 'response'}
+    );
+  }
+
   public getAccommodationById(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(
       this.gateway_url + `/api/booking-service/accommodation/${bookingId}`,

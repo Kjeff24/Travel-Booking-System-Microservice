@@ -23,6 +23,16 @@ public class CarRentalController {
         return carRentalService.findAllCarRentals();
     }
 
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<CarRental> findCarRentalById(@PathVariable String bookingId) {
+        return carRentalService.findCarRentalById(bookingId);
+    }
+
+    @GetMapping("category/{categoryId}")
+    public ResponseEntity<?> findAllCarRentalsByCategory(@PathVariable String categoryId) {
+        return carRentalService.findAllCarRentalsByCategory(categoryId);
+    }
+
     @GetMapping("/find-category-by-booking-id/{bookingId}")
     public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
         return carRentalService.findCategoryByBookingId(bookingId);
@@ -31,11 +41,6 @@ public class CarRentalController {
     @PostMapping
     public ResponseEntity<?> createCarRentalOffer(@Valid @RequestBody CarRentalRequest carRentalRequest) {
         return carRentalService.createCarRentalOffer(carRentalRequest);
-    }
-
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<CarRental> findCarRentalById(@PathVariable String bookingId) {
-        return carRentalService.findCarRentalById(bookingId);
     }
 
     @PutMapping("/update/{bookingId}")

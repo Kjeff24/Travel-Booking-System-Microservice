@@ -24,7 +24,14 @@
 <section class="vh-100">
     <div class="container-fluid h-custom">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-md-8 col-lg-6 col-xl-4 offset-xl-1 order-lg-1 order-md-2">
+            <div class="col-md-9 col-lg-6 col-xl-5 order-md-1 order-sm-1 order-lg-2">
+                <img
+                        src="/images/travel_flip.svg"
+                        class="img-fluid"
+                        alt="Sample image"
+                />
+            </div>
+            <div class="col-md-8 col-lg-6 col-xl-4 order-md-2 order-sm-2 order-lg-1 ">
                 <div th:if="${error}" class="alert alert-warning alert-dismissible fade show" role="alert">
                     <strong>Oops! </strong><span th:text="${error}"></span>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -118,13 +125,6 @@
                         </p>
                     </div>
                 </form>
-            </div>
-            <div class="col-md-9 col-lg-6 col-xl-5 order-lg-2 order-md-1">
-                <img
-                        src="/images/travel_flip.svg"
-                        class="img-fluid"
-                        alt="Sample image"
-                />
             </div>
         </div>
     </div>

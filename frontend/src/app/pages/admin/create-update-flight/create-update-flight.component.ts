@@ -5,11 +5,12 @@ import { FlightService } from '../../../services/flight/flight.service';
 import { FormsModule } from '@angular/forms';
 import { CategoryItem } from '../../../models/category-item';
 import { CategoryService } from '../../../services/category/category.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-create-flight',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './create-update-flight.component.html',
   styleUrl: './create-update-flight.component.css'
 })

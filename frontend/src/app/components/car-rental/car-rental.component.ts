@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CarRentalItem } from '../../models/car-rental-item';
 import { OrderItem } from '../../models/order-item';
 import { BookingService } from '../../services/booking/booking.service';
@@ -18,12 +18,15 @@ import { OrderService } from '../../services/order/order.service';
   styleUrl: './car-rental.component.css'
 })
 export class CarRentalComponent  extends UserstateComponent {
-  isUpdate: boolean = false;
   carRentalList!: CarRentalItem[];
   filteredCarRentalList!: CarRentalItem[];
   orderItem: OrderItem;
+  isDashboardPage: boolean = false;
+  categoryId: string;
+  categoryName: string;
 
   constructor(
+    private route: ActivatedRoute,
     private bookingService: BookingService,
     private orderService: OrderService,
     private carRentalService: CarRentalService,
@@ -36,11 +39,16 @@ export class CarRentalComponent  extends UserstateComponent {
 
   ngOnInit(): void {
     this.getLogged();
-    const currentUrl = this.location.path();
-    if (currentUrl.includes('dashboard')) {
-      this.isUpdate = true;
-    }
-    this.carRentalService.getAllCarRental().subscribe({
+    this.route.params.subscribe((params) => {
+      this.categoryId = params['id'];
+      this.categoryName = params['name'];
+      this.isDashboardPage = this.location.path().includes('dashboard');
+      this.getCarRentals();
+    });
+  }
+
+  getCarRentals(): void {
+    this.carRentalService.getAllCarRentalByCategoryId(this.categoryId).subscribe({
       next: (response) => {
         this.carRentalList = response.body;
         this.filteredCarRentalList = this.carRentalList

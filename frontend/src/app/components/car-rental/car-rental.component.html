@@ -1,5 +1,5 @@
 <div class="d-flex  justify-content-between align-items-center mx-2">
-    <h6 class="">Car Rental</h6>
+  <h6 class="">{{ categoryName }}</h6>
     <div class="d-flex">
         <input
           class="form-control"
@@ -28,9 +28,9 @@
           {{ carRentalItem.carType }}
         </div>
       </div>
-      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(carRentalItem.id, carRentalItem.price)" *ngIf="!isUpdate"> Add to Cart</button>
+      <button class="btn btn-outline-dark mt-auto text-nowrap" (click)="addToCart(carRentalItem.id, carRentalItem.price)" *ngIf="!isDashboardPage"> Add to Cart</button>
       
-      <button class="btn btn-outline-dark mt-auto text-nowrap" [routerLink]="['/dashboard/update-car-rental/', carRentalItem.id]"  *ngIf="isUpdate">Update </button>
+      <button class="btn btn-outline-dark mt-auto text-nowrap" [routerLink]="['/dashboard/update-car-rental/', carRentalItem.id]"  *ngIf="isDashboardPage">Update </button>
     </div>
   </div>
 </div>

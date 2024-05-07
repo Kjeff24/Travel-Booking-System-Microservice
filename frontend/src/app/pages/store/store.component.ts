@@ -37,16 +37,16 @@ export class StoreComponent implements OnInit{
 
   
 
-  getRouterLink(code: string): any[] {
+  getRouterLink(code: string, categoryName: string, categoryId: string): any[] {
     switch (code) {
       case 'ACC':
-        return ['/store/category/accommodation'];
+        return ['/store/category/accommodation', categoryName, categoryId];
       case 'HOT':
-        return ['/store/category/hotel'];
+        return ['/store/category/hotel', categoryName, categoryId];
       case 'CAR':
-        return ['/store/category/car-rental'];
+        return ['/store/category/car-rental', categoryName, categoryId];
       case 'FLI':
-        return ['/store/category/flight'];
+        return ['/store/category/flight', categoryName, categoryId];
       default:
         return ['']; 
     }

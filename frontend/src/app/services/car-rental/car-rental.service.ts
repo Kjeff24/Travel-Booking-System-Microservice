@@ -19,6 +19,13 @@ export class CarRentalService {
     );
   }
 
+  public getAllCarRentalByCategoryId(categoryId: string): Observable<any> {
+    return this.httpClient.get<any>(
+      this.gateway_url + `/api/booking-service/car-rental/category/${categoryId}`,
+      {observe: 'response'}
+    );
+  }
+
   public getCarRentalById(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(
       this.gateway_url + `/api/booking-service/car-rental/${bookingId}`,

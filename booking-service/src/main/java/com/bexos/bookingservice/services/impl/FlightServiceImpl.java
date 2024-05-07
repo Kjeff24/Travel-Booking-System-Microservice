@@ -4,6 +4,7 @@ import com.bexos.bookingservice.dto.FlightRequest;
 import com.bexos.bookingservice.feign.CategoryClient;
 import com.bexos.bookingservice.mappers.BookingMapper;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
+import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
 import com.bexos.bookingservice.repositories.FlightRepository;
 import com.bexos.bookingservice.services.FlightService;
@@ -53,6 +54,11 @@ public class FlightServiceImpl implements FlightService {
     public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
         Optional<Flight> flight = flightRepository.findById(bookingId);
         return flight.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
+    }
+
+    public ResponseEntity<?> findAllFlightsByCategory(String categoryId) {
+        Optional<List<Flight>> flights = flightRepository.findAllByCategoryId(categoryId);
+        return flights.map(ResponseEntity::ok).orElse(null);
     }
 
     public ResponseEntity<List<Flight>> findAllFlights() {

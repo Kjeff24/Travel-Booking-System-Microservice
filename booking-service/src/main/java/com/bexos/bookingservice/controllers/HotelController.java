@@ -23,6 +23,16 @@ public class HotelController {
         return hotelService.findAllHotels();
     }
 
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<Hotel> findHotelById(@PathVariable String bookingId) {
+        return hotelService.findHotelById(bookingId);
+    }
+
+    @GetMapping("category/{categoryId}")
+    public ResponseEntity<?> findAllHotelsByCategory(@PathVariable String categoryId) {
+        return hotelService.findAllHotelsByCategory(categoryId);
+    }
+
     @GetMapping("/find-category-by-booking-id/{bookingId}")
     public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
         return hotelService.findCategoryByBookingId(bookingId);
@@ -31,11 +41,6 @@ public class HotelController {
     @PostMapping
     public ResponseEntity<?> createHotelOffer(@Valid @RequestBody HotelRequest hotelRequest) {
         return hotelService.createHotelOffer(hotelRequest);
-    }
-
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<Hotel> findHotelById(@PathVariable String bookingId) {
-        return hotelService.findHotelById(bookingId);
     }
 
     @PutMapping("/update/{bookingId}")

@@ -41,7 +41,7 @@ public class BookingServiceImpl implements BookingService {
         return hotelOptional.map(ResponseEntity::ok).orElse(null);
     }
 
-    public ResponseEntity<Long> findNumberOfProduct() {
+    public ResponseEntity<Long> findNumberOfProducts() {
         return ResponseEntity.ok(accommodationRepository.count() + flightRepository.count() + carRentalRepository.count() + hotelRepository.count());
 
     }

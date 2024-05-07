@@ -13,19 +13,14 @@ export class CartService {
   }
 
   addToCart(bookingId: string, price: number): void {
-    // Check if the item already exists in the cart based on bookingId
     const existingItem = this.cartItems.find(item => item.bookingId === bookingId);
 
     if (existingItem) {
-      // If the item already exists, update its quantity and totalPrice
       existingItem.quantity++;
       existingItem.totalPrice = existingItem.quantity * price;
     } else {
-      // If the item does not exist, add it to the cart with quantity 1 and totalPrice equal to price
       this.cartItems.push({ bookingId, quantity: 1, totalPrice: price });
     }
-
-    // Update the total price and quantity of all items in the cart
     this.updateCartData();
   }
 

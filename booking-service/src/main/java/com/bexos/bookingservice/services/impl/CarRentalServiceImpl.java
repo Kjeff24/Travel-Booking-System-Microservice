@@ -54,6 +54,11 @@ public class CarRentalServiceImpl implements CarRentalService {
         return carRental.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
     }
 
+    public ResponseEntity<?> findAllCarRentalsByCategory(String categoryId) {
+        Optional<List<CarRental>> carRentals = carRentalRepository.findAllByCategoryId(categoryId);
+        return carRentals.map(ResponseEntity::ok).orElse(null);
+    }
+
     public ResponseEntity<List<CarRental>> findAllCarRentals() {
         return ResponseEntity.ok(carRentalRepository.findAll());
     }

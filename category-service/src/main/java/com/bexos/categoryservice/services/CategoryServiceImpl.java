@@ -25,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
         return ResponseEntity.ok(categoryRepository.findAll());
     }
 
-    public ResponseEntity<Category> createCategory(CategoryRequest categoryRequest) {
+    public ResponseEntity<?> createCategory(CategoryRequest categoryRequest) {
 
         Category category = Category.builder()
                 .name(categoryRequest.name())
@@ -34,7 +34,7 @@ public class CategoryServiceImpl implements CategoryService {
                 .icon(categoryRequest.icon())
                 .build();
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(categoryRepository.save(category));
+        return ResponseEntity.ok(categoryRepository.save(category));
     }
 
     public ResponseEntity<?> findCategoryById(String id) {

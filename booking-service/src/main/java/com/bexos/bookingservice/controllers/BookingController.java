@@ -25,7 +25,7 @@ public class BookingController {
     }
 
     @GetMapping("/number-of-products")
-    public ResponseEntity<?> getProductSize() {
-        return bookingService.findNumberOfProduct();
+    public ResponseEntity<?> findNumberOfProducts() {
+        return bookingService.findNumberOfProducts();
     }
 }

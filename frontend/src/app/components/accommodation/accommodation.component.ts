@@ -6,7 +6,7 @@ import { TokenService } from '../../services/token/token.service';
 import { OrderItem } from '../../models/order-item';
 import { CartService } from '../../services/cart/cart.service';
 import { UserstateComponent } from '../userstate/userstate.component';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { AccommodationService } from '../../services/accommodation/accommodation.service';
 import { OrderService } from '../../services/order/order.service';
 
@@ -21,33 +21,44 @@ export class AccommodationComponent extends UserstateComponent {
   accommodationList!: AccommodationItem[];
   filteredAccommodationList!: AccommodationItem[];
   orderItem: OrderItem;
-  isUpdate: boolean = false;
+  isDashboardPage: boolean = false;
+  categoryId: string;
+  categoryName: string;
 
   constructor(
+    private route: ActivatedRoute,
     private orderService: OrderService,
     private accommodationService: AccommodationService,
     public override tokenService: TokenService,
     private cartService: CartService,
     private location: Location
   ) {
-    super(tokenService)
+    super(tokenService);
   }
 
   ngOnInit(): void {
     this.getLogged();
-    const currentUrl = this.location.path();
-    if (currentUrl.includes('dashboard')) {
-      this.isUpdate = true;
-    }
-    this.accommodationService.getAllAccommodations().subscribe({
-      next: (response) => {
-        this.accommodationList = response.body;
-        this.filteredAccommodationList = this.accommodationList;
-      },
-      error: (error: string) => {
-        console.log(`Error: ${error}`);
-      },
+    this.route.params.subscribe((params) => {
+      this.categoryId = params['id'];
+      this.categoryName = params['name'];
+      this.isDashboardPage = this.location.path().includes('dashboard');
+      this.getAccommodations();
     });
+  }
+
+  getAccommodations(): void {
+    this.accommodationService
+      .getAllAccommodationsByCategoryId(this.categoryId)
+      .subscribe({
+        next: (response) => {
+          console.log(response);
+          this.accommodationList = response.body;
+          this.filteredAccommodationList = this.accommodationList;
+        },
+        error: (error: string) => {
+          console.log(`Error: ${error}`);
+        },
+      });
   }
 
   filterResults(text: string) {
@@ -64,7 +75,6 @@ export class AccommodationComponent extends UserstateComponent {
         item?.type.toLowerCase().includes(text)
     );
   }
-
 
   addToCart(bookingId: string, price: number): void {
     if (this.isLoggedIn) {

@@ -4,6 +4,7 @@ import com.bexos.bookingservice.dto.HotelRequest;
 import com.bexos.bookingservice.feign.CategoryClient;
 import com.bexos.bookingservice.mappers.BookingMapper;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
+import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Hotel;
 import com.bexos.bookingservice.repositories.HotelRepository;
 import com.bexos.bookingservice.services.HotelService;
@@ -57,6 +58,11 @@ public class HotelServiceImpl implements HotelService {
     public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
         Optional<Hotel> hotel = hotelRepository.findById(bookingId);
         return hotel.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
+    }
+
+    public ResponseEntity<?> findAllHotelsByCategory(String categoryId) {
+        Optional<List<Hotel>> hotels = hotelRepository.findAllByCategoryId(categoryId);
+        return hotels.map(ResponseEntity::ok).orElse(null);
     }
 
 

@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AccommodationRepository extends MongoRepository<Accommodation, String> {
-    Optional<Accommodation> findByCategoryId(String categoryId);
+    Optional<List<Accommodation>> findAllByCategoryId(String categoryId);
     @NotNull
     Optional<Accommodation> findById(@NotNull String id);
 }

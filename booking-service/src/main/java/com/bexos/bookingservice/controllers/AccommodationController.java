@@ -21,6 +21,16 @@ public class AccommodationController {
         return accommodationService.findAllAccommodations();
     }
 
+    @GetMapping("/{bookingId}")
+    public ResponseEntity<Accommodation> findAccommodationById(@PathVariable String bookingId) {
+        return accommodationService.findAccommodationById(bookingId);
+    }
+
+    @GetMapping("category/{categoryId}")
+    public ResponseEntity<?> findAllAccommodationsByCategory(@PathVariable String categoryId) {
+        return accommodationService.findAllAccommodationsByCategory(categoryId);
+    }
+
     @GetMapping("/find-category-by-booking-id/{bookingId}")
     public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
         return accommodationService.findCategoryByBookingId(bookingId);
@@ -29,11 +39,6 @@ public class AccommodationController {
     @PostMapping
     public ResponseEntity<?> createAccommodationOffer(@Valid @RequestBody AccommodationRequest accommodationRequest) {
         return accommodationService.createAccommodationOffer(accommodationRequest);
-    }
-
-    @GetMapping("/{bookingId}")
-    public ResponseEntity<Accommodation> findAccommodationById(@PathVariable String bookingId) {
-        return accommodationService.findAccommodationById(bookingId);
     }
 
     @PutMapping("/update/{bookingId}")
