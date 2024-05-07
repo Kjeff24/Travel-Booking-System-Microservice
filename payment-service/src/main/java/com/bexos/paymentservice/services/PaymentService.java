@@ -8,7 +8,9 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface PaymentService {
-    ResponseEntity<?> makePayment(String usedId, PaymentRequest request);
+    ResponseEntity<?> makePayment(PaymentRequest request);
 
     ResponseEntity<List<PaymentDetail>> findAllPayments();
+
+    ResponseEntity<Long> findNumberOfPayments();
 }

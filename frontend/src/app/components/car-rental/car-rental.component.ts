@@ -2,7 +2,7 @@ import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CarRentalItem } from '../../models/car-rental-item';
-import { OrderItem } from '../../models/order-item';
+import { CartItem } from '../../models/cart-item';
 import { BookingService } from '../../services/booking/booking.service';
 import { CarRentalService } from '../../services/car-rental/car-rental.service';
 import { CartService } from '../../services/cart/cart.service';
@@ -20,14 +20,13 @@ import { OrderService } from '../../services/order/order.service';
 export class CarRentalComponent  extends UserstateComponent {
   carRentalList!: CarRentalItem[];
   filteredCarRentalList!: CarRentalItem[];
-  orderItem: OrderItem;
+  cartItem: CartItem;
   isDashboardPage: boolean = false;
   categoryId: string;
   categoryName: string;
 
   constructor(
     private route: ActivatedRoute,
-    private bookingService: BookingService,
     private orderService: OrderService,
     private carRentalService: CarRentalService,
     public override tokenService: TokenService,
@@ -75,7 +74,7 @@ export class CarRentalComponent  extends UserstateComponent {
     if(this.isLoggedIn){
       this.orderService.addToCart({userId: this.userId, bookingId, price}).subscribe({
         next: (data:any) => {
-          this.orderItem = data.body;
+          this.cartItem = data.body;
           window.location.reload();
         }
       })

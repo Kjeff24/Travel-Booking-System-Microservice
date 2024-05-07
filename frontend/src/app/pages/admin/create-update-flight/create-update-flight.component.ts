@@ -102,7 +102,6 @@ export class CreateUpdateFlightComponent {
   }
 
   handleCreate(): void {
-    console.log(this.flightItem)
     this.flightService
       .createFlight(this.flightItem)
       .subscribe({

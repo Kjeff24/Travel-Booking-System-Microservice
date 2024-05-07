@@ -16,16 +16,25 @@ export class PaymentService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/payment-service/`,
+      this.gateway_url + `/api/payment-service`,
       { headers, observe: 'response' }
     );
   }
 
-  public makePayment(userId: string, data: any): Observable<any> {
+  public getNumberOfPayments(): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.get<any>(
+      this.gateway_url + '/api/payment-service/number-of-payments',
+      { headers, observe: 'response' }
+    );
+  }
+
+  public makePayment(data: any): Observable<any> {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
-      this.gateway_url + `/api/payment-service/${userId}`,
+      this.gateway_url + '/api/payment-service',
       data,
       { headers, observe: 'response' }
     );

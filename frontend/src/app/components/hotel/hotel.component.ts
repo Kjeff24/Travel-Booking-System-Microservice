@@ -1,9 +1,8 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CartItem, } from '../../models/cart-item';
 import { HotelItem } from '../../models/hotel-item';
-import { OrderItem } from '../../models/order-item';
-import { BookingService } from '../../services/booking/booking.service';
 import { CartService } from '../../services/cart/cart.service';
 import { HotelService } from '../../services/hotel/hotel.service';
 import { OrderService } from '../../services/order/order.service';
@@ -20,7 +19,7 @@ import { UserstateComponent } from '../userstate/userstate.component';
 export class HotelComponent extends UserstateComponent{
   hotelList!: HotelItem[];
   filteredHotelList!: HotelItem[];
-  orderItem: OrderItem;
+  cartItem: CartItem;
   isDashboardPage: boolean = false;
   categoryId: string;
   categoryName: string;
@@ -77,7 +76,7 @@ export class HotelComponent extends UserstateComponent{
     if(this.isLoggedIn){
       this.orderService.addToCart({userId: this.userId, bookingId, price}).subscribe({
         next: (data:any) => {
-          this.orderItem = data.body;
+          this.cartItem = data.body;
           window.location.reload();
         }
       })

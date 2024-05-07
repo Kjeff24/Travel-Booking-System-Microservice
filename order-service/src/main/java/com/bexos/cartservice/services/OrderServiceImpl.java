@@ -74,6 +74,21 @@ public class OrderServiceImpl implements OrderService {
         return ResponseEntity.ok(updatedCartItems);
     }
 
+    public ResponseEntity<?> findOrderById(String orderId) {
+        Optional<Order> order = orderRepository.findById(orderId);
+        return order.map(ResponseEntity::ok).orElse(null);
+    }
+
+    public ResponseEntity<Void> deleteAllCartItems(String userId) {
+        Optional<Order> order = orderRepository.findByUserId(userId);
+        if (order.isPresent()) {
+            cartItemRepository.deleteAllByOrderId(order.get().getId());
+            orderRepository.delete(order.get());
+
+        }
+        return ResponseEntity.noContent().build();
+    }
+
 
     public ResponseEntity<Void> deleteFromCart(String bookingId, String userId) {
         orderRepository.findByUserId(userId).ifPresent(order ->

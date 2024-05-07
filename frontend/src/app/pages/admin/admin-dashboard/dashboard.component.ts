@@ -5,6 +5,7 @@ import { RouterLink, RouterOutlet } from '@angular/router';
 import { CategoryItem } from '../../../models/category-item';
 import { CommonModule } from '@angular/common';
 import { BookingService } from '../../../services/booking/booking.service';
+import { PaymentService } from '../../../services/payment/payment.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -16,17 +17,19 @@ import { BookingService } from '../../../services/booking/booking.service';
 export class DashboardComponent {
   categorySize: number;
   totalProducts: number;
+  totalPayments: number;
   categoryItemList!: CategoryItem[];
   
   constructor(
     private categoryService: CategoryService,
-    private bookingService: BookingService
+    private bookingService: BookingService,
+    private paymentService: PaymentService
   ) {}
 
   ngOnInit(): void {
     this.getCategories();
     this.getNumberofProducts();
-    
+    this.getNumberOfPayments();
   }
 
   getNumberofProducts(): void {
@@ -36,6 +39,17 @@ export class DashboardComponent {
       },
       error: () => {
         console.log( "Error");
+      }
+    })
+  }
+
+  getNumberOfPayments(): void {
+    this.paymentService.getNumberOfPayments().subscribe({
+      next: (response) => {
+        this.totalPayments = response.body;
+      },
+      error: () => {
+        console.log("error")
       }
     })
   }

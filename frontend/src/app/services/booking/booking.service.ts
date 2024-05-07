@@ -11,15 +11,12 @@ export class BookingService {
   gateway_url = environment.gateway_url;
 
   constructor(
-    private httpClient: HttpClient,
-    private tokenService: TokenService
+    private httpClient: HttpClient
   ) {}
   public getNumberofProducts(): Observable<any> {
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
       this.gateway_url + '/api/booking-service/number-of-products',
-      {headers, observe: 'response'}
+      { observe: 'response'}
     );
   }
 

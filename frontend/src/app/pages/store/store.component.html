@@ -24,18 +24,17 @@
     >
       Booking Categories
     </button>
-    <ul class="dropdown-menu"
-    >
-      <li 
-      *ngFor="let categoryItem of categoryItemList">
-        <a [routerLink]="getRouterLink(categoryItem.code, categoryItem.name, categoryItem.id)" class="dropdown-item"
+    <ul class="dropdown-menu">
+      <li *ngFor="let categoryItem of categoryItemList">
+        <a
+          [routerLink]="
+            getRouterLink(categoryItem.code, categoryItem.name, categoryItem.id)
+          "
+          class="dropdown-item"
           >{{ categoryItem.name }}</a
         >
       </li>
     </ul>
   </div>
-  <!-- <div class="booking-categories">   -->
-    
-      <router-outlet ></router-outlet>
-  <!-- </div> -->
+  <router-outlet ></router-outlet>
 </div>

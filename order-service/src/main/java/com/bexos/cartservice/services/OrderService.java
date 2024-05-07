@@ -22,4 +22,8 @@ public interface OrderService {
     ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request);
 
     ResponseEntity<List<CartItem>> addAllCartItems(List<AddAllToCartRequest> request, String userId);
+
+    ResponseEntity<?> findOrderById(String orderId);
+
+    ResponseEntity<Void> deleteAllCartItems(String userId);
 }

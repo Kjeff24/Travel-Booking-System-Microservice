@@ -2,9 +2,8 @@ import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { producerNotifyConsumers } from '@angular/core/primitives/signals';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { CartItem, } from '../../models/cart-item';
 import { FlightItem } from '../../models/flight-item';
-import { OrderItem } from '../../models/order-item';
-import { BookingService } from '../../services/booking/booking.service';
 import { CartService } from '../../services/cart/cart.service';
 import { FlightService } from '../../services/flight/flight.service';
 import { OrderService } from '../../services/order/order.service';
@@ -21,7 +20,7 @@ import { UserstateComponent } from '../userstate/userstate.component';
 export class FlightComponent  extends UserstateComponent{
   flightList!: FlightItem[];
   filteredFlightList!: FlightItem[];
-  orderItem: OrderItem;
+  cartItem: CartItem;
   isDashboardPage: boolean = false;
   categoryId: string;
   categoryName: string;
@@ -74,9 +73,9 @@ export class FlightComponent  extends UserstateComponent{
 
   addToCart(bookingId: string, price: number): void {
     if(this.isLoggedIn){
-      this.orderService.addToCart({userId: this.userId, bookingId, producerNotifyConsumers}).subscribe({
+      this.orderService.addToCart({userId: this.userId, bookingId, price}).subscribe({
         next: (data:any) => {
-          this.orderItem = data.body;
+          this.cartItem = data.body;
           window.location.reload();
         }
       })

@@ -23,6 +23,7 @@ public class SecurityConfiguration {
                                 "/api/booking-service/accommodation/**",
                                 "/api/booking-service/hotel/**",
                                 "/api/booking-service/flight/**",
+                                "/api/booking-service/number-of-products/**",
                                 "/api/booking-service/car-rental/**").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));

@@ -16,7 +16,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/order-service/order-items/get-order-quantity/${userId}`,
+      this.gateway_url + `/api/order-service/get-order-quantity/${userId}`,
       { headers, observe: 'response' }
     );
   }
@@ -25,7 +25,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/order-service/order-items/get-cart-items/${userId}`,
+      this.gateway_url + `/api/order-service/get-cart-items/${userId}`,
       { headers, observe: 'response' }
     );
   }
@@ -34,7 +34,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/order-service/order-items/get-total-price/${userId}`,
+      this.gateway_url + `/api/order-service/get-total-price/${userId}`,
       { headers, observe: 'response' }
     );
   }
@@ -43,7 +43,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
-      this.gateway_url + '/api/order-service/order-items/add-to-cart',
+      this.gateway_url + '/api/order-service/add-to-cart',
       data,
       { headers, observe: 'response' }
     );
@@ -53,8 +53,17 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
-      this.gateway_url + `/api/order-service/order-items/add-all-to-cart/${userId}`,
+      this.gateway_url + `/api/order-service/add-all-to-cart/${userId}`,
       data,
+      { headers, observe: 'response' }
+    );
+  }
+
+  public deleteAllCartItems(userId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.delete<any>(
+      this.gateway_url + `/api/order-service/delete-all-cart-items/${userId}`,
       { headers, observe: 'response' }
     );
   }
@@ -63,7 +72,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.delete<any>(
-      this.gateway_url + `/api/order-service/order-items/delete-from-cart?bookingId=${bookingId}&userId=${userId}`,
+      this.gateway_url + `/api/order-service/delete-from-cart?bookingId=${bookingId}&userId=${userId}`,
       { headers }
     );
   }
@@ -72,7 +81,7 @@ export class OrderService {
     const token = this.tokenService.getAccessToken();
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.patch<any>(
-      this.gateway_url + '/api/order-service/order-items/decrease-cart-item',
+      this.gateway_url + '/api/order-service/decrease-cart-item',
       data,
       { headers }
     );

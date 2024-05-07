@@ -20,6 +20,8 @@ import { CreateUpdateHotelComponent } from './pages/admin/create-update-hotel/cr
 import { adminGuard } from './guards/admin/admin.guard';
 import { loginGuard } from './guards/login/login.guard';
 import { AdminHomeComponent } from './pages/admin/admin-home/admin-home.component';
+import { StoreMainPageComponent } from './components/store-main-page/store-main-page.component';
+import { TransactionComponent } from './pages/admin/transaction/transaction.component';
 
 export const routes: Routes = [
   {
@@ -47,6 +49,11 @@ export const routes: Routes = [
         path: '',
         component: AdminHomeComponent,
         title: 'ExcursionEase Admin | Home',
+      },
+      {
+        path: 'transaction',
+        component: TransactionComponent,
+        title: 'ExcursionEase Admin | Transactions',
       },
       {
         path: 'create-category',
@@ -127,6 +134,11 @@ export const routes: Routes = [
     component: StoreComponent,
     title: 'ExcursionEase | Store',
     children: [
+      {
+        path: '',
+        component: StoreMainPageComponent,
+        title: 'ExcursionEase | Store',
+      },
       {
         path: 'category/accommodation/:name/:id',
         component: AccommodationComponent,

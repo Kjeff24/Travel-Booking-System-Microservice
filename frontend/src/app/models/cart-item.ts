@@ -1,4 +1,4 @@
-export interface OrderItem{
+export interface CartItem{
     id: string,
     bookingId: string,
     quantity: number,

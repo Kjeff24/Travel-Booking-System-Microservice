@@ -15,13 +15,18 @@ import java.util.List;
 public class PaymentController {
     private final PaymentService paymentService;
 
-    @PostMapping("/{userId}")
-    ResponseEntity<?> makePayment(@RequestBody PaymentRequest request, @PathVariable String userId){
-        return paymentService.makePayment(userId, request);
+    @PostMapping
+    ResponseEntity<?> makePayment(@RequestBody PaymentRequest request){
+        return paymentService.makePayment(request);
     }
 
     @GetMapping
     ResponseEntity<List<PaymentDetail>> findAllPayments(){
         return paymentService.findAllPayments();
+    }
+
+    @GetMapping("/number-of-payments")
+    public ResponseEntity<Long> findNumberOfPayments() {
+        return paymentService.findNumberOfPayments();
     }
 }

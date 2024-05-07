@@ -1,6 +1,8 @@
 package com.bexos.paymentservice.services;
 
+import com.bexos.paymentservice.dto.CartItem;
 import com.bexos.paymentservice.dto.PaymentRequest;
+import com.bexos.paymentservice.feign.OrderClient;
 import com.bexos.paymentservice.mappers.PaymentMapper;
 import com.bexos.paymentservice.model.PaymentDetail;
 import com.bexos.paymentservice.repository.PaymentRepository;
@@ -15,15 +17,19 @@ import java.util.List;
 public class PaymentServiceImpl implements PaymentService {
     private final PaymentRepository paymentRepository;
     private final PaymentMapper paymentMapper;
+    private final OrderClient orderClient;
 
-    public ResponseEntity<?> makePayment(String userId, PaymentRequest request) {
+    public ResponseEntity<?> makePayment(PaymentRequest request) {
         PaymentDetail paymentDetail = paymentMapper.toPaymentDetail(request);
-        paymentDetail.setUserId(userId);
         return ResponseEntity.ok(paymentRepository.save(paymentDetail));
     }
 
     public ResponseEntity<List<PaymentDetail>> findAllPayments() {
         List<PaymentDetail> payments = paymentRepository.findAll();
         return ResponseEntity.ok(payments);
+    }
+
+    public ResponseEntity<Long> findNumberOfPayments() {
+        return ResponseEntity.ok(paymentRepository.count());
     }
 }

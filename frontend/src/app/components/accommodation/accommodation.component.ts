@@ -1,14 +1,13 @@
-import { Component } from '@angular/core';
-import { AccommodationItem } from '../../models/accommodation-item';
-import { BookingService } from '../../services/booking/booking.service';
 import { CommonModule, Location } from '@angular/common';
-import { TokenService } from '../../services/token/token.service';
-import { OrderItem } from '../../models/order-item';
-import { CartService } from '../../services/cart/cart.service';
-import { UserstateComponent } from '../userstate/userstate.component';
+import { Component } from '@angular/core';
 import { ActivatedRoute, RouterLink } from '@angular/router';
+import { AccommodationItem } from '../../models/accommodation-item';
+import { CartItem } from '../../models/cart-item';
 import { AccommodationService } from '../../services/accommodation/accommodation.service';
+import { CartService } from '../../services/cart/cart.service';
 import { OrderService } from '../../services/order/order.service';
+import { TokenService } from '../../services/token/token.service';
+import { UserstateComponent } from '../userstate/userstate.component';
 
 @Component({
   selector: 'app-accommodation',
@@ -20,7 +19,7 @@ import { OrderService } from '../../services/order/order.service';
 export class AccommodationComponent extends UserstateComponent {
   accommodationList!: AccommodationItem[];
   filteredAccommodationList!: AccommodationItem[];
-  orderItem: OrderItem;
+  cartItem: CartItem;
   isDashboardPage: boolean = false;
   categoryId: string;
   categoryName: string;
@@ -51,7 +50,6 @@ export class AccommodationComponent extends UserstateComponent {
       .getAllAccommodationsByCategoryId(this.categoryId)
       .subscribe({
         next: (response) => {
-          console.log(response);
           this.accommodationList = response.body;
           this.filteredAccommodationList = this.accommodationList;
         },
@@ -82,7 +80,7 @@ export class AccommodationComponent extends UserstateComponent {
         .addToCart({ userId: this.userId, bookingId, price })
         .subscribe({
           next: (data: any) => {
-            this.orderItem = data.body;
+            this.cartItem = data.body;
             window.location.reload();
           },
         });

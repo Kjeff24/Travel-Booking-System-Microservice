@@ -2,6 +2,7 @@ package com.bexos.paymentservice.mappers;
 
 import com.bexos.paymentservice.dto.PaymentRequest;
 import com.bexos.paymentservice.model.PaymentDetail;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -13,6 +14,9 @@ public class PaymentMapper {
                 .exp_month(request.exp_month())
                 .exp_year(request.exp_year())
                 .last4(request.last4())
+                .userId(request.userId())
+                .totalCost(request.totalCost())
+                .cartItems(request.cartItems())
                 .build();
     }
 }

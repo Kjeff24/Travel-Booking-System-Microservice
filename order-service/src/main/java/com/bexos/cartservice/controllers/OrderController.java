@@ -11,20 +11,26 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/order-service/order-items")
+@RequestMapping("/api/order-service")
 @RequiredArgsConstructor
 public class OrderController {
 
     private final OrderService orderService;
 
+
     @PostMapping("/add-to-cart")
     public ResponseEntity<CartItem> addToCart(@RequestBody AddToCartRequest request) {
         return orderService.addToCart(request);
     }
+
     @PostMapping("/add-all-to-cart/{userId}")
     public ResponseEntity<List<CartItem>> addAllCartItems(@RequestBody List<AddAllToCartRequest> request, @PathVariable String userId) {
-        System.out.println(request.toString());
         return orderService.addAllCartItems(request, userId);
+    }
+
+    @DeleteMapping("/delete-all-cart-items/{userId}")
+    public ResponseEntity<Void> deleteAllCartItems(@PathVariable String userId) {
+        return orderService.deleteAllCartItems(userId);
     }
 
     @DeleteMapping("/delete-from-cart")

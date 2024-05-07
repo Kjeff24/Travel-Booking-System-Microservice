@@ -20,6 +20,10 @@ spring:
         id: order-service
         uri: lb://order-service
         predicates[0]: Path=/api/order-service/**
+      routes[3]:
+        id: payment-service
+        uri: lb://payment-service
+        predicates[0]: Path=/api/payment-service/**
       # Enable token relay - Pass the successful authenticated token from keycloak server to downstream APIs
       default-filters: TokenRelay
     # Below property tells API Gateway to work in a load balanced mode

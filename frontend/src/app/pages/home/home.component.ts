@@ -39,7 +39,10 @@ export class HomeComponent{
   ngOnInit(): void {
     
     this.tokenService.getTokenExpiration();
+    this.getAllCategory();
+  }
 
+  getAllCategory(): void {
     this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {
         this.categoryItemList = data.body;
