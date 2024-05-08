@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -31,5 +32,13 @@ public class PaymentServiceImpl implements PaymentService {
 
     public ResponseEntity<Long> findNumberOfPayments() {
         return ResponseEntity.ok(paymentRepository.count());
+    }
+
+    public ResponseEntity<?> deletePaymentById(String paymentId) {
+        Optional<PaymentDetail> paymentDetail = paymentRepository.findById(paymentId);
+        if (paymentDetail.isPresent()) {
+            paymentRepository.deleteById(paymentId);
+        }
+        return ResponseEntity.ok().build();
     }
 }

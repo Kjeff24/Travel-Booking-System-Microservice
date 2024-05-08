@@ -13,4 +13,6 @@ public interface PaymentService {
     ResponseEntity<List<PaymentDetail>> findAllPayments();
 
     ResponseEntity<Long> findNumberOfPayments();
+
+    ResponseEntity<?> deletePaymentById(String paymentId);
 }

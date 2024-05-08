@@ -39,4 +39,13 @@ export class PaymentService {
       { headers, observe: 'response' }
     );
   }
+
+  public deletePaymentById(paymentId: string): Observable<any> {
+    const token = this.tokenService.getAccessToken();
+    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
+    return this.httpClient.delete<any>(
+      this.gateway_url + `/api/payment-service/${paymentId}`,
+      { headers, observe: 'response' }
+    );
+  }
 }

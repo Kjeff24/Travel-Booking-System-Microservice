@@ -24,7 +24,7 @@ public class PaymentDetail {
     private String id;
     private String userId;
     private String email;
-    private String paymentId;
+    private String cardId;
     private int exp_month;
     private int exp_year;
     private int last4;

@@ -7,7 +7,7 @@ public record PaymentRequest(
         int exp_month,
         int exp_year,
         int last4,
-        String paymentId,
+        String cardId,
         String userId,
         int totalCost,
         List<CartItem> cartItems

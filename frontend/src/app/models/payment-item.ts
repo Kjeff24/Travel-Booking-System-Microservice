@@ -2,7 +2,7 @@ import { CartItem } from "./cart-item";
 
 export class PaymentItem{
     id: string = '';
-    paymentId: string = '';
+    cardId: string = '';
     email: string = '';
     exp_month: number = 0;
     exp_year: number = 0;
@@ -10,6 +10,7 @@ export class PaymentItem{
     totalCost: number = 0;
     userId: string = '';
     cartItems: CartItem[];
+    paymentDate: Date;
 
     constructor(){}
 }

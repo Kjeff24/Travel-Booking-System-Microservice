@@ -6,58 +6,51 @@
             <table class="table table-bordered">
               <thead>
                 <tr>
-                  <th class="product-thumbnail">Payment Id</th>
-                  <th class="product-name">Email</th>
-                  <th class="product-price">Card Expiration Month</th>
-                  <th class="product-quantity">Card Expiration Year</th>
-                  <th class="product-quantity">Cart Items</th>
-                  <th class="product-total">TotalCost</th>
-                  <th class="product-remove">Remove</th>
+                  <th class="id">Payment Id</th>
+                  <th class="card-id">Card Id</th>
+                  <th class="payment-email">Email</th>
+                  <th class="payment-date">Date</th>
+                  <th class="payment-exp-month">Card Expiration Month</th>
+                  <th class="payment-exp-year">Card Expiration Year</th>
+                  <th class="payment-cart-items">Booking Id</th>
+                  <th class="payment-total-cost">TotalCost</th>
+                  <th class="payment-remove">Remove</th>
                 </tr>
               </thead>
               <tbody *ngFor="let paymentItem of paymentItemList">
                 <tr>
-                  <td class="product-thumbnail ">
-                    <h2></h2>
+                  <td >
+                    <p>{{ paymentItem.id }}</p>
                   </td>
-                  <td class="product-name">
-                    <h2 class="h5 text-black"></h2>
+                  <td >
+                    <p>{{ paymentItem.cardId }}</p>
                   </td>
-                  <td></td>
                   <td>
-                    <div class="input-group mb-3" style="max-width: 120px">
-                      <div class="input-group-prepend">
-                        <button
-                          data-action="remove"
-                          class="btn btn-outline-dark js-btn-minus update-cart"
-                          type="button"
-                        >
-                          &minus;
-                        </button>
-                      </div>
-                      <input
-                        type="text"
-                        class="form-control text-center"
-                        placeholder=""
-                        aria-label="Example text with button addon"
-                        aria-describedby="button-addon1"
-                        readonly
-                      />
-                      <div class="input-group-append">
-                        <button
-                          data-action="add"
-                          class="btn btn-outline-dark js-btn-plus update-cart"
-                          type="button"
-                        >
-                          &plus;
-                        </button>
-                      </div>
-                    </div>
+                    <p >{{ paymentItem.email }}</p>
                   </td>
-                  <td></td>
+                  <td>
+                    <p >{{ paymentItem.paymentDate }}</p>
+                  </td>
+                  <td>
+                    <p >{{ paymentItem.exp_month }}</p>
+                  </td>
+                  <td>
+                    <p >{{ paymentItem.exp_year }}</p>
+                  </td>
+                  <td>
+                    <select>
+                      <option *ngFor="let cartItem of paymentItem.cartItems" [value]="cartItem.id">
+                        {{ cartItem.bookingId }}
+                      </option>
+                    </select>
+                  </td>
+                  <td>
+                    <p>{{ paymentItem.totalCost }}</p>
+                  </td>
                   <td>
                     <a
                       class="btn btn-dark height-auto btn-sm update-cart"
+                      (click)="deletePayment(paymentItem.id)"
                       >X</a
                     >
                   </td>

@@ -105,7 +105,7 @@ export class CheckoutComponent extends UserstateComponent {
       key: 'pk_test_51PDAy7P1Hc5vPjyRwbcj3e25f9I9TfILnpcJWhUY9vqCZLxwzCnfdPZvuqu4bzoMfKFuizFIUi61aNPDIq75Nkto00q9ry7lOl',
       locale: 'auto',
       token: (token: any) => { 
-        this.paymentItem.paymentId = token['card'].id;
+        this.paymentItem.cardId = token['card'].id;
         this.paymentItem.email = token['card'].name;
         this.paymentItem.exp_month = token['card'].exp_month;
         this.paymentItem.exp_year = token['card'].exp_year;

@@ -29,4 +29,9 @@ public class PaymentController {
     public ResponseEntity<Long> findNumberOfPayments() {
         return paymentService.findNumberOfPayments();
     }
+
+    @DeleteMapping("/{paymentId}")
+    public ResponseEntity<?> deletePaymentById(@PathVariable String paymentId){
+        return paymentService.deletePaymentById(paymentId);
+    }
 }

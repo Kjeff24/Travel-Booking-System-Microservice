@@ -17,6 +17,7 @@ public class PaymentMapper {
                 .userId(request.userId())
                 .totalCost(request.totalCost())
                 .cartItems(request.cartItems())
+                .cardId(request.cardId())
                 .build();
     }
 }
