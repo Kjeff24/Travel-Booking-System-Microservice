@@ -6,19 +6,21 @@ import { FormsModule } from '@angular/forms';
 import { CategoryItem } from '../../../models/category-item';
 import { CategoryService } from '../../../services/category/category.service';
 import { RouterLink } from '@angular/router';
+import { FileHandle } from '../../../models/file-handle';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-create-car-rental',
   standalone: true,
   imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './create-update-car-rental.component.html',
-  styleUrl: './create-update-car-rental.component.css'
+  styleUrl: './create-update-car-rental.component.css',
 })
 export class CreateUpdateCarRentalComponent {
   bookingId: string;
   isUpdate: boolean = false;
   categoryItemUpdate: CategoryItem;
-  carRentalItem: CarRentalItem;
+  carRentalItem!: CarRentalItem;
   categoryItemList!: CategoryItem[];
   success: boolean = false;
   successMessage: string;
@@ -26,12 +28,13 @@ export class CreateUpdateCarRentalComponent {
   errorMessages: any;
 
   constructor(
-    private location: Location, 
+    private location: Location,
     private carRentalService: CarRentalService,
     private categoryService: CategoryService,
+    private sanitizer: DomSanitizer
   ) {
-    this.categoryItemUpdate = new CategoryItem();
     this.carRentalItem = new CarRentalItem();
+    this.categoryItemUpdate = new CategoryItem();
   }
 
   ngOnInit(): void {
@@ -42,7 +45,6 @@ export class CreateUpdateCarRentalComponent {
       this.bookingId = urlSegments[urlSegments.length - 1];
       this.loadCarRental();
     }
-
 
     this.categoryService.getAllCategoryByCode('CAR').subscribe({
       next: (data: any) => {
@@ -55,28 +57,26 @@ export class CreateUpdateCarRentalComponent {
   }
 
   loadCarRental(): void {
-    this.carRentalService.getCarRentalById(this.bookingId)
-      .subscribe({
-        next: (response) => {
-          this.carRentalItem = response.body;
-        },
-        error: (error: any) => {
-          console.log(`Error: ${error}`);
-        }
-      });
+    this.carRentalService.getCarRentalById(this.bookingId).subscribe({
+      next: (response) => {
+        this.carRentalItem = response.body;
+        this.getCategoryItem(this.carRentalItem.categoryId);
+      },
+      error: (error: any) => {
+        console.log(`Error: ${error}`);
+      },
+    });
   }
 
-  getCategoryItem(): void {
-    this.carRentalService
-      .getCategoryByCarRentalId(this.bookingId)
-      .subscribe({
-        next: (response) => {
-          this.categoryItemUpdate = response.body;
-        },
-        error: (error: any) => {
-          console.log(`Error: ${error}`);
-        },
-      });
+  getCategoryItem(categoryId: string): void {
+    this.categoryService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+        this.categoryItemUpdate = response.body;
+      },
+      error: (err) => {
+        console.log(err);
+      },
+    });
   }
 
   handleSubmit() {
@@ -88,38 +88,76 @@ export class CreateUpdateCarRentalComponent {
   }
 
   handleUpdate(): void {
-    this.carRentalService
-      .updateCarRental(this.bookingId, this.carRentalItem)
-      .subscribe({
-        next: (response) => {
-          this.carRentalItem = response.body;
-          this.success = true;
-          this.successMessage = "Product Updated Successfully"
-        },
-        error: (error: any) => {
-          if (error.status === 400) {
-            this.error = true
-            this.errorMessages = Object.values(error.error);
-          }
-        },
-      });
+    const carRentalFormData: any = this.prepareFormData(this.carRentalItem);
+    if (carRentalFormData != null) {
+      this.carRentalService
+        .updateCarRental(this.bookingId, this.carRentalItem)
+        .subscribe({
+          next: (response) => {
+            this.carRentalItem = response.body;
+            this.success = true;
+            this.successMessage = 'Product Updated Successfully';
+          },
+          error: (error: any) => {
+            if (error.status === 400) {
+              this.error = true;
+              this.errorMessages = Object.values(error.error);
+            }
+          },
+        });
+    }
   }
 
   handleCreate(): void {
-    this.carRentalService
-      .createCarRental(this.carRentalItem)
-      .subscribe({
+    const carRentalFormData: any = this.prepareFormData(this.carRentalItem);
+    if (carRentalFormData != null) {
+      this.carRentalService.createCarRental(carRentalFormData).subscribe({
         next: (response) => {
           this.carRentalItem = response.body;
           this.success = true;
-          this.successMessage = "Product Added Successfully"
+          this.successMessage = 'Product Added Successfully';
+          this.carRentalItem = new CarRentalItem();
         },
         error: (error: any) => {
           if (error.status === 400) {
-            this.error = true
+            this.error = true;
             this.errorMessages = Object.values(error.error);
           }
         },
       });
+    }
+  }
+
+  prepareFormData(carRentalItem: CarRentalItem): FormData {
+    const formData: any = new FormData();
+    formData.append(
+      'carRentalRequest',
+      new Blob([JSON.stringify(carRentalItem)], { type: 'application/json' })
+    );
+    if (carRentalItem.carImage) {
+      formData.append(
+        'imageFile',
+        carRentalItem.carImage.file,
+        carRentalItem.carImage.file.name
+      );
+      return formData;
+    } else {
+      this.error = true;
+      this.errorMessages = ['Upload an Image'];
+      return null;
+    }
+  }
+
+  onFileSelected(event) {
+    if (event.target.files) {
+      const file = event.target.files[0];
+      const fileHandle: FileHandle = {
+        file: file,
+        url: this.sanitizer.bypassSecurityTrustUrl(
+          window.URL.createObjectURL(file)
+        ),
+      };
+      this.carRentalItem.carImage = fileHandle;
+    }
   }
 }

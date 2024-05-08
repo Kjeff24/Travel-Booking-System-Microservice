@@ -1,5 +1,6 @@
 package com.bexos.categoryservice.models;
 
+import com.bexos.categoryservice.dto.ImageModel;
 import lombok.Builder;
 import lombok.Data;
 import org.springframework.data.annotation.Id;
@@ -16,6 +17,6 @@ public class Category {
     private String name;
     private String description;
     private CategoryCode code;
-    private String icon;
+    private ImageModel icon;
 
 }

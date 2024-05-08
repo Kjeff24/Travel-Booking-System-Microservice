@@ -48,11 +48,6 @@ public class AccommodationServiceImpl implements AccommodationService {
         return ResponseEntity.badRequest().body("Accommodation does not exist");
     }
 
-    public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
-        Optional<Accommodation> accommodation = accommodationRepository.findById(bookingId);
-        return accommodation.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
-    }
-
     public ResponseEntity<?> findAllAccommodationsByCategory(String categoryId) {
         Optional<List<Accommodation>> accommodations = accommodationRepository.findAllByCategoryId(categoryId);
         return accommodations.map(ResponseEntity::ok).orElse(null);

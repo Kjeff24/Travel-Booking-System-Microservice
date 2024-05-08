@@ -22,11 +22,9 @@ export class PaymentService {
   }
 
   public getNumberOfPayments(): Observable<any> {
-    const token = this.tokenService.getAccessToken();
-    const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.get<any>(
       this.gateway_url + '/api/payment-service/number-of-payments',
-      { headers, observe: 'response' }
+      { observe: 'response' }
     );
   }
 

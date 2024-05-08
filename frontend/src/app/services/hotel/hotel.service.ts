@@ -33,13 +33,6 @@ export class HotelService {
     );
   }
 
-  public getCategoryByHotelId(bookingId: string): Observable<any> {
-    return this.httpClient.get<any>(
-      this.gateway_url + `/api/booking-service/hotel/find-category-by-booking-id/${bookingId}`,
-      {observe: 'response'}
-    );
-  }
-
   public createHotel(data: HotelItem): Observable<any> {
     return this.httpClient.post<any>(
       this.gateway_url + '/api/booking-service/hotel',

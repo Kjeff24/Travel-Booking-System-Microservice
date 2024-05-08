@@ -21,6 +21,7 @@ public class SecurityConfiguration {
                 .csrf(csrf -> csrf.ignoringRequestMatchers("/api/payment-service/**"))
                 .cors(Customizer.withDefaults());
         http.authorizeHttpRequests(authorize -> authorize
+                        .requestMatchers("/api/payment-service/number-of-payments").permitAll()
                         .anyRequest().authenticated())
                 .oauth2ResourceServer((oauth2) -> oauth2.jwt(Customizer.withDefaults()));
         return http.build();

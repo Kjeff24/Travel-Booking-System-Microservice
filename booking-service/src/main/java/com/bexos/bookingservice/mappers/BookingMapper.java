@@ -1,9 +1,6 @@
 package com.bexos.bookingservice.mappers;
 
-import com.bexos.bookingservice.dto.AccommodationRequest;
-import com.bexos.bookingservice.dto.CarRentalRequest;
-import com.bexos.bookingservice.dto.FlightRequest;
-import com.bexos.bookingservice.dto.HotelRequest;
+import com.bexos.bookingservice.dto.*;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
 import com.bexos.bookingservice.models.booking_categories.CarRental;
 import com.bexos.bookingservice.models.booking_categories.Flight;
@@ -43,10 +40,10 @@ public class BookingMapper {
                 .build();
     }
 
-    public CarRental toCarRental(CarRentalRequest carRentalRequest) {
+    public CarRental toCarRental(CarRentalRequest carRentalRequest, ImageModel carImage) {
         return CarRental.builder()
                 .carType(carRentalRequest.carType())
-                .carImage(carRentalRequest.carImage())
+                .carImage(carImage)
                 .price(carRentalRequest.price())
                 .categoryId(carRentalRequest.categoryId())
                 .build();

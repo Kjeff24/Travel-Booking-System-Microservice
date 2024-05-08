@@ -33,11 +33,6 @@ public class FlightController {
         return flightService.findAllFlightsByCategory(categoryId);
     }
 
-    @GetMapping("/find-category-by-booking-id/{bookingId}")
-    public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
-        return flightService.findCategoryByBookingId(bookingId);
-    }
-
     @PostMapping
     public ResponseEntity<?> createFlightOffer(@Valid @RequestBody FlightRequest flightRequest) {
         return flightService.createFlightOffer(flightRequest);

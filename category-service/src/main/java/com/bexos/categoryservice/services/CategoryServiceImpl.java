@@ -2,13 +2,12 @@ package com.bexos.categoryservice.services;
 
 import com.bexos.categoryservice.dto.CategoryRequest;
 import com.bexos.categoryservice.dto.CategoryResponse;
+import com.bexos.categoryservice.dto.ImageModel;
 import com.bexos.categoryservice.mappers.CategoryMapper;
 import com.bexos.categoryservice.models.Category;
 import com.bexos.categoryservice.models.CategoryCode;
 import com.bexos.categoryservice.repositories.CategoryRepository;
 import lombok.RequiredArgsConstructor;
-import org.bson.types.ObjectId;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
@@ -25,13 +24,13 @@ public class CategoryServiceImpl implements CategoryService {
         return ResponseEntity.ok(categoryRepository.findAll());
     }
 
-    public ResponseEntity<?> createCategory(CategoryRequest categoryRequest) {
+    public ResponseEntity<?> createCategory(CategoryRequest categoryRequest, ImageModel icon) {
 
         Category category = Category.builder()
                 .name(categoryRequest.name())
                 .description(categoryRequest.description())
                 .code(CategoryCode.valueOf(categoryRequest.code()))
-                .icon(categoryRequest.icon())
+                .icon(icon)
                 .build();
 
         return ResponseEntity.ok(categoryRepository.save(category));
@@ -43,7 +42,7 @@ public class CategoryServiceImpl implements CategoryService {
         if (response.isPresent()) {
             return ResponseEntity.ok(response);
         }
-        return ResponseEntity.badRequest().body("Category with "+ id +" was not found");
+        return ResponseEntity.badRequest().body("Category with " + id + " was not found");
     }
 
     public ResponseEntity<List<Category>> findCategoryByCode(CategoryCode code) {
@@ -56,12 +55,12 @@ public class CategoryServiceImpl implements CategoryService {
         return categoryRepository.existsById(String.valueOf(id));
     }
 
-    public ResponseEntity<?> updateCategory(String categoryId, CategoryRequest request) {
+    public ResponseEntity<?> updateCategory(String categoryId, CategoryRequest request, ImageModel icon) {
         Optional<Category> category = categoryRepository.findById(categoryId);
         if (category.isPresent()) {
             Category categoryToUpdate = category.get();
             categoryToUpdate.setCode(CategoryCode.valueOf(request.code()));
-            categoryToUpdate.setIcon(request.icon());
+            categoryToUpdate.setIcon(icon);
             categoryToUpdate.setName(request.name());
             categoryToUpdate.setDescription(request.description());
             return ResponseEntity.ok(categoryRepository.save(categoryToUpdate));

@@ -1,8 +1,9 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../../environments/environment';
 import { Observable } from 'rxjs';
 import { CarRentalItem } from '../../models/car-rental-item';
+import { TokenService } from '../token/token.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,7 @@ import { CarRentalItem } from '../../models/car-rental-item';
 export class CarRentalService {
   gateway_url = environment.gateway_url;
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient, private tokenService: TokenService) { }
 
   public getAllCarRental(): Observable<any> {
     return this.httpClient.get<any>(
@@ -21,8 +22,7 @@ export class CarRentalService {
 
   public getAllCarRentalByCategoryId(categoryId: string): Observable<any> {
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/booking-service/car-rental/category/${categoryId}`,
-      {observe: 'response'}
+      this.gateway_url + `/api/booking-service/car-rental/category/${categoryId}`
     );
   }
 
@@ -33,14 +33,9 @@ export class CarRentalService {
     );
   }
 
-  public getCategoryByCarRentalId(bookingId: string): Observable<any> {
-    return this.httpClient.get<any>(
-      this.gateway_url + `/api/booking-service/car-rental/find-category-by-booking-id/${bookingId}`,
-      {observe: 'response'}
-    );
-  }
-
-  public createCarRental(data: CarRentalItem): Observable<any> {
+  public createCarRental(data: FormData): Observable<any> {
+    // const token = this.tokenService.getAccessToken();
+    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
       this.gateway_url + '/api/booking-service/car-rental',
       data,

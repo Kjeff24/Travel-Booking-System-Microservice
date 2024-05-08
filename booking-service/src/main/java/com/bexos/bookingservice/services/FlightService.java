@@ -16,7 +16,5 @@ public interface FlightService {
 
     ResponseEntity<?> updateFlight(String bookingId, FlightRequest request);
 
-    ResponseEntity<?> findCategoryByBookingId(String bookingId);
-
     ResponseEntity<?> findAllFlightsByCategory(String categoryId);
 }

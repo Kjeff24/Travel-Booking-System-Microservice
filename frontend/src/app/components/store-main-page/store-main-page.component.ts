@@ -24,7 +24,7 @@ export class StoreMainPageComponent {
 
   getAllCategory(): void {this.categoryService.getAllCategory().subscribe({
     next: (data: any) => {
-      this.categoryItemList = data.body;
+      this.categoryItemList = data;
     },
     error: () => {
       console.log( "Error");

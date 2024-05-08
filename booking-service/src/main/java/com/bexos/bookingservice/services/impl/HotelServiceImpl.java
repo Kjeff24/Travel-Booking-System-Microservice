@@ -55,11 +55,6 @@ public class HotelServiceImpl implements HotelService {
         return ResponseEntity.badRequest().body("Accommodation does not exist");
     }
 
-    public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
-        Optional<Hotel> hotel = hotelRepository.findById(bookingId);
-        return hotel.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
-    }
-
     public ResponseEntity<?> findAllHotelsByCategory(String categoryId) {
         Optional<List<Hotel>> hotels = hotelRepository.findAllByCategoryId(categoryId);
         return hotels.map(ResponseEntity::ok).orElse(null);

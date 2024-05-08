@@ -1,13 +1,26 @@
 <form>
   <div class="p-2 m-3 p-lg-5 border bg-dark text-white">
-    <h5 class="text-center">{{ isUpdate ? 'Update' : 'Create' }} Hotel</h5>
-    <div *ngIf="success" class="alert alert-warning alert-dismissible fade show" role="alert">
-      <strong>Great</strong> {{successMessage}}
-      <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    <h5 class="text-center">{{ isUpdate ? "Update" : "Create" }} Hotel</h5>
+    <div
+      *ngIf="success"
+      class="alert alert-warning alert-dismissible fade show"
+      role="alert"
+    >
+      <strong>Great</strong> {{ successMessage }}
+      <button
+        type="button"
+        class="btn-close"
+        data-bs-dismiss="alert"
+        aria-label="Close"
+      ></button>
     </div>
-    <div *ngIf="error" class="alert alert-danger d-flex align-items-center flex-column" role="alert">
+    <div
+      *ngIf="error"
+      class="alert alert-danger d-flex align-items-center flex-column"
+      role="alert"
+    >
       <span *ngFor="let error of errorMessages">
-        {{error}}
+        {{ error }}
       </span>
     </div>
     <div id="map"></div>
@@ -22,7 +35,7 @@
           id="hotelName"
           [(ngModel)]="hotelItem.hotelName"
           name="hotelName"
-          value="{{ isUpdate && hotelItem  ? hotelItem.hotelName : '' }}"
+          value="{{ isUpdate && hotelItem ? hotelItem.hotelName : '' }}"
           required
         />
       </div>
@@ -38,7 +51,7 @@
           id="location"
           [(ngModel)]="hotelItem.location"
           name="location"
-          value="{{ isUpdate && hotelItem  ? hotelItem.location : '' }}"
+          value="{{ isUpdate && hotelItem ? hotelItem.location : '' }}"
           required
         />
       </div>
@@ -54,7 +67,7 @@
           id="roomType"
           [(ngModel)]="hotelItem.roomType"
           name="roomType"
-          value="{{ isUpdate && hotelItem  ? hotelItem.roomType : '' }}"
+          value="{{ isUpdate && hotelItem ? hotelItem.roomType : '' }}"
           required
         />
       </div>
@@ -70,7 +83,7 @@
           id="price"
           [(ngModel)]="hotelItem.price"
           name="price"
-          value="{{ isUpdate && hotelItem  ? hotelItem.price : '' }}"
+          value="{{ isUpdate && hotelItem ? hotelItem.price : '' }}"
           required
         />
       </div>
@@ -81,28 +94,49 @@
           >Category <span class="text-danger">*</span></label
         >
         <select
-        class="form-select"
-        id="floatingSelect"
-        aria-label="Floating label select example"
-        required
-        [(ngModel)]="hotelItem.categoryId"
-        name="category"
-      >
-        <option 
-        value="{{ isUpdate && categoryItemUpdate  ? categoryItemUpdate.id : '' }}" selected>{{isUpdate && categoryItemUpdate ? categoryItemUpdate.name : 'Choose...'}}</option>
-        <option *ngFor="let categoryItem of categoryItemList" [value]="categoryItem.id">
-          {{ categoryItem.name }}
-        </option>
-      </select>
+          class="form-select"
+          id="floatingSelect"
+          aria-label="Floating label select example"
+          required
+          [(ngModel)]="hotelItem.categoryId"
+          name="category"
+        >
+          <option
+            value="{{
+              isUpdate && categoryItemUpdate ? categoryItemUpdate.id : ''
+            }}"
+            selected
+          >
+            {{
+              isUpdate && categoryItemUpdate
+                ? categoryItemUpdate.name
+                : "Choose..."
+            }}
+          </option>
+          <option
+            *ngFor="let categoryItem of categoryItemList"
+            [value]="categoryItem.id"
+          >
+            {{ categoryItem.name }}
+          </option>
+        </select>
       </div>
     </div>
     <div class="form-group">
       <div class="d-flex justify-content-center p-3">
-        <button type="submit" class="btn btn-secondary" (click)="handleSubmit()">{{ isUpdate ? 'Update' : 'Create' }}</button>
+        <button
+          type="submit"
+          class="btn btn-secondary"
+          (click)="handleSubmit()"
+        >
+          {{ isUpdate ? "Update" : "Create" }}
+        </button>
       </div>
     </div>
     <div class="text-center">
-      <a href="" class="btn text-white" [routerLink]="['/dashboard/']">Go Home</a>
+      <a href="" class="btn text-white" [routerLink]="['/dashboard/']"
+        >Go Home</a
+      >
     </div>
   </div>
 </form>

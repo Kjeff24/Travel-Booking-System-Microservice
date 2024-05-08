@@ -17,7 +17,5 @@ public interface HotelService {
 
     ResponseEntity<?> updateHotel(String bookingId, HotelRequest request);
 
-    ResponseEntity<?> findCategoryByBookingId(String bookingId);
-
     ResponseEntity<?> findAllHotelsByCategory(String categoryId);
 }

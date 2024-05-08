@@ -31,11 +31,6 @@ public class AccommodationController {
         return accommodationService.findAllAccommodationsByCategory(categoryId);
     }
 
-    @GetMapping("/find-category-by-booking-id/{bookingId}")
-    public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
-        return accommodationService.findCategoryByBookingId(bookingId);
-    }
-
     @PostMapping
     public ResponseEntity<?> createAccommodationOffer(@Valid @RequestBody AccommodationRequest accommodationRequest) {
         return accommodationService.createAccommodationOffer(accommodationRequest);

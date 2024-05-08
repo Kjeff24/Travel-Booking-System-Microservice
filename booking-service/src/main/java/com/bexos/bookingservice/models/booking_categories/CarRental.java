@@ -1,5 +1,6 @@
 package com.bexos.bookingservice.models.booking_categories;
 
+import com.bexos.bookingservice.dto.ImageModel;
 import com.bexos.bookingservice.models.Booking;
 import lombok.Builder;
 import lombok.Data;
@@ -15,7 +16,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class CarRental extends Booking {
     private String carType;
     private double price;
-    private String carImage;
+    private ImageModel carImage;
     private String categoryId;
 
 }

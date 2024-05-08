@@ -33,10 +33,6 @@ public class HotelController {
         return hotelService.findAllHotelsByCategory(categoryId);
     }
 
-    @GetMapping("/find-category-by-booking-id/{bookingId}")
-    public ResponseEntity<?> findCategoryByBookingId(@PathVariable String bookingId) {
-        return hotelService.findCategoryByBookingId(bookingId);
-    }
 
     @PostMapping
     public ResponseEntity<?> createHotelOffer(@Valid @RequestBody HotelRequest hotelRequest) {

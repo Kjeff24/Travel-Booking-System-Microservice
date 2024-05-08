@@ -19,7 +19,9 @@
     *ngFor="let carRentalItem of filteredCarRentalList"
   >
     <div class="booking-category-card d-flex flex-column">
-      <img src="{{ carRentalItem.carImage}}" class="image-fluid" alt="car-image">
+      <div class="m-auto">
+        <img [src]="carRentalItem.carImage.url" class="image-fluid" alt="car-image" width="200">
+      </div>
       <div class="d-flex align-items-center justify-content-between">
         <div class="booking-title">
           <span>$ {{ carRentalItem.price }}</span>

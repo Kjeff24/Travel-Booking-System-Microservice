@@ -33,13 +33,6 @@ export class FlightService {
     );
   }
 
-  public getCategoryByFlightId(bookingId: string): Observable<any> {
-    return this.httpClient.get<any>(
-      this.gateway_url + `/api/booking-service/flight/find-category-by-booking-id/${bookingId}`,
-      {observe: 'response'}
-    );
-  }
-
   public createFlight(data: FlightItem): Observable<any> {
     return this.httpClient.post<any>(
       this.gateway_url + '/api/booking-service/flight',

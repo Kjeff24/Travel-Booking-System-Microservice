@@ -51,11 +51,6 @@ public class FlightServiceImpl implements FlightService {
         return ResponseEntity.badRequest().body("Accommodation does not exist");
     }
 
-    public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
-        Optional<Flight> flight = flightRepository.findById(bookingId);
-        return flight.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
-    }
-
     public ResponseEntity<?> findAllFlightsByCategory(String categoryId) {
         Optional<List<Flight>> flights = flightRepository.findAllByCategoryId(categoryId);
         return flights.map(ResponseEntity::ok).orElse(null);

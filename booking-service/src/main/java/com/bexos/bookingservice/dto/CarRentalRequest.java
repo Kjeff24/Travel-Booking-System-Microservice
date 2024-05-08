@@ -8,8 +8,6 @@ public record CarRentalRequest(
         String carType,
         @NotNull(message = "Price field is required")
         double price,
-//        @NotEmpty(message = "CarImage field is required")
-        String carImage,
         @NotEmpty(message = "Category field is required")
         String categoryId
 ) {

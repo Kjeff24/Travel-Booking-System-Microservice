@@ -39,7 +39,7 @@ export class CreateUpdateHotelComponent {
       this.loadHotel();
     }
 
-    this.categoryService.getAllCategoryByCode('ACC').subscribe({
+    this.categoryService.getAllCategoryByCode('HOT').subscribe({
       next: (data: any) => {
         this.categoryItemList = data.body;
       },
@@ -54,6 +54,7 @@ export class CreateUpdateHotelComponent {
       .subscribe({
         next: (response) => {
           this.hotelItem = response.body;
+          this.getCategoryItem(this.hotelItem.categoryId)
         },
         error: (error: any) => {
           console.log(`Error: ${error}`);
@@ -61,17 +62,15 @@ export class CreateUpdateHotelComponent {
       });
   }
 
-  getCategoryItem(): void {
-    this.hotelService
-      .getCategoryByHotelId(this.bookingId)
-      .subscribe({
-        next: (response) => {
-          this.categoryItemUpdate = response.body;
-        },
-        error: (error: any) => {
-          console.log(`Error: ${error}`);
-        },
-      });
+  getCategoryItem(categoryId: string): void {
+    this.categoryService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+          this.categoryItemUpdate = response.body
+      },
+      error: (err) => {
+          console.log(err);
+      },
+    })
   }
 
   handleSubmit() {

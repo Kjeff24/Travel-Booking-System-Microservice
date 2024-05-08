@@ -22,7 +22,7 @@ export class AdminHomeComponent {
   ngOnInit(): void {
     this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {
-        this.categoryItemList = data.body;
+        this.categoryItemList = data;
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);

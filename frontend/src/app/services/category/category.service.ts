@@ -13,7 +13,7 @@ export class CategoryService {
   constructor(private httpClient: HttpClient) { }
 
   public getAllCategory(): Observable<any>{
-    return this.httpClient.get<any>(this.gateway_url + '/api/category-service/all', {observe: 'response'})
+    return this.httpClient.get<any>(this.gateway_url + '/api/category-service/all')
   }
 
   public getCategoryById(categoryId: string): Observable<any> {

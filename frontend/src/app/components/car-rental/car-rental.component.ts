@@ -9,6 +9,8 @@ import { CartService } from '../../services/cart/cart.service';
 import { TokenService } from '../../services/token/token.service';
 import { UserstateComponent } from '../userstate/userstate.component';
 import { OrderService } from '../../services/order/order.service';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-car-rental',
@@ -31,7 +33,8 @@ export class CarRentalComponent  extends UserstateComponent {
     private carRentalService: CarRentalService,
     public override tokenService: TokenService,
     private cartService: CartService,
-    private location: Location
+    private location: Location,
+    private imageProcessingService: ImageProcessingService
   ){
     super(tokenService)
   }
@@ -47,9 +50,14 @@ export class CarRentalComponent  extends UserstateComponent {
   }
 
   getCarRentals(): void {
-    this.carRentalService.getAllCarRentalByCategoryId(this.categoryId).subscribe({
+    this.carRentalService.getAllCarRentalByCategoryId(this.categoryId)
+    .pipe(
+      map((x: CarRentalItem[], i) => x.map((product: CarRentalItem) => this.imageProcessingService.createCarRentalImage(product)))
+    )
+    .subscribe({
       next: (response) => {
-        this.carRentalList = response.body;
+        this.carRentalList = response;
+        console.log(response)
         this.filteredCarRentalList = this.carRentalList
       },
       error: (error: string) => {

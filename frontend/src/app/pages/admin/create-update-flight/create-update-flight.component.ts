@@ -55,6 +55,7 @@ export class CreateUpdateFlightComponent {
       .subscribe({
         next: (response) => {
           this.flightItem = response.body;
+          this.getCategoryItem(this.flightItem.categoryId)
         },
         error: (error: any) => {
           console.log(`Error: ${error}`);
@@ -62,17 +63,15 @@ export class CreateUpdateFlightComponent {
       });
   }
 
-  getCategoryItem(): void {
-    this.flightService
-      .getCategoryByFlightId(this.bookingId)
-      .subscribe({
-        next: (response) => {
-          this.categoryItemUpdate = response.body;
-        },
-        error: (error: any) => {
-          console.log(`Error: ${error}`);
-        },
-      });
+  getCategoryItem(categoryId: string): void {
+    this.categoryService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+          this.categoryItemUpdate = response.body
+      },
+      error: (err) => {
+          console.log(err);
+      },
+    })
   }
 
   handleSubmit() {

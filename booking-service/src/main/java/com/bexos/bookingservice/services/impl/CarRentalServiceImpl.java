@@ -1,6 +1,7 @@
 package com.bexos.bookingservice.services.impl;
 
 import com.bexos.bookingservice.dto.CarRentalRequest;
+import com.bexos.bookingservice.dto.ImageModel;
 import com.bexos.bookingservice.feign.CategoryClient;
 import com.bexos.bookingservice.mappers.BookingMapper;
 import com.bexos.bookingservice.models.booking_categories.Accommodation;
@@ -22,10 +23,10 @@ public class CarRentalServiceImpl implements CarRentalService {
     private final CategoryClient categoryClient;
     private final CarRentalRepository carRentalRepository;
 
-    public ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest) {
+    public ResponseEntity<?> createCarRentalOffer(CarRentalRequest carRentalRequest, ImageModel carImage) {
         boolean existsById = categoryClient.existsCategoryById(carRentalRequest.categoryId());
         if(existsById){
-            CarRental newCarRental = carRentalRepository.save(bookingMapper.toCarRental(carRentalRequest));
+            CarRental newCarRental = carRentalRepository.save(bookingMapper.toCarRental(carRentalRequest, carImage));
             return ResponseEntity.status(HttpStatus.CREATED).body(newCarRental);
         }
 
@@ -37,21 +38,16 @@ public class CarRentalServiceImpl implements CarRentalService {
         return carRental.map(ResponseEntity::ok).orElse(null);
     }
 
-    public ResponseEntity<?> updateCarRental(String bookingId, CarRentalRequest request) {
+    public ResponseEntity<?> updateCarRental(String bookingId, CarRentalRequest request, ImageModel carImage) {
         Optional<CarRental> carRental = carRentalRepository.findById(bookingId);
         if (carRental.isPresent()) {
             CarRental carRentalToUpdate = carRental.get();
-            carRentalToUpdate.setCarImage(request.carImage());
+            carRentalToUpdate.setCarImage(carImage);
             carRentalToUpdate.setCarType(request.carType());
             carRentalToUpdate.setPrice(request.price());
             return ResponseEntity.ok(carRentalRepository.save(carRentalToUpdate));
         }
         return ResponseEntity.badRequest().body("Car Rental does not exist");
-    }
-
-    public ResponseEntity<?> findCategoryByBookingId(String bookingId) {
-        Optional<CarRental> carRental = carRentalRepository.findById(bookingId);
-        return carRental.map(value -> ResponseEntity.ok(categoryClient.findCategoryById(value.getCategoryId()))).orElse(null);
     }
 
     public ResponseEntity<?> findAllCarRentalsByCategory(String categoryId) {

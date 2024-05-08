@@ -41,12 +41,11 @@ export class CreateUpdateAccommodationComponent {
       const urlSegments = currentUrl.split('/');
       this.bookingId = urlSegments[urlSegments.length - 1];
       this.loadAccommodation();
-      this.getCategoryItem();
     }
 
     this.categoryService.getAllCategoryByCode('ACC').subscribe({
       next: (data: any) => {
-        this.categoryItemList = data.body;
+        this.categoryItemList = data.body
       },
       error: () => {
         console.log('Error');
@@ -58,6 +57,7 @@ export class CreateUpdateAccommodationComponent {
     this.accommodationService.getAccommodationById(this.bookingId).subscribe({
       next: (response) => {
         this.accommodationItem = response.body;
+        this.getCategoryItem(this.accommodationItem.categoryId)
       },
       error: (error: any) => {
         console.log(`Error: ${error}`);
@@ -65,18 +65,17 @@ export class CreateUpdateAccommodationComponent {
     });
   }
 
-  getCategoryItem(): void {
-    this.accommodationService
-      .getCategoryByAccommodationId(this.bookingId)
-      .subscribe({
-        next: (response) => {
-          this.categoryItemUpdate = response.body;
-        },
-        error: (error: any) => {
-          console.log(`Error: ${error}`);
-        },
-      });
+  getCategoryItem(categoryId: string): void {
+    this.categoryService.getCategoryById(categoryId).subscribe({
+      next: (response) => {
+          this.categoryItemUpdate = response.body
+      },
+      error: (err) => {
+          console.log(err);
+      },
+    })
   }
+  
 
   handleSubmit() {
     if (this.isUpdate) {

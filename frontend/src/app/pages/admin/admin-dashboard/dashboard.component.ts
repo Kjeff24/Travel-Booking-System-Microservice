@@ -57,8 +57,8 @@ export class DashboardComponent {
   getCategories(): void {
     this.categoryService.getAllCategory().subscribe({
       next: (data: any) => {
-        this.categoryItemList = data.body;
-        this.categorySize = data.body.length;
+        this.categoryItemList = data;
+        this.categorySize = data.length;
       },
       error: () => {
         console.log( "Error");

@@ -1,12 +1,6 @@
-/* .booking-category-container {
-    margin: 5px;
-  }
-  
-  
-  .booking-title {
-    margin-top: 10px;
-  } */
-  
+*{
+  box-sizing: border-box;
+}
   .item {
     background-color: #fff;
   }
