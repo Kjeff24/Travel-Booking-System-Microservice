@@ -69,9 +69,7 @@ public class User implements UserDetails {
     }
 
     public static User fromOAuth2GithubUser(OAuth2User user){
-        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
-        Set<Role> roles = new HashSet<>();
-        roles.add(customerRole);
+        Set<Role> roles = CustomerRole();
         return User.builder()
                 .email(user.getAttribute("email"))
                 .fullName(user.getAttribute("name"))
@@ -83,9 +81,7 @@ public class User implements UserDetails {
     }
 
     public static User fromOauth2GoogleUser(OAuth2User user){
-        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
-        Set<Role> roles = new HashSet<>();
-        roles.add(customerRole);
+        Set<Role> roles = CustomerRole();
         return User.builder()
                 .email(user.getAttributes().get("email").toString())
                 .fullName(user.getAttributes().get("name").toString())
@@ -94,5 +90,14 @@ public class User implements UserDetails {
                 .roles(roles)
                 .enabled(true)
                 .build();
+    }
+
+    private static Set<Role> CustomerRole() {
+        Role customerRole = Role.builder().role(RoleName.CUSTOMER).build();
+        Role oauthRole = Role.builder().role(RoleName.OAUTH2).build();
+        Set<Role> roles = new HashSet<>();
+        roles.add(customerRole);
+        roles.add(oauthRole);
+        return roles;
     }
 }

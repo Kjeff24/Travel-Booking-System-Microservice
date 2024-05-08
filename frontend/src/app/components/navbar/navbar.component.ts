@@ -60,7 +60,6 @@ export class NavbarComponent  extends UserstateComponent {
     const httpParams = new HttpParams({ fromObject: this.params });
     const codeUrl = this.authorize_uri + httpParams.toString();
     location.href = codeUrl;
-    // location.href = this.signup_uri;
   }
 
   onLogin(): void {

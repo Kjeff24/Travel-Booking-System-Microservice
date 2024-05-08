@@ -16,6 +16,7 @@ export class UserstateComponent{
   isLoggedIn: boolean;
   isAdmin: boolean;
   isCustomer: boolean;
+  isOauth2User: boolean;
   userId: string;
 
   constructor(public tokenService: TokenService) {}
@@ -24,6 +25,7 @@ export class UserstateComponent{
     this.isLoggedIn = this.tokenService.isLoggedIn();
     this.isAdmin = this.tokenService.isAdmin();
     this.isCustomer = this.tokenService.isCustomer();
+    this.isOauth2User = this.tokenService.IsOauth2User();
     this.userId = this.tokenService.getUserId();
   }
 

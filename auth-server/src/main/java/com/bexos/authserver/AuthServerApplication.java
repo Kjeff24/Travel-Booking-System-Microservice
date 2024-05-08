@@ -32,11 +32,11 @@ public class AuthServerApplication implements CommandLineRunner {
 			roleRepository.save(customeRole);
 		}
 
-		if (!roleRepository.existsByRole(RoleName.BUSINESS)) {
-			Role businessRole = Role.builder()
-					.role(RoleName.BUSINESS)
+		if (!roleRepository.existsByRole(RoleName.OAUTH2)) {
+			Role oauth2Role = Role.builder()
+					.role(RoleName.OAUTH2)
 					.build();
-			roleRepository.save(businessRole);
+			roleRepository.save(oauth2Role);
 		}
 
 	}

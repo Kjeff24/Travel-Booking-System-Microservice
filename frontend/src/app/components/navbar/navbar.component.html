@@ -56,7 +56,7 @@
           >
         </a>
         <br>
-        <div class="btn-group dropdown" *ngIf="isLoggedIn && isCustomer">
+        <div class="btn-group dropdown" *ngIf="isLoggedIn && isCustomer && !isOauth2User">
           <button
             type="button"
             class="btn"

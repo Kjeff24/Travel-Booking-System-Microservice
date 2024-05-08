@@ -80,7 +80,7 @@
           <a class="nav-link click-pointer" (click)="onLogout()">Log out</a>
         </li>
       </ul>
-      <div class="btn-group dropdown">
+      <div class="btn-group dropdown" *ngIf="isLoggedIn && isCustomer && !isOauth2User">
         <button
           type="button"
           class="btn"

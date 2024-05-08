@@ -56,6 +56,10 @@ export class TokenService {
     return this.hasRole('CUSTOMER');
   }
 
+  IsOauth2User(): boolean {
+    return this.hasRole('OAUTH2');
+  }
+
   getUserId() : string {
     if (!this.isLoggedIn()) {
       return null; 

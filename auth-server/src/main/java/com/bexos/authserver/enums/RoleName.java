@@ -1,7 +1,7 @@
 package com.bexos.authserver.enums;
 
 public enum RoleName {
-    BUSINESS,
+    OAUTH2,
     CUSTOMER,
     ADMIN
 }

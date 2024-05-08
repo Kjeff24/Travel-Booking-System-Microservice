@@ -61,6 +61,7 @@ export class AuthorizedComponent implements OnInit {
             next: () => {
               this.cartService.clearCart();
               this.router.navigate(['']);
+              window.location.reload();
             },
             error: (error) => {
               console.error('Error sending cart items to backend:', error);

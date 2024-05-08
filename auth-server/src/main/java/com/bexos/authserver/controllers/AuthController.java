@@ -49,7 +49,7 @@ public class AuthController {
         } else if (userRepository.existsByUsernameIgnoreCase(user.getUsername())) {
             model.addAttribute("error", "User with this username already exists.");
 
-        } else if (!userService.validate(user.getPassword())) {
+        } else if (!userService.isValidPassword(user.getPassword())) {
             model.addAttribute(
                     "error",
                     "Password must be at least 8 characters long and include a combination of uppercase letters, lowercase letters, special characters, and numbers.");

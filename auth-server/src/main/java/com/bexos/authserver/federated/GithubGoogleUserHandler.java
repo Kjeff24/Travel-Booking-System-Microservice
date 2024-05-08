@@ -18,7 +18,6 @@ public final class GithubGoogleUserHandler implements Consumer<OAuth2User> {
 
         if ((email == null || !userRepository.existsByEmailIgnoreCase(email)) && !userRepository.existsByUsernameIgnoreCase(username)) {
             User newUser = user.getAttributes().containsKey("login") ? User.fromOAuth2GithubUser(user) : User.fromOauth2GoogleUser(user);
-            System.out.println(newUser.toString());
             this.userRepository.save(newUser);
         }
     }
