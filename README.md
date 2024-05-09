@@ -52,3 +52,20 @@ Microservice responsible for managing orders and cart items
 
 ## CLIENT RESOURCE REQUEST
 ![alt text](assets/client_resource_request.png)
+
+## DATABASE MODEL
+
+### USER
+![user-service.png](assets/user-service.png)
+
+### CATEGORY
+![category-service.png](assets/category-service.png)
+
+### BOOKING
+![booking-service.png](assets/booking-service.png)
+
+### ORDER
+![order-service.png](assets/order-service.png)
+
+### PAYMENT
+![payment-service.png](assets/payment-service.png)

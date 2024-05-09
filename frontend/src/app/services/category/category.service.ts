@@ -30,7 +30,7 @@ export class CategoryService {
     );
   }
 
-  public createCategory(data: CategoryItem): Observable<any> {
+  public createCategory(data: FormData): Observable<any> {
     return this.httpClient.post<any>(
       this.gateway_url + '/api/category-service/create',
       data,
@@ -38,7 +38,7 @@ export class CategoryService {
     );
   }
 
-  public updateCategory(categoryId:string, data: CategoryItem): Observable<any> {
+  public updateCategory(categoryId:string, data: FormData): Observable<any> {
     return this.httpClient.put<any>(
       this.gateway_url + `/api/category-service/update/${categoryId}`,
       data,

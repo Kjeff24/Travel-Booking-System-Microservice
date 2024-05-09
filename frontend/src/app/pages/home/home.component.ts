@@ -13,6 +13,8 @@ import { CategoryService } from '../../services/category/category.service';
 import { MiniAboutComponent } from '../../components/mini-about/mini-about.component';
 import { TokenService } from '../../services/token/token.service';
 import { UserstateComponent } from '../../components/userstate/userstate.component';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-home',
@@ -34,6 +36,7 @@ export class HomeComponent{
   constructor(
     private categoryService: CategoryService, 
     private tokenService: TokenService,
+    private imageProcessingService: ImageProcessingService
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +46,14 @@ export class HomeComponent{
   }
 
   getAllCategory(): void {
-    this.categoryService.getAllCategory().subscribe({
-      next: (data: any) => {
-        this.categoryItemList = data;
+    this.categoryService.getAllCategory()
+    .pipe(
+      map((x: CategoryItem[], i) => x.map((product: CategoryItem) => this.imageProcessingService.createCategoryImage(product)))
+    )
+    .subscribe({
+      next: (response) => {
+        this.categoryItemList = response;
+        console.log(this.categoryItemList)
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);

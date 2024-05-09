@@ -77,7 +77,7 @@ public class CategoryController {
         return categoryService.existCategoryById(id);
     }
 
-    @PutMapping("/update/{categoryId}")
+    @PutMapping(value ="/update/{categoryId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateCategory(@PathVariable String categoryId,
                                             @RequestBody CategoryRequest request,
                                             @RequestPart("imageFile") MultipartFile image) {

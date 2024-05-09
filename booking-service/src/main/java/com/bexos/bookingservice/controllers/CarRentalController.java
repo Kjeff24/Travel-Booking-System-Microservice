@@ -57,7 +57,7 @@ public class CarRentalController {
 
     }
 
-    @PutMapping("/update/{bookingId}")
+    @PutMapping(value = "/update/{bookingId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateCarRental(
             @PathVariable String bookingId,
             @Valid @RequestPart("carRentalRequest") CarRentalRequest carRentalRequest,

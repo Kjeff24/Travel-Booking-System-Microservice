@@ -57,7 +57,6 @@ export class CarRentalComponent  extends UserstateComponent {
     .subscribe({
       next: (response) => {
         this.carRentalList = response;
-        console.log(response)
         this.filteredCarRentalList = this.carRentalList
       },
       error: (error: string) => {

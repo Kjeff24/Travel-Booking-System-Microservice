@@ -11,6 +11,6 @@ public record CategoryResponse(
         String name,
         String description,
         CategoryCode code,
-        String icon
+        ImageModel icon
 ) {
 }

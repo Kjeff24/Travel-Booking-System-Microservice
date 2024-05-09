@@ -28,3 +28,7 @@ Command to start RabbitMQ in docker:
 
 Command to start keycloak in docker:
     docker run --name keycloak -p 8080:8080 -e KEYCLOAK_ADMIN=<admin> -e KEYCLOAK_ADMIN_PASSWORD=<admin_password> quay.io/keycloak/keycloak:24.0.2 start-dev
+
+Command to compile into docker image and push to docker hub:
+     mvn clean compile com.google.cloud.tools:jib-maven-plugin:3.4.2:build
+

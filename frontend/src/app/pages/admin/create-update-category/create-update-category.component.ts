@@ -64,7 +64,7 @@ export class CreateUpdateCategoryComponent {
     const categoryFormData: any = this.prepareFormData(this.categoryItem);
     if (categoryFormData != null) {
       this.categoryService
-        .updateCategory(this.categoryId, this.categoryItem)
+        .updateCategory(this.categoryId, categoryFormData)
         .subscribe({
           next: (response) => {
             this.categoryItem = response.body;
@@ -85,11 +85,12 @@ export class CreateUpdateCategoryComponent {
     const categoryFormData: any = this.prepareFormData(this.categoryItem);
     {
       if (categoryFormData != null)
-        this.categoryService.createCategory(this.categoryItem).subscribe({
+        this.categoryService.createCategory(categoryFormData).subscribe({
           next: (response) => {
             this.categoryItem = response.body;
             this.success = true;
             this.successMessage = 'Product Added Successfully';
+            this.categoryItem = new CategoryItem();
           },
           error: (error: any) => {
             if (error.status === 400) {
@@ -104,7 +105,7 @@ export class CreateUpdateCategoryComponent {
   prepareFormData(categoryItem: CategoryItem): FormData {
     const formData: any = new FormData();
     formData.append(
-      'carRentalRequest',
+      'categoryRequest',
       new Blob([JSON.stringify(categoryItem)], { type: 'application/json' })
     );
     if (categoryItem.icon) {

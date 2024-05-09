@@ -1,6 +1,7 @@
 package com.bexos.categoryservice.mappers;
 
 import com.bexos.categoryservice.dto.CategoryResponse;
+import com.bexos.categoryservice.dto.ImageModel;
 import com.bexos.categoryservice.models.Category;
 import org.springframework.stereotype.Service;
 

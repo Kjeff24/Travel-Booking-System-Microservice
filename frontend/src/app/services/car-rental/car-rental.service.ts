@@ -43,7 +43,7 @@ export class CarRentalService {
     );
   }
 
-  public updateCarRental(bookingId:string, data: CarRentalItem): Observable<any> {
+  public updateCarRental(bookingId:string, data: FormData): Observable<any> {
     return this.httpClient.put<any>(
       this.gateway_url + `/api/booking-service/car-rental/update/${bookingId}`,
       data,

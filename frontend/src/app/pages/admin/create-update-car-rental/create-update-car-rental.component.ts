@@ -91,7 +91,7 @@ export class CreateUpdateCarRentalComponent {
     const carRentalFormData: any = this.prepareFormData(this.carRentalItem);
     if (carRentalFormData != null) {
       this.carRentalService
-        .updateCarRental(this.bookingId, this.carRentalItem)
+        .updateCarRental(this.bookingId, carRentalFormData)
         .subscribe({
           next: (response) => {
             this.carRentalItem = response.body;

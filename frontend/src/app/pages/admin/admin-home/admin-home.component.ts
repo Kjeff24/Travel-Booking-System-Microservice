@@ -4,6 +4,8 @@ import { CategoryCardComponent } from '../../../components/category-card/categor
 import { CategoryService } from '../../../services/category/category.service';
 import { CategoryItem } from '../../../models/category-item';
 import { RouterLink } from '@angular/router';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-admin-home',
@@ -16,11 +18,16 @@ export class AdminHomeComponent {
   categoryItemList: CategoryItem[];
 
   constructor(
-    private categoryService: CategoryService
+    private categoryService: CategoryService,
+    private imageProcessingService: ImageProcessingService
   ){}
 
   ngOnInit(): void {
-    this.categoryService.getAllCategory().subscribe({
+    this.categoryService.getAllCategory()
+    .pipe(
+      map((x: CategoryItem[], i) => x.map((product: CategoryItem) => this.imageProcessingService.createCategoryImage(product)))
+    )
+    .subscribe({
       next: (data: any) => {
         this.categoryItemList = data;
       },
