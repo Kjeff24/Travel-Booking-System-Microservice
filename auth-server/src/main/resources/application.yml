@@ -2,8 +2,8 @@ spring:
   application.name: auth-server
   data.mongodb:
     authentication-database: admin
-    username: root
-    password: password
+    username: ${mongodb_username}
+    password: ${mongodb_password}
     database: user-service
     port: 27017
     host: localhost
