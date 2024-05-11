@@ -53,7 +53,6 @@ export class HomeComponent{
     .subscribe({
       next: (response) => {
         this.categoryItemList = response;
-        console.log(this.categoryItemList)
       },
       error: (error: string) => {
         console.log(`Error: ${error}`);

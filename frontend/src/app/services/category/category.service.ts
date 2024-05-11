@@ -18,8 +18,7 @@ export class CategoryService {
 
   public getCategoryById(categoryId: string): Observable<any> {
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/category-service/${categoryId}`,
-      {observe: 'response' }
+      this.gateway_url + `/api/category-service/${categoryId}`
     );
   }
 

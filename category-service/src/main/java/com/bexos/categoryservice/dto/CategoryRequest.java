@@ -1,7 +1,9 @@
 package com.bexos.categoryservice.dto;
 
 import jakarta.validation.constraints.NotEmpty;
+import lombok.Builder;
 
+@Builder
 public record CategoryRequest(
         @NotEmpty(message = "Name field is required")
         String name,

@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +25,6 @@ public class OrderServiceImpl implements OrderService {
     private final CartItemRepository cartItemRepository;
     private final OrderMapper orderMapper;
     private final CartItemMongoTemplate cartItemMongoTemplate;
-    private final BookingClient bookingClient;
 
 
     public ResponseEntity<CartItem> addToCart(AddToCartRequest request) {
@@ -76,7 +74,9 @@ public class OrderServiceImpl implements OrderService {
 
     public ResponseEntity<?> findOrderById(String orderId) {
         Optional<Order> order = orderRepository.findById(orderId);
-        return order.map(ResponseEntity::ok).orElse(null);
+//        return order.map(ResponseEntity::ok).orElse(null);
+        return order.map(ResponseEntity::ok)
+                .orElse(ResponseEntity.badRequest().build());
     }
 
     public ResponseEntity<Void> deleteAllCartItems(String userId) {
@@ -90,13 +90,14 @@ public class OrderServiceImpl implements OrderService {
     }
 
 
-    public ResponseEntity<Void> deleteFromCart(String bookingId, String userId) {
+    public ResponseEntity<Void> deleteCartItemByBookingIdAndOrderId(String bookingId, String userId) {
         orderRepository.findByUserId(userId).ifPresent(order ->
                 cartItemRepository.deleteByBookingIdAndOrderId(bookingId, order.getId()));
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request) {String userId = request.userId();
+    public ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request) {
+        String userId = request.userId();
         String bookingId = request.bookingId();
         Optional<Order> existingOrderOptional = orderRepository.findByUserId(userId);
         if (existingOrderOptional.isPresent()) {

@@ -15,6 +15,16 @@ This project is a travel booking system aimed at providing a reliable and user-f
 - MongoDB: NoSQL database for backend data.
 - Bootstrap: Frontend framework for responsive design and styling.
 
+## HOW TO RUN THE APPLICATION
+1. Run ```docker-compose up -d``` to start mongodb, mongo-express and RabbitMQ
+2. Go inside each folder except 'frontend/' to build the application.
+   - Run ```mvn clean verify -DskipTests``` if you have maven installed globally
+   - Run ```.\mvnw clean verify DskipTests``` if you have the maven file in your current directory.
+3. Go inside each folder to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
+4. To start the angular application, navigate into the frontend directory.
+   - Run ```npm install```
+   - Run ```ng serve --host 127.0.0.1```
+
 ## BACKEND TECHNOLOGIES (MICROSERVICES OVERVIEW)
 
 ### Eureka Discovery

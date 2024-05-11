@@ -28,14 +28,11 @@ export class CarRentalService {
 
   public getCarRentalById(bookingId: string): Observable<any> {
     return this.httpClient.get<any>(
-      this.gateway_url + `/api/booking-service/car-rental/${bookingId}`,
-      {observe: 'response'}
+      this.gateway_url + `/api/booking-service/car-rental/${bookingId}`
     );
   }
 
   public createCarRental(data: FormData): Observable<any> {
-    // const token = this.tokenService.getAccessToken();
-    // const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.httpClient.post<any>(
       this.gateway_url + '/api/booking-service/car-rental',
       data,

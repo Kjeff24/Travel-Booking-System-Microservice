@@ -6,6 +6,8 @@ import { CategoryItem } from '../../../models/category-item';
 import { FormsModule } from '@angular/forms';
 import { FileHandle } from '../../../models/file-handle';
 import { DomSanitizer } from '@angular/platform-browser';
+import { ImageProcessingService } from '../../../services/image-processing/image-processing.service';
+import { map } from 'rxjs';
 
 @Component({
   selector: 'app-create-category',
@@ -26,7 +28,8 @@ export class CreateUpdateCategoryComponent {
   constructor(
     private location: Location,
     private categoryService: CategoryService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private imageProcessingService: ImageProcessingService
   ) {
     this.categoryItem = new CategoryItem();
   }
@@ -42,9 +45,15 @@ export class CreateUpdateCategoryComponent {
   }
 
   loadCategory(): void {
-    this.categoryService.getCategoryById(this.categoryId).subscribe({
+    this.categoryService
+    .getCategoryById(this.categoryId)
+    .pipe(
+      map((product: CategoryItem, i) => this.imageProcessingService.createCategoryImage(product))
+    )
+    .subscribe({
       next: (response) => {
-        this.categoryItem = response.body;
+        this.categoryItem = response;
+        console.log(this.categoryItem)
       },
       error: (error: any) => {
         console.log(`Error: ${error}`);

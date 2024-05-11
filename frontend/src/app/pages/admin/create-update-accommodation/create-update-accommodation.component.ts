@@ -1,11 +1,12 @@
 import { CommonModule, Location } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { RouterLink } from '@angular/router';
 import { AccommodationItem } from '../../../models/accommodation-item';
+import { CategoryItem } from '../../../models/category-item';
 import { AccommodationService } from '../../../services/accommodation/accommodation.service';
 import { CategoryService } from '../../../services/category/category.service';
-import { CategoryItem } from '../../../models/category-item';
-import { RouterLink } from '@angular/router';
+import { ImageProcessingService } from '../../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-create-accommodation',
@@ -66,9 +67,10 @@ export class CreateUpdateAccommodationComponent {
   }
 
   getCategoryItem(categoryId: string): void {
-    this.categoryService.getCategoryById(categoryId).subscribe({
+    this.categoryService.getCategoryById(categoryId)
+    .subscribe({
       next: (response) => {
-          this.categoryItemUpdate = response.body
+          this.categoryItemUpdate = response
       },
       error: (err) => {
           console.log(err);

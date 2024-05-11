@@ -79,11 +79,11 @@ public class CategoryController {
 
     @PutMapping(value ="/update/{categoryId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public ResponseEntity<?> updateCategory(@PathVariable String categoryId,
-                                            @RequestBody CategoryRequest request,
+                                            @RequestPart CategoryRequest categoryRequest,
                                             @RequestPart("imageFile") MultipartFile image) {
         try {
             ImageModel icon = uploadImage(image);
-            return categoryService.updateCategory(categoryId, request, icon);
+            return categoryService.updateCategory(categoryId, categoryRequest, icon);
         } catch (Exception e) {
             System.out.println(e.getMessage());
             return ResponseEntity.badRequest().body("Image file upload failed, ensure you upload an image");

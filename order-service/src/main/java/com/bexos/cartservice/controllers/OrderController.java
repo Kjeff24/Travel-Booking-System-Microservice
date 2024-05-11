@@ -35,7 +35,7 @@ public class OrderController {
 
     @DeleteMapping("/delete-from-cart")
     public ResponseEntity<Void> deleteFromCart(@RequestParam("bookingId") String bookingId, @RequestParam("userId") String userId) {
-        return orderService.deleteFromCart(bookingId, userId);
+        return orderService.deleteCartItemByBookingIdAndOrderId(bookingId, userId);
     }
 
     @PatchMapping("/decrease-cart-item")

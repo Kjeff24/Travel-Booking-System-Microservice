@@ -65,7 +65,7 @@ export class CreateUpdateHotelComponent {
   getCategoryItem(categoryId: string): void {
     this.categoryService.getCategoryById(categoryId).subscribe({
       next: (response) => {
-          this.categoryItemUpdate = response.body
+          this.categoryItemUpdate = response
       },
       error: (err) => {
           console.log(err);

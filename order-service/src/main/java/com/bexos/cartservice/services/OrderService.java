@@ -17,7 +17,7 @@ public interface OrderService {
 
     ResponseEntity<Integer> findCartItemsTotalPrice(String userId);
 
-    ResponseEntity<Void> deleteFromCart(String bookingId, String userId);
+    ResponseEntity<Void> deleteCartItemByBookingIdAndOrderId(String bookingId, String userId);
 
     ResponseEntity<CartItem> decreaseCartItem(AddToCartRequest request);
 

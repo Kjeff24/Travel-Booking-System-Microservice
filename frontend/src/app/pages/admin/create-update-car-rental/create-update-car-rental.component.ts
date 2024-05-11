@@ -8,6 +8,8 @@ import { CategoryService } from '../../../services/category/category.service';
 import { RouterLink } from '@angular/router';
 import { FileHandle } from '../../../models/file-handle';
 import { DomSanitizer } from '@angular/platform-browser';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-create-car-rental',
@@ -31,7 +33,8 @@ export class CreateUpdateCarRentalComponent {
     private location: Location,
     private carRentalService: CarRentalService,
     private categoryService: CategoryService,
-    private sanitizer: DomSanitizer
+    private sanitizer: DomSanitizer,
+    private imageProcessingService: ImageProcessingService
   ) {
     this.carRentalItem = new CarRentalItem();
     this.categoryItemUpdate = new CategoryItem();
@@ -57,9 +60,13 @@ export class CreateUpdateCarRentalComponent {
   }
 
   loadCarRental(): void {
-    this.carRentalService.getCarRentalById(this.bookingId).subscribe({
+    this.carRentalService.getCarRentalById(this.bookingId)
+    .pipe(
+      map((product: CarRentalItem, i) => this.imageProcessingService.createCarRentalImage(product))
+    )
+    .subscribe({
       next: (response) => {
-        this.carRentalItem = response.body;
+        this.carRentalItem = response;
         this.getCategoryItem(this.carRentalItem.categoryId);
       },
       error: (error: any) => {
@@ -69,9 +76,10 @@ export class CreateUpdateCarRentalComponent {
   }
 
   getCategoryItem(categoryId: string): void {
-    this.categoryService.getCategoryById(categoryId).subscribe({
+    this.categoryService.getCategoryById(categoryId)
+    .subscribe({
       next: (response) => {
-        this.categoryItemUpdate = response.body;
+        this.categoryItemUpdate = response;
       },
       error: (err) => {
         console.log(err);

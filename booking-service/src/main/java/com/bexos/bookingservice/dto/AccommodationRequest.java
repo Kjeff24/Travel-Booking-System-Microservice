@@ -2,7 +2,9 @@ package com.bexos.bookingservice.dto;
 
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
+import lombok.Builder;
 
+@Builder
 public record AccommodationRequest(
         @NotEmpty(message = "Location field is required")
         String location,

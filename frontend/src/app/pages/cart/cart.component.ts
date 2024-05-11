@@ -85,7 +85,7 @@ export class CartComponent extends UserstateComponent {
     this.categoryService
       .getCategoryById(item.categoryId)
       .subscribe((categoryResponse: any) => {
-        const category = categoryResponse.body;
+        const category = categoryResponse;
         switch (category.code) {
           case 'ACC':
             this.accommodationCartItemList.push({

@@ -13,6 +13,7 @@ import org.springframework.security.oauth2.server.authorization.client.Registere
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/client")
@@ -29,10 +30,12 @@ public class ClientController {
     }
 
     @GetMapping("/getClient/{client-id}")
-    public ResponseEntity<Client> findById(@PathVariable("client-id") String id) {
-        Client client = clientRepository.findByClientId(id)
-                .orElseThrow(() -> new RuntimeException("client not found (findById)"));
-        return ResponseEntity.ok(client);
+    public ResponseEntity<?> findById(@PathVariable("client-id") String id) {
+        Optional<Client> optionalClient = clientRepository.findByClientId(id);
+        if(optionalClient.isPresent()) {
+            return ResponseEntity.ok(optionalClient.get());
+        }
+        return ResponseEntity.badRequest().body("Client not found");
     }
 
     @GetMapping

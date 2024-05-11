@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { CategoryItem } from '../../../models/category-item';
 import { CategoryService } from '../../../services/category/category.service';
 import { RouterLink } from '@angular/router';
+import { map } from 'rxjs';
+import { ImageProcessingService } from '../../../services/image-processing/image-processing.service';
 
 @Component({
   selector: 'app-create-flight',
@@ -25,7 +27,11 @@ export class CreateUpdateFlightComponent {
   error: boolean = false;
   errorMessages: any;
 
-  constructor(private location: Location, private flightService: FlightService, private categoryService: CategoryService) {
+  constructor(
+    private location: Location, 
+    private flightService: FlightService, 
+    private categoryService: CategoryService
+  ) {
     this.flightItem = new FlightItem();
     this.categoryItemUpdate = new CategoryItem();
   }
@@ -64,9 +70,10 @@ export class CreateUpdateFlightComponent {
   }
 
   getCategoryItem(categoryId: string): void {
-    this.categoryService.getCategoryById(categoryId).subscribe({
+    this.categoryService.getCategoryById(categoryId)
+    .subscribe({
       next: (response) => {
-          this.categoryItemUpdate = response.body
+          this.categoryItemUpdate = response
       },
       error: (err) => {
           console.log(err);
