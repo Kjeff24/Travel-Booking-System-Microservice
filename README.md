@@ -16,12 +16,29 @@ This project is a travel booking system aimed at providing a reliable and user-f
 - Bootstrap: Frontend framework for responsive design and styling.
 
 ## HOW TO RUN THE APPLICATION
+Requirements: JDK 17, node.js and angular cli
 1. Run ```docker-compose up -d``` to start mongodb, mongo-express and RabbitMQ
-2. Go inside each folder except 'frontend/' to build the application.
+2. Go into `application.yml` and provide the following environment variables.
+   - email-app-password
+   - email-app-password
+   - github-id
+   - github-secret
+   - google-id
+   - google-secret
+   - jwt-secret
+3. Go inside each folder except 'frontend/' to build the application.
    - Run ```mvn clean verify -DskipTests``` if you have maven installed globally
    - Run ```.\mvnw clean verify DskipTests``` if you have the maven file in your current directory.
-3. Go inside each folder to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
-4. To start the angular application, navigate into the frontend directory.
+4. Go inside each folder in the order below to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
+   - auth-server
+   - config-server
+   - discovery-server
+   - category-service
+   - booking-service
+   - order-service
+   - payment-service
+   - gateway
+5. To start the angular application, navigate into the frontend directory.
    - Run ```npm install```
    - Run ```ng serve --host 127.0.0.1```
 
