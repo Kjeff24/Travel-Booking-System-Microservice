@@ -17,7 +17,7 @@ This project is a travel booking system aimed at providing a reliable and user-f
 
 ## HOW TO RUN THE APPLICATION
 Requirements: JDK 17, node.js and angular cli
-1. Run ```docker-compose up -d``` to start mongodb, mongo-express and RabbitMQ
+1. Run ```docker-compose up -d``` to start mongodb, mongo-express, zipkin and RabbitMQ
 2. Go into `application.yml` and provide the following environment variables.
    - email-app-password
    - email-app-password

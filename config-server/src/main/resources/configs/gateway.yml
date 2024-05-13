@@ -55,3 +55,5 @@ eureka:
   instance:
     hostname: localhost
     instance-id: ${spring.application.name}:${random.uuid}
+
+management.tracing.sampling.probability: 1.0

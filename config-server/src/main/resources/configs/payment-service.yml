@@ -26,3 +26,4 @@ eureka:
 
 # Below property will enable us to access the /actuator/refresh endpoint
 management.endpoints.web.exposure.include: "*"
+management.tracing.sampling.probability: 1.0

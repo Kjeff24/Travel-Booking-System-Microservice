@@ -3,20 +3,22 @@ services:
 
   # MongoDb Service
   mongodb:
-    image: mongo:latest # use the latest image.
+    image: mongo:latest
     container_name: mongodb
     restart: unless-stopped
-    environment: # set required env variables to access mongo
+    environment:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: password
     ports:
       - "27017:27017"
-    volumes: # optional to preserve database after container is deleted.
+    volumes:
       - ./database-data:/data/db
+    networks:
+      - mongodb-network
 
   # Mongo Express Service
   mongo-express:
-    image: mongo-express:latest # latest image
+    image: mongo-express:latest
     container_name: mongo-express
     restart: unless-stopped
     ports:
@@ -33,10 +35,29 @@ services:
   # Rabbitmq Service
   rabbitmq:
     image: rabbitmq:3.13-management
-    container_name: 'rabbitmq'
+    container_name: rabbitmq
     ports:
-      - 5672:5672
-      - 15672:15672
+      - "5672:5672"
+      - "15672:15672"
     volumes:
       - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
       - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
+    networks:
+      - rabbitmq-network
+
+  # ZipKin Service
+  zipkin:
+    image: openzipkin/zipkin
+    container_name: zipkin
+    ports:
+      - "9411:9411"
+    networks:
+      - zipkin-network
+
+networks:
+  mongodb-network:
+    driver: bridge
+  rabbitmq-network:
+    driver: bridge
+  zipkin-network:
+    driver: bridge
