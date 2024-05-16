@@ -13,8 +13,6 @@ services:
       - "27017:27017"
     volumes:
       - ./database-data:/data/db
-    networks:
-      - mongodb-network
 
   # Mongo Express Service
   mongo-express:
