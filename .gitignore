@@ -1,2 +1,4 @@
 database-data/
 .idea
+.env
+.env-docker

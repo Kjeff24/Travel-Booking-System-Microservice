@@ -3,8 +3,12 @@ spring:
     name: gateway
 # Below property is equivalent to @EnableEurekaClient. It helps API Gateway to register itself to eureka server
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:${CONFIG_SERVER_URL}
+  cloud.config.uri: ${CONFIG_SERVER_URL}
 
 server:
   port: 8765
+#  address: ${GATEWAY_HOST_NAME}
+  servlet.session.cookie.same-site: lax
 
+travel.booking.system.frontend-uri: ${FRONTEND_URL}

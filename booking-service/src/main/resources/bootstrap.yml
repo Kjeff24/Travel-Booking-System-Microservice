@@ -1,6 +1,10 @@
 spring:
   application.name: booking-service
   config:
-    import: optional:configserver:http://localhost:8888
+    import: optional:configserver:${CONFIG_SERVER_URL}
+  cloud.config.uri: ${CONFIG_SERVER_URL}
 
-server.port: 0
+
+server:
+  port: 0
+#  address: ${BOOKING_SERVICE_HOST_NAME}

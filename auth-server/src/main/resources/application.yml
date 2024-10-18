@@ -1,12 +1,12 @@
 spring:
   application.name: auth-server
   data.mongodb:
-    authentication-database: admin
-    username: root
-    password: password
-    database: user-service
-    port: 27017
-    host: localhost
+    authentication-database: ${MONGODB_AUTH_DB}
+    username: ${MONGODB_USERNAME}
+    password: ${MONGODB_PASSWORD}
+    database: ${MONGODB_AUTH_SERVER_DB}
+    port: ${MONGODB_PORT}
+    host: ${MONGODB_HOST}
 
   output.ansi.enabled: always
 
@@ -16,14 +16,14 @@ spring:
         registration:
           google:
             provider: google
-            client-id: ${google-id}
-            client-secret: ${google-secret}
+            client-id: ${GOOGLE_ID}
+            client-secret: ${GOOGLE_SECRET}
             scope: openid, https://www.googleapis.com/auth/userinfo.profile, https://www.googleapis.com/auth/userinfo.email
             client-name: google-client
           github:
             provider: github
-            clientId: ${github-id}
-            clientSecret: ${github-secret}
+            clientId: ${GITHUB_ID}
+            clientSecret: ${GITHUB_SECRET}
             scope: user:email, read:user
             client-name: github-client
         provider:
@@ -32,16 +32,22 @@ spring:
   mail:
     host: smtp.gmail.com
     port: 587
-    username: ${email-username}
-    password: ${email-app-password}
+    username: ${EMAIL_USERNAME}
+    password: ${EMAIL_PASSWORD}
     properties.mail.smtp:
       auth: true
       starttls.enable: true
 
-jwt-secret: ${jwt-secret}
+
 
 
 server:
   port: 8080
+#  address: ${AUTH_SERVER_HOST_NAME}
 
 management.tracing.sampling.probability: 1.0
+management.zipkin.tracing.endpoint: ${ZIPKIN_URI}
+travel.booking.system:
+  frontend-uri: ${FRONTEND_URL}
+  gateway-redirect-uri: ${GATEWAY_REDIRECT_URI}
+  angular-redirect-uri: ${ANGULAR_REDIRECT_URI}

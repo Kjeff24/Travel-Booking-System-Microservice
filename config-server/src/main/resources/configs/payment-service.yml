@@ -1,29 +1,34 @@
 spring:
   application.name: payment-service
   data.mongodb:
-    authentication-database: admin
-    username: root
-    password: password
-    database: payment-service
-    port: 27017
-    host: localhost
+    authentication-database: ${MONGODB_AUTH_DB}
+    username: ${MONGODB_USERNAME}
+    password: ${MONGODB_PASSWORD}
+    database: ${MONGODB_PAYMENT_SERVICE_DB}
+    port: ${MONGODB_PORT}
+    host: ${MONGODB_HOST}
   # RabbitMQ config
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: guest
-    password: guest
+    host: ${RABBITMQ_HOST}
+    port: ${RABBITMQ_PORT}
+    username: ${RABBITMQ_USERNAME}
+    password: ${RABBITMQ_PASSWORD}
 
   security:
     oauth2:
       resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8080/oauth2/jwks
+          jwk-set-uri: ${JWT_SET_URI}
 eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_URI}
   instance:
-    hostname: localhost
+    hostname: ${PAYMENT_SERVICE_HOST_NAME}
     instance-id: ${spring.application.name}:${random.uuid}
 
 # Below property will enable us to access the /actuator/refresh endpoint
 management.endpoints.web.exposure.include: "*"
 management.tracing.sampling.probability: 1.0
+
+management.zipkin.tracing.endpoint: ${ZIPKIN_URI}

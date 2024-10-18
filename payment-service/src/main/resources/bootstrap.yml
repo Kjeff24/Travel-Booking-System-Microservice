@@ -1,5 +1,8 @@
 spring:
   application.name: payment-service
   config:
-    import: optional:configserver:http://localhost:8888
-server.port: 0
+    import: optional:configserver:${CONFIG_SERVER_URL}
+  cloud.config.uri: ${CONFIG_SERVER_URL}
+server:
+  port: 0
+#  address: ${PAYMENT_SERVICE_HOST_NAME}

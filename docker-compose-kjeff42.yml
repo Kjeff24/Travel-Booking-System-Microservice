@@ -56,7 +56,7 @@ services:
       - tbs-network
 
   auth-server:
-    image: auth-server:latest
+    image: kjeff42/travel-booking-system-auth-server:0.0.1-SNAPSHOT
     container_name: tbs-auth-server
     ports:
       - "8080:8080"
@@ -69,7 +69,7 @@ services:
       - tbs-network
 
   config-server:
-    image: config-server:latest
+    image: kjeff42/travel-booking-system-config-server:0.0.1-SNAPSHOT
     container_name: tbs-config-server
     ports:
       - "8888:8888"
@@ -79,7 +79,7 @@ services:
       - tbs-network
 
   discovery-server:
-    image: discovery-server:latest
+    image: kjeff42/travel-booking-system-discovery-server:0.0.1-SNAPSHOT
     container_name: tbs-discovery-server
     ports:
       - "8761:8761"
@@ -92,7 +92,7 @@ services:
       - tbs-network
 
   gateway:
-    image: gateway:latest
+    image: kjeff42/travel-booking-system-gateway:0.0.1-SNAPSHOT
     container_name: tbs-gateway
     ports:
       - "8765:8765"
@@ -106,7 +106,7 @@ services:
       - tbs-network
 
   booking-service:
-    image: booking-service:latest
+    image: kjeff42/travel-booking-system-booking-service:0.0.1-SNAPSHOT
     container_name: tbs-booking-service
     env_file:
       - .env-docker
@@ -119,7 +119,7 @@ services:
       - tbs-network
 
   category-service:
-    image: category-service:latest
+    image: kjeff42/travel-booking-system-category-service:0.0.1-SNAPSHOT
     container_name: tbs-category-service
     env_file:
       - .env-docker
@@ -132,7 +132,7 @@ services:
       - tbs-network
 
   order-service:
-    image: order-service:latest
+    image: kjeff42/travel-booking-system-order-service:0.0.1-SNAPSHOT
     container_name: tbs-order-service
     env_file:
       - .env-docker
@@ -145,7 +145,7 @@ services:
       - tbs-network
 
   payment-service:
-    image: payment-service:latest
+    image: kjeff42/travel-booking-system-payment-service:0.0.1-SNAPSHOT
     container_name: tbs-payment-service
     env_file:
       - .env-docker
@@ -158,7 +158,5 @@ services:
       - tbs-network
 
 networks:
-#  mongodb-network:
-#    driver: bridge
   tbs-network:
     driver: bridge
