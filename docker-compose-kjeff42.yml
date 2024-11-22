@@ -61,10 +61,12 @@ services:
     ports:
       - "8080:8080"
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - zipkin
-      - mongodb
+      zipkin:
+        condition: service_started
+      mongodb:
+        condition: service_started
     networks:
       - tbs-network
 
@@ -74,7 +76,12 @@ services:
     ports:
       - "8888:8888"
     env_file:
-      - .env-docker
+      - .env
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8888/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - tbs-network
 
@@ -84,10 +91,17 @@ services:
     ports:
       - "8761:8761"
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - zipkin
-      - config-server
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8761/actuator/health" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
     networks:
       - tbs-network
 
@@ -97,11 +111,14 @@ services:
     ports:
       - "8765:8765"
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - zipkin
-      - config-server
-      - discovery-server
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
     networks:
       - tbs-network
 
@@ -109,12 +126,16 @@ services:
     image: kjeff42/travel-booking-system-booking-service:0.0.1-SNAPSHOT
     container_name: tbs-booking-service
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - rabbitmq
-      - zipkin
-      - config-server
-      - discovery-server
+      rabbitmq:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
     networks:
       - tbs-network
 
@@ -122,12 +143,16 @@ services:
     image: kjeff42/travel-booking-system-category-service:0.0.1-SNAPSHOT
     container_name: tbs-category-service
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - rabbitmq
-      - zipkin
-      - config-server
-      - discovery-server
+      rabbitmq:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
     networks:
       - tbs-network
 
@@ -135,12 +160,16 @@ services:
     image: kjeff42/travel-booking-system-order-service:0.0.1-SNAPSHOT
     container_name: tbs-order-service
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - rabbitmq
-      - zipkin
-      - config-server
-      - discovery-server
+      rabbitmq:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
     networks:
       - tbs-network
 
@@ -148,12 +177,16 @@ services:
     image: kjeff42/travel-booking-system-payment-service:0.0.1-SNAPSHOT
     container_name: tbs-payment-service
     env_file:
-      - .env-docker
+      - .env
     depends_on:
-      - rabbitmq
-      - zipkin
-      - config-server
-      - discovery-server
+      rabbitmq:
+        condition: service_started
+      zipkin:
+        condition: service_started
+      config-server:
+        condition: service_healthy
+      discovery-server:
+        condition: service_healthy
     networks:
       - tbs-network
 

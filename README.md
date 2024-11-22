@@ -23,12 +23,14 @@ GOOGLE_ID=your_google_id
 GOOGLE_SECRET=your_google_secret
 GITHUB_ID=your_github_id
 GITHUB_SECRET=your_github_secret
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
 EMAIL_USERNAME=your_email_username
 EMAIL_PASSWORD=your_email_password
 
 # DATABASE CONFIGURATION
 # Maintain the same MONGODB_AUTH_DB, MONGODB_PORT
-# When using docker compose maintain MONGODB_HOST value else localhost
+# When using docker compose maintain MONGODB_HOST value else use `localhost`
 MONGODB_AUTH_DB=admin
 MONGODB_USERNAME=your_mongodb_username
 MONGODB_PASSWORD=your_mongodb_password
@@ -62,6 +64,7 @@ ORDER_SERVICE_HOST_NAME=order-service
 PAYMENT_SERVICE_HOST_NAME=payment-service
 ZIPKIN_HOST_NAME=zipkin
 RABBITMQ_HOST_NAME=rabbitmq
+EUREKA_HOST=discovery-server
 
 # RABBITMQ CONFIGURATION
 RABBITMQ_HOST=${RABBITMQ_HOST_NAME}
@@ -70,7 +73,6 @@ RABBITMQ_USERNAME=your_rabbitmq_username
 RABBITMQ_PASSWORD=your_rabbitmq_password
 
 # EUREKA CONFIGURATION
-EUREKA_HOST=discovery-server
 EUREKA_DEFAULT_URI=http://${EUREKA_HOST}:8761/eureka/
 # GATEWAY CONFIGURATION
 GATEWAY_CLIENT_ID=gateway-client
@@ -84,9 +86,10 @@ Requirements: JDK 17, node.js and angular cli
 - Provide the environment variables in [USAGE](#usage)
 
 ### USING DOCKER
-- Run ```docker-compose up -d``` to start the servers
+- Run ```docker-compose -f docker-compose.yml up --build -d``` to start the servers
 
 ### USING MAVEN
+- Ensure you have mongodb, rabbitmq, and zipkin running
 - Go inside each folder in the order below to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
    - auth-server
    - config-server
@@ -96,11 +99,9 @@ Requirements: JDK 17, node.js and angular cli
    - order-service
    - payment-service
    - gateway
-
-### ANGULAR APPLICATION
 - To start the angular application, navigate into the frontend directory.
-   - Run ```npm install```
-   - Run ```ng serve --host 127.0.0.1```
+  - Run ```npm install```
+  - Run ```ng serve --host 127.0.0.1```
 
 ## BACKEND TECHNOLOGIES (MICROSERVICES OVERVIEW)
 

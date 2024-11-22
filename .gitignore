@@ -1,4 +1,6 @@
 database-data/
 .idea
 .env
-.env-docker
+.localEnv
+env-docker.txt
+env-local.txt
