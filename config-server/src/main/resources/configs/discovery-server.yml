@@ -3,7 +3,10 @@ spring:
     name: discovery-server
 eureka:
   client:
+    serviceUrl:
+      defaultZone: ${EUREKA_DEFAULT_URI}
     register-with-eureka: false
     fetch-registry: false
 
 management.tracing.sampling.probability: 1.0
+management.zipkin.tracing.endpoint: ${ZIPKIN_URI}

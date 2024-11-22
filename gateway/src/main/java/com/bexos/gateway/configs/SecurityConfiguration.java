@@ -1,5 +1,6 @@
 package com.bexos.gateway.configs;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -17,6 +18,8 @@ import org.springframework.web.cors.reactive.CorsConfigurationSource;
 @EnableWebFluxSecurity
 public class SecurityConfiguration {
     private final ReactiveClientRegistrationRepository repository;
+    @Value("${travel.booking.system.frontend-uri}")
+    private String frontendUri;
 
     public SecurityConfiguration(ReactiveClientRegistrationRepository repository) {
         this.repository = repository;
@@ -26,9 +29,9 @@ public class SecurityConfiguration {
     public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) throws Exception {
         return http
                 .cors(Customizer.withDefaults())
-                .csrf(ServerHttpSecurity.CsrfSpec::disable)
+                .csrf(Customizer.withDefaults())
                 .authorizeExchange(exchange -> exchange
-                        .pathMatchers("/**").permitAll()
+                        .pathMatchers("/hello").permitAll()
                         .anyExchange().authenticated())
                 .oauth2Login(Customizer.withDefaults())
                 .oauth2Client(Customizer.withDefaults())
@@ -50,7 +53,7 @@ public class SecurityConfiguration {
         cors.addAllowedHeader("*");
         cors.addAllowedMethod("*");
         cors.setAllowCredentials(true);
-        cors.addAllowedOrigin("http://127.0.0.1:4200");
+        cors.addAllowedOrigin(frontendUri);
         source.registerCorsConfiguration("/**", cors);
         return source;
     }

@@ -56,9 +56,7 @@ services:
       - tbs-network
 
   auth-server:
-    build:
-      context: ./auth-server
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-auth-server:0.0.1-SNAPSHOT
     container_name: tbs-auth-server
     ports:
       - "8080:8080"
@@ -73,9 +71,7 @@ services:
       - tbs-network
 
   config-server:
-    build:
-      context: ./config-server
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-config-server:0.0.1-SNAPSHOT
     container_name: tbs-config-server
     ports:
       - "8888:8888"
@@ -90,9 +86,7 @@ services:
       - tbs-network
 
   discovery-server:
-    build:
-      context: ./discovery-server
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-discovery-server:0.0.1-SNAPSHOT
     container_name: tbs-discovery-server
     ports:
       - "8761:8761"
@@ -112,9 +106,7 @@ services:
       - tbs-network
 
   gateway:
-    build:
-      context: ./gateway
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-gateway:0.0.1-SNAPSHOT
     container_name: tbs-gateway
     ports:
       - "8765:8765"
@@ -131,9 +123,7 @@ services:
       - tbs-network
 
   booking-service:
-    build:
-      context: ./booking-service
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-booking-service:0.0.1-SNAPSHOT
     container_name: tbs-booking-service
     env_file:
       - .env
@@ -150,9 +140,7 @@ services:
       - tbs-network
 
   category-service:
-    build:
-      context: ./category-service
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-category-service:0.0.1-SNAPSHOT
     container_name: tbs-category-service
     env_file:
       - .env
@@ -169,9 +157,7 @@ services:
       - tbs-network
 
   order-service:
-    build:
-      context: ./order-service
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-order-service:0.0.1-SNAPSHOT
     container_name: tbs-order-service
     env_file:
       - .env
@@ -188,9 +174,7 @@ services:
       - tbs-network
 
   payment-service:
-    build:
-      context: ./payment-service
-      dockerfile: Dockerfile
+    image: kjeff42/travel-booking-system-payment-service:0.0.1-SNAPSHOT
     container_name: tbs-payment-service
     env_file:
       - .env
@@ -205,23 +189,6 @@ services:
         condition: service_healthy
     networks:
       - tbs-network
-
-
-  frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
-    container_name: tbs-frontend
-    ports:
-      - "127.0.0.1:4200:80"
-    environment:
-      - NODE_ENV=production
-    depends_on:
-      gateway:
-        condition: service_started
-    networks:
-      - tbs-network
-
 
 networks:
   tbs-network:

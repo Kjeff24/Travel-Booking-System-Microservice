@@ -15,21 +15,82 @@ This project is a travel booking system aimed at providing a reliable and user-f
 - MongoDB: NoSQL database for backend data.
 - Bootstrap: Frontend framework for responsive design and styling.
 
+## USAGE
+- Create .env file in the root folder
+```
+# AUTH SERVER CONFIGURATION
+GOOGLE_ID=your_google_id
+GOOGLE_SECRET=your_google_secret
+GITHUB_ID=your_github_id
+GITHUB_SECRET=your_github_secret
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_USERNAME=your_email_username
+EMAIL_PASSWORD=your_email_password
+
+# DATABASE CONFIGURATION
+# Maintain the same MONGODB_AUTH_DB, MONGODB_PORT
+# When using docker compose maintain MONGODB_HOST value else use `localhost`
+MONGODB_AUTH_DB=admin
+MONGODB_USERNAME=your_mongodb_username
+MONGODB_PASSWORD=your_mongodb_password
+MONGODB_PORT=27017
+MONGODB_HOST=host.docker.internal
+MONGO_EXPRESS_BASIC_AUTH_USERNAME=your_basic_auth_username
+MONGO_EXPRESS_BASIC_AUTH_PASSWORD=your_basic_auth_password
+MONGODB_AUTH_SERVER_DB=your_auth_server_db
+MONGODB_BOOKING_SERVICE_DB=your_booking_service_db
+MONGODB_CATEGORY_SERVICE_DB=your_category_service_db
+MONGODB_ORDER_SERVICE_DB=your_order_service_db
+MONGODB_PAYMENT_SERVICE_DB=your_payment_service_db
+
+# URL
+CONFIG_SERVER_URL=http://${CONFIG_SERVER_HOST_NAME}:8888
+JWT_SET_URI=http://${AUTH_SERVER_HOST_NAME}:8080/oauth2/jwks
+ISSUER_URI=http://${AUTH_SERVER_HOST_NAME}:8080
+FRONTEND_URL=http://127.0.0.1:4200
+ANGULAR_REDIRECT_URI=http://127.0.0.1:4200/login/oauth2/code/angular-client
+ZIPKIN_URI=http://${ZIPKIN_HOST_NAME}:9411
+
+# HOST NAME
+# Maintain the same host name values below when using docker-compose else use localhost when running locally
+AUTH_SERVER_HOST_NAME=auth-server
+BOOKING_SERVICE_HOST_NAME=booking-service
+CATEGORY_SERVICE_HOST_NAME=category-service
+CONFIG_SERVER_HOST_NAME=config-server
+DISCOVERY_SERVER_HOST_NAME=discovery-server
+GATEWAY_HOST_NAME=gateway
+ORDER_SERVICE_HOST_NAME=order-service
+PAYMENT_SERVICE_HOST_NAME=payment-service
+ZIPKIN_HOST_NAME=zipkin
+RABBITMQ_HOST_NAME=rabbitmq
+EUREKA_HOST=discovery-server
+
+# RABBITMQ CONFIGURATION
+RABBITMQ_HOST=${RABBITMQ_HOST_NAME}
+RABBITMQ_PORT=5672
+RABBITMQ_USERNAME=your_rabbitmq_username
+RABBITMQ_PASSWORD=your_rabbitmq_password
+
+# EUREKA CONFIGURATION
+EUREKA_DEFAULT_URI=http://${EUREKA_HOST}:8761/eureka/
+# GATEWAY CONFIGURATION
+GATEWAY_CLIENT_ID=gateway-client
+GATEWAY_CLIENT_SECRET=secret
+GATEWAY_REDIRECT_URI=http://${GATEWAY_HOST_NAME}:8765/login/oauth2/code/gateway-client
+
+```
+
 ## HOW TO RUN THE APPLICATION
 Requirements: JDK 17, node.js and angular cli
-1. Run ```docker-compose up -d``` to start mongodb, mongo-express, zipkin and RabbitMQ
-2. Go into `application.yml` and provide the following environment variables.
-   - email-app-password
-   - email-app-password
-   - github-id
-   - github-secret
-   - google-id
-   - google-secret
-   - jwt-secret
-3. Go inside each folder except 'frontend/' to build the application.
-   - Run ```mvn clean verify -DskipTests``` if you have maven installed globally
-   - Run ```.\mvnw clean verify DskipTests``` if you have the maven file in your current directory.
-4. Go inside each folder in the order below to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
+- Provide the environment variables in [USAGE](#usage)
+
+### USING DOCKER
+- Run ```docker-compose -f docker-compose.yml up --build -d``` to start the servers
+
+### USING MAVEN
+- Ensure you have mongodb, rabbitmq, and zipkin running
+- Go inside each folder in the order below to start the applications. Run ```mvn spring-boot:run``` or ```.\mvnw spring-boot:run```.
    - auth-server
    - config-server
    - discovery-server
@@ -38,9 +99,9 @@ Requirements: JDK 17, node.js and angular cli
    - order-service
    - payment-service
    - gateway
-5. To start the angular application, navigate into the frontend directory.
-   - Run ```npm install```
-   - Run ```ng serve --host 127.0.0.1```
+- To start the angular application, navigate into the frontend directory.
+  - Run ```npm install```
+  - Run ```ng serve --host 127.0.0.1```
 
 ## BACKEND TECHNOLOGIES (MICROSERVICES OVERVIEW)
 

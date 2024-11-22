@@ -6,6 +6,7 @@ import com.bexos.authserver.models.Role;
 import com.bexos.authserver.repositories.ClientRepository;
 import com.bexos.authserver.repositories.RoleRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -23,6 +24,10 @@ public class AuthServerApplication implements CommandLineRunner {
 	private final RoleRepository roleRepository;
 	private final ClientRepository clientRepository;
 	private final PasswordEncoder passwordEncoder;
+	@Value("${travel.booking.system.angular-redirect-uri}")
+	private String angularClientUri;
+	@Value("${travel.booking.system.gateway-redirect-uri}")
+	private String gatewayClientUri;
 
 	public static void main(String[] args) {
 		SpringApplication.run(AuthServerApplication.class, args);
@@ -75,12 +80,12 @@ public class AuthServerApplication implements CommandLineRunner {
 		}
 
 		if(!clientRepository.existsByClientId("angular-client")){
-			Client angularClient = createClient("angular-client", "http://127.0.0.1:4200/login/oauth2/code/angular-client");
+			Client angularClient = createClient("angular-client", angularClientUri);
 			clientRepository.save(angularClient);
 		}
 
 		if(!clientRepository.existsByClientId("gateway-client")){
-			Client gatewayClient = createClient("gateway-client", "http://127.0.0.1:8765/login/oauth2/code/gateway-client");
+			Client gatewayClient = createClient("gateway-client", gatewayClientUri);
 			clientRepository.save(gatewayClient);
 		}
 

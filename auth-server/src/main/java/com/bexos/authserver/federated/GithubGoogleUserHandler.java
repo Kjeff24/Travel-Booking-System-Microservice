@@ -13,6 +13,7 @@ public final class GithubGoogleUserHandler implements Consumer<OAuth2User> {
 
     @Override
     public void accept(OAuth2User user) {
+        System.out.println("Heloo world");
         String email = user.getAttribute("email");
         String username = user.getAttributes().containsKey("login") ? user.getAttribute("login") : user.getAttribute("given_name");
 

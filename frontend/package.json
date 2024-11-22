@@ -22,6 +22,7 @@
     "@types/crypto-js": "^4.2.2",
     "bootstrap-icons": "^1.11.3",
     "crypto-js": "^4.2.0",
+    "my_app": "file:",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.2"
